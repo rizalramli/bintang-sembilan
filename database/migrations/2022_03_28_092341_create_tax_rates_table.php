@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTaxRatesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('tax_rates', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->string('name', 55);
+            $table->string('code', 10)->nullable();
+            $table->decimal('rate', 12, 4);
+            $table->string('type', 50);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tax_rates');
+    }
+}
