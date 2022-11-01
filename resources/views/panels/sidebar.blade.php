@@ -39,6 +39,14 @@ $configData = Helper::applClasses();
                     <span class="badge rounded-pill badge-light-primary ms-auto me-1"></span>
                 </a>
             </li>
+
+            <li class="nav-item {{ Request::is('banks*') ? 'active' : '' }}">
+                <a href="{{ url('banks') }}" class="d-flex align-items-center" target="_self">
+                    <i data-feather='home'></i>
+                    <span class="menu-title text-truncate">Bank</span>
+                    <span class="badge rounded-pill badge-light-primary ms-auto me-1"></span>
+                </a>
+            </li>
  
             {{-- @include('layouts.menu')  --}}
         </ul>
