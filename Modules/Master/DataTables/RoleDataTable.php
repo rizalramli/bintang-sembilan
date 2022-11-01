@@ -1,12 +1,12 @@
 <?php
 
-namespace $NAMESPACE_DATATABLES$;
+namespace Modules\Master\DataTables;
 
-use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use Modules\Master\Models\Role;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class $MODEL_NAME$DataTable extends DataTable
+class RoleDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -18,16 +18,16 @@ class $MODEL_NAME$DataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', '$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.datatables_actions');
+        return $dataTable->addColumn('action', 'master::roles.datatables_actions');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\$MODEL_NAME$ $model
+     * @param \App\Models\Role $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query($MODEL_NAME$ $model)
+    public function query(Role $model)
     {
         return $model->newQuery();
     }
@@ -49,10 +49,10 @@ class $MODEL_NAME$DataTable extends DataTable
                  'displayLength' => 20,
                 'lengthMenu'    => [20, 50, 100],
                 'order'     => [[0, 'desc']],
-                'buttons'   => [
+                'buttons'   => [                     
                     ['text'     => '<i data-feather="plus"></i> Tambah Data',
                         'className' => 'create-new btn btn-success',
-                        'action'    => 'function() { window.location = "' . route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.create')  . '"; }',
+                        'action'    => 'function() { window.location = "' . route('roles.create')  . '"; }',
                     ],
                 ],
                 'drawCallback'  => 'function() { feather.replace() }',
@@ -67,7 +67,7 @@ class $MODEL_NAME$DataTable extends DataTable
     protected function getColumns()
     {
         return [
-            $DATATABLE_COLUMNS$
+            'name' => ['title' => 'Nama'],
         ];
     }
 
@@ -78,6 +78,6 @@ class $MODEL_NAME$DataTable extends DataTable
      */
     protected function filename()
     {
-        return '$MODEL_NAME_PLURAL_SNAKE$_datatable_' . time();
+        return 'roles_datatable_' . time();
     }
 }

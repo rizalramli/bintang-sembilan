@@ -13,4 +13,5 @@
 
 Route::prefix('master')->group(function() {
     Route::get('/', 'MasterController@index');
+    Route::resource('roles', Modules\Master\Http\Controllers\RoleController::class);
 });

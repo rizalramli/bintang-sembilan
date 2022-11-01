@@ -24,36 +24,8 @@ $configData = Helper::applClasses();
 
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-
-            {{-- Foreach menu item starts --}}
-            {{-- <li class="navigation-header">
-        <span>Navigasi Header</span>
-        <i data-feather="more-horizontal"></i>
-      </li>  --}}
-            {{-- Add Custom Class with nav-item --}}
-
-            <li class="nav-item {{ Request::is('home*') || Request::is('/') ? 'active' : '' }}">
-                <a href="{{ url('home') }}" class="d-flex align-items-center" target="_self">
-                    <i data-feather='home'></i>
-                    <span class="menu-title text-truncate">Home</span>
-                    <span class="badge rounded-pill badge-light-primary ms-auto me-1"></span>
-                </a>
-            </li>
-
-            <li class="nav-item {{ Request::is('banks*') ? 'active' : '' }}">
-                <a href="{{ url('banks') }}" class="d-flex align-items-center" target="_self">
-                    <i data-feather='home'></i>
-                    <span class="menu-title text-truncate">Bank</span>
-                    <span class="badge rounded-pill badge-light-primary ms-auto me-1"></span>
-                </a>
-            </li>
- 
-            {{-- @include('layouts.menu')  --}}
+            @include('layouts.menu') 
         </ul>
-
-        
-
-
     </div>
 </div>
 <!-- END: Main Menu-->
