@@ -17,9 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::auth();
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+Route::resource('banks', App\Http\Controllers\BankController::class);
