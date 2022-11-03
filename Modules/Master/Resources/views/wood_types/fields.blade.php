@@ -1,4 +1,4 @@
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('name') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('name', 'Nama') !!}
     {!! Form::text('name', null, ['class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
