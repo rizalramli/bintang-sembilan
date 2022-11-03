@@ -58,6 +58,7 @@ data-asset-path="{{ asset('/')}}">
 
   <script type="text/javascript">
     $(window).on('load', function() {
+      $("form :input").attr("autocomplete", "off");
       if (feather) {
         feather.replace({
           width: 14,

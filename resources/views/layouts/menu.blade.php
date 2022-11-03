@@ -1,7 +1,7 @@
 <li class="nav-item {{ Request::is('home*') || Request::is('/') ? 'active' : '' }}">
     <a href="{{ url('home') }}" class="d-flex align-items-center" target="_self">
         <i data-feather='home'></i>
-        <span class="menu-title text-truncate">Home</span>
+        <span class="menu-title text-truncate">Dashboard</span>
         <span class="badge rounded-pill badge-light-primary ms-auto me-1"></span>
     </a>
 </li>

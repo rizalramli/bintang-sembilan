@@ -10,9 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::prefix('master')->group(function() {
+        Route::get('/', 'MasterController@index');
+        Route::resource('users', Modules\Master\Http\Controllers\UserController::class);
+        Route::resource('roles', Modules\Master\Http\Controllers\RoleController::class);
+    });
 
-Route::prefix('master')->group(function() {
-    Route::get('/', 'MasterController@index');
-    Route::resource('users', Modules\Master\Http\Controllers\UserController::class);
-    Route::resource('roles', Modules\Master\Http\Controllers\RoleController::class);
 });
