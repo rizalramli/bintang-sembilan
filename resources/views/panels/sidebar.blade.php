@@ -8,7 +8,7 @@ $configData = Helper::applClasses();
                 <a class="navbar-brand" href="{{ url('home') }}">
                     <span class="brand-logo">
                          
-                    <h2 class="brand-text" >POS </h2>
+                    <h2 class="brand-text" >Bintang Sembilan</h2>
                     </span>
                 </a>
             </li>

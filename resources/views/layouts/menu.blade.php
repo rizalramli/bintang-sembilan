@@ -11,11 +11,18 @@
         <span class="menu-title text-truncate text-custom">Pengaturan</span>
     </a>
     <ul>
-        <li class="nav-item {{ Request::is('master/roles') || Request::is('master/roles/create') || Request::is('master/roles/*/edit') ? 'active ' : '' }}" id="purchases_index">
+        <li class="nav-item {{ Request::is('master/users') || Request::is('master/users/create') || Request::is('master/users/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/users'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pengguna</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('master/roles') || Request::is('master/roles/create') || Request::is('master/roles/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/roles'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Hak Akses</span>
             </a>
         </li>
     </ul>
-</li>
+
+

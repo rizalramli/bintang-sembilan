@@ -7,7 +7,7 @@
                     <span class="brand-logo">
 
                     </span>
-                    <h2 class="brand-text mb-0">POS</h2>
+                    <h2 class="brand-text mb-0">Bintang Sembilan</h2>
                 </a>
             </li>
         </ul>
@@ -19,13 +19,6 @@
             <div class="bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav d-xl-none">
                     <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link nav-link-style">
-                            <i class="ficon" data-feather="{{ $configData['theme'] === 'dark' ? 'sun' : 'moon' }}"></i>
-                        </a>
-                    </li>
                 </ul>
             </div>
             <ul class="nav navbar-nav align-items-center ms-auto">
