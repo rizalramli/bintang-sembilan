@@ -23,6 +23,12 @@
                 <span class="text text-custom">Pemasok</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('master/warehouses') || Request::is('master/warehouses/create') || Request::is('master/warehouses/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/warehouses'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Gudang</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('master/users') || Request::is('master/users/create') || Request::is('master/users/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/users'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -36,6 +42,4 @@
             </a>
         </li>
     </ul>
-
-
 

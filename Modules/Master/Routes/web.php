@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'MasterController@index');
         Route::resource('woodTypes', 'WoodTypeController');
         Route::resource('suppliers', 'SupplierController');
+        Route::resource('warehouses', 'WarehouseController');
         Route::resource('users', 'UserController');
         Route::resource('roles', 'RoleController');
     });
