@@ -11,6 +11,12 @@
         <span class="menu-title text-truncate text-custom">Pengaturan</span>
     </a>
     <ul>
+        <li class="nav-item {{ Request::is('master/woodTypes') || Request::is('master/woodTypes/create') || Request::is('master/woodTypes/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/woodTypes'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Jenis Kayu</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('master/users') || Request::is('master/users/create') || Request::is('master/users/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/users'); }}">
                 <i class="ficon" data-feather="circle"></i>
