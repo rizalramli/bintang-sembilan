@@ -10,6 +10,11 @@ class Human
 	{
 		return number_format($value,0,",","."); 
 	}
+
+	public static function datetimeFormat($datetime)
+	{
+		return date('d/m/Y H:i', strtotime($datetime));
+	}
 	
  
 	public static function num2text( $n, $precision = 1 ) {

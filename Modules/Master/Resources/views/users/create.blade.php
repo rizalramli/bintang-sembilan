@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Tambah Pengguna')
-@include('layouts.library.select2_css')
+@include('layouts.library.style')
 @section('content')
     
         <div class="card">
@@ -26,4 +26,4 @@
  
 @endsection
 
-@include('layouts.library.select2_js')
+@include('layouts.library.script')

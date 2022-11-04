@@ -1,0 +1,100 @@
+<?php
+
+namespace Modules\Transaction\Repositories;
+
+use Modules\Transaction\Models\IncomingWood;
+use App\Repositories\BaseRepository;
+
+/**
+ * Class IncomingWoodRepository
+ * @package App\Repositories
+ * @version November 4, 2022, 7:10 pm WIB
+*/
+
+class IncomingWoodRepository extends BaseRepository
+{
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'template_wood_id',
+        'supplier_id',
+        'warehouse_id',
+        'wood_type_id',
+        'serial_number',
+        'date',
+        'number_vehicles',
+        'type',
+        'total_volume',
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * Return searchable fields
+     *
+     * @return array
+     */
+    public function getFieldsSearchable()
+    {
+        return $this->fieldSearchable;
+    }
+
+    /**
+     * Configure the Model
+     **/
+    public function model()
+    {
+        return IncomingWood::class;
+    }
+
+    public static function getData($param = [])
+    {
+        $result = IncomingWood::query();
+        
+        $result->select(
+            'incoming_wood.*',
+            'supplier.name as supplier_name',
+            'warehouse.name as warehouse_name',
+            'wood_type.name as wood_type_name',
+        );
+
+        $result->leftJoin('supplier', 'supplier.id', '=', 'incoming_wood.supplier_id');
+        $result->leftJoin('warehouse', 'warehouse.id', '=', 'incoming_wood.warehouse_id');
+        $result->leftJoin('wood_type', 'wood_type.id', '=', 'incoming_wood.wood_type_id');
+
+        if(isset($param['get_by_supplier']) && !is_null($param['get_by_supplier'])){
+            $result->where('incoming_wood.supplier_id', '=', $param['get_by_supplier']);
+        }
+
+        if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
+            $result->where('incoming_wood.warehouse_id', '=', $param['get_by_warehouse']);
+        }
+
+        if(isset($param['get_by_wood_type']) && !is_null($param['get_by_wood_type'])){
+            $result->where('incoming_wood.wood_type_id', '=', $param['get_by_wood_type']);
+        }
+
+        // Filter Tanggal 
+
+        if (isset($param['get_by_date']) && !is_null($param['get_by_date'])) {
+            $result->whereDate('incoming_wood.date', $param['get_by_date']);
+        }
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('incoming_wood.date', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('incoming_wood.date', $param['get_by_year']);
+        }
+
+        if (isset($param['get_by_date_start']) && !is_null($param['get_by_date_start']) && isset($param['get_by_date_end']) && !is_null($param['get_by_date_end'])) {
+            $result->whereBetween('incoming_wood.date', [$param['get_by_date_start'], $param['get_by_date_end']]);
+        }
+
+        return $result;
+    }
+}

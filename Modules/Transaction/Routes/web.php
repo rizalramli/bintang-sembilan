@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('transaction')->group(function() {
         Route::get('/', 'TransactionController@index');
+        Route::resource('incomingWoods', 'IncomingWoodController');
     });
 
 });

@@ -1,21 +1,25 @@
 @extends('layouts.app')
-@section('title', 'Edit Pengguna')
-@include('layouts.library.style')
+@section('title', 'Tambah Incoming Wood')
 @section('content')
+    
+
+        @include('adminlte-templates::common.errors')
 
         <div class="card">
 
-            {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
+            {!! Form::open(['route' => 'incomingWoods.store']) !!}
 
             <div class="card-body">
+
                 <div class="row">
-                    @include('master::users.fields')
+                    @include('incoming_woods.fields')
                 </div>
+
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('users.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('incomingWoods.index') }}" class="btn btn-secondary">Batal</a>
             </div>
 
             {!! Form::close() !!}
@@ -23,4 +27,3 @@
         </div>
  
 @endsection
-@include('layouts.library.script')
