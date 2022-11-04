@@ -42,6 +42,9 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer">
+                <button class="btn btn-success" id="export-excel">Export Excel</button>
+            </div>
         </div>
 
         <div class="clearfix"></div>
