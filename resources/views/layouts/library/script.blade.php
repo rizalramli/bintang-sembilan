@@ -16,8 +16,8 @@
     $(document).ready(function() {
         let service_schedule_date = $('.datetime-custom').flatpickr({
             enableTime: true,
-            altFormat: "d/m/Y H:i",
-            dateFormat: "d/m/Y H:i",
+            altFormat: "Y-m-d H:i:s",
+            dateFormat: "Y-m-d H:i:s",
             time_24hr: true,
         });
     });

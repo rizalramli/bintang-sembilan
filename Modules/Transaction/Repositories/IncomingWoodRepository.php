@@ -4,6 +4,8 @@ namespace Modules\Transaction\Repositories;
 
 use Modules\Transaction\Models\IncomingWood;
 use App\Repositories\BaseRepository;
+use Modules\Transaction\Models\IncomingWoodDetail;
+use Modules\Transaction\Models\IncomingWoodDetailItem;
 
 /**
  * Class IncomingWoodRepository
@@ -96,5 +98,31 @@ class IncomingWoodRepository extends BaseRepository
         }
 
         return $result;
+    }
+
+    public static function getDetail($param = [])
+    {
+        $result = IncomingWoodDetail::query();
+
+        $result->select('incoming_wood_detail.*');
+
+        if(isset($param['get_by_incoming_wood_id']) && !is_null($param['get_by_incoming_wood_id'])){
+            $result->where('incoming_wood_detail.incoming_wood_id', '=', $param['get_by_incoming_wood_id']);
+        }
+
+        $result->orderBy('incoming_wood_detail.id', 'asc');
+
+        $item = null;
+        if($result->count() > 0){
+            $item = $result->get()->map(function($data){
+                $detail = IncomingWoodDetailItem::
+                where('incoming_wood_detail_id', $data->id)
+                ->get();
+                $data->detail = $detail;
+                return $data;
+            });
+        }
+
+        return $item;
     }
 }

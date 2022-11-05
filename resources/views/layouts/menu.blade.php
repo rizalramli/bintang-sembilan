@@ -11,7 +11,7 @@
         <span class="menu-title text-truncate text-custom">Transaksi</span>
     </a>
     <ul>
-        <li class="nav-item {{ Request::is('transaction/incomingWoods') || Request::is('transaction/incomingWoods/create') || Request::is('transaction/incomingWoods/*/edit') ? 'active ' : '' }}">
+        <li class="nav-item {{ Request::is('transaction/incomingWoods') || Request::is('transaction/incomingWoods/create') || Request::is('transaction/incomingWoods/*/edit') || Request::is('transaction/incomingWoods/*') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('transaction/incomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Masuk</span>

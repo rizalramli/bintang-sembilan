@@ -1,17 +1,20 @@
 @extends('layouts.app')
-@section('title', 'Edit Incoming Wood')
+@section('title', 'Edit Kayu Masuk')
+@include('layouts.library.style')
 @section('content')
-    
- 
-        @include('adminlte-templates::common.errors')
-
         <div class="card">
 
             {!! Form::model($incomingWood, ['route' => ['incomingWoods.update', $incomingWood->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('incoming_woods.fields')
+                    @include('transaction::incoming_woods.fields')
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @include('transaction::incoming_woods.fields.table_detail')
                 </div>
             </div>
 
@@ -25,3 +28,5 @@
         </div>
  
 @endsection
+
+@include('layouts.library.script')

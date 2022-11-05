@@ -1,111 +1,73 @@
-<!-- Template Wood Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('template_wood_id', 'Template Wood Id:') !!}
-    {!! Form::number('template_wood_id', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Supplier Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('supplier_id', 'Supplier Id:') !!}
-    {!! Form::number('supplier_id', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Warehouse Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('warehouse_id', 'Warehouse Id:') !!}
-    {!! Form::number('warehouse_id', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Wood Type Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('wood_type_id', 'Wood Type Id:') !!}
-    {!! Form::number('wood_type_id', null, ['class' => 'form-control']) !!}
-</div>
-
+@if(isset($incomingWood))
 <!-- Serial Number Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('serial_number', 'Serial Number:') !!}
-    {!! Form::number('serial_number', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('serial_number', 'No Urut') !!}
+    {!! Form::number('serial_number', isset($incomingWood) ? $incomingWood->serial_number : null, ['class' => 'form-control','readonly']) !!}
 </div>
+@endif
 
-<!-- Date Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('date', 'Date:') !!}
-    {!! Form::text('date', null, ['class' => 'form-control','id'=>'date']) !!}
-</div>
-
-@push('page_scripts')
-    <script type="text/javascript">
-        $('#date').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: true,
-            sideBySide: true
-        })
-    </script>
-@endpush
-
-<!-- Number Vehicles Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('number_vehicles', 'Number Vehicles:') !!}
-    {!! Form::text('number_vehicles', null, ['class' => 'form-control','maxlength' => 15,'maxlength' => 15]) !!}
-</div>
-
-<!-- Type Field -->
-<div class="form-group col-sm-6">
-    <div class="form-check">
-        {!! Form::hidden('type', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('type', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('type', 'Type', ['class' => 'form-check-label']) !!}
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('date', 'Tanggal:') !!}
+    @php $is_invalid = ''; $errors->has('date') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::text('date', isset($incomingWood) ? $incomingWood->date : null, ['class' => "form-control datetime-custom $is_invalid"]) !!}
+    @error('date')
+    <div class="invalid-feedback">
+        {{ $message }}
     </div>
+    @enderror
 </div>
 
-
-<!-- Total Volume Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('total_volume', 'Total Volume:') !!}
-    {!! Form::number('total_volume', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('supplier_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('supplier_id', 'Supplier') !!}
+    {!! Form::select('supplier_id', $supplier, isset($incomingWood) ? $incomingWood->supplier_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'supplier_id']) !!}
+    @error('supplier_id')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
 
-<!-- Created By Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('created_by', 'Created By:') !!}
-    {!! Form::number('created_by', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('warehouse_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('warehouse_id', 'Gudang') !!}
+    {!! Form::select('warehouse_id', $warehouse, isset($incomingWood) ? $incomingWood->warehouse_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'warehouse_id']) !!}
+    @error('warehouse_id')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
 
-<!-- Updated By Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('updated_by', 'Updated By:') !!}
-    {!! Form::number('updated_by', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('wood_type_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('wood_type_id', 'Jenis Kayu') !!}
+    {!! Form::select('wood_type_id', $wood_type, isset($incomingWood) ? $incomingWood->wood_type_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'wood_type_id']) !!}
+    @error('wood_type_id')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
 
-<!-- Created At Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('created_at', 'Created At:') !!}
-    {!! Form::text('created_at', null, ['class' => 'form-control','id'=>'created_at']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('number_vehicles') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('number_vehicles', 'Plat Kendaraan') !!}
+    {!! Form::text('number_vehicles', isset($incomingWood) ? $incomingWood->number_vehicles : null, ['class' => "form-control $is_invalid"]) !!}
+    @error('number_vehicles')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
 
-@push('page_scripts')
-    <script type="text/javascript">
-        $('#created_at').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: true,
-            sideBySide: true
-        })
-    </script>
-@endpush
-
-<!-- Updated At Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    {!! Form::text('updated_at', null, ['class' => 'form-control','id'=>'updated_at']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('total_volume') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('total_volume', 'Total Volume') !!}
+    {!! Form::text('total_volume', isset($incomingWood) ? $incomingWood->total_volume : null, ['class' => "form-control $is_invalid",'readonly']) !!}
+    @error('total_volume')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
-
-@push('page_scripts')
-    <script type="text/javascript">
-        $('#updated_at').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: true,
-            sideBySide: true
-        })
-    </script>
-@endpush

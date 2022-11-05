@@ -1,4 +1,4 @@
-<!-- {!! Form::open(['route' => ['incomingWoods.destroy', $id], 'method' => 'delete']) !!}
+{!! Form::open(['route' => ['incomingWoods.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
     <a href="{{ route('incomingWoods.show', $id) }}" class='btn btn-info btn-sm'>
         <i data-feather='eye'></i> Detail
@@ -12,5 +12,5 @@
         'onclick' => "return confirm('Apakah anda yakin ingin menghapus data tersebut?')"
     ]) !!}
 </div>
-{!! Form::close() !!} -->
+{!! Form::close() !!}
  

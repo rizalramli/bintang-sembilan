@@ -91,12 +91,23 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Incoming Wood not found');
+            Flash::error('Kayu masuk tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
 
-        return view('incoming_woods.show')->with('incomingWood', $incomingWood);
+        $supplier = Supplier::pluck('name', 'id');
+        $warehouse = Warehouse::pluck('name', 'id');
+        $wood_type = WoodType::pluck('name', 'id');
+
+        $param = [];
+        
+        $param['get_by_incoming_wood_id'] = $id;
+
+        $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
+        
+        return view('transaction::incoming_woods.show',compact('supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
+
     }
 
     /**
@@ -111,12 +122,23 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Incoming Wood not found');
+            Flash::error('Kayu masuk tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
 
-        return view('incoming_woods.edit')->with('incomingWood', $incomingWood);
+        $supplier = Supplier::pluck('name', 'id');
+        $warehouse = Warehouse::pluck('name', 'id');
+        $wood_type = WoodType::pluck('name', 'id');
+
+        $param = [];
+        
+        $param['get_by_incoming_wood_id'] = $id;
+
+        $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
+        
+
+        return view('transaction::incoming_woods.edit',compact('supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
     }
 
     /**
@@ -132,7 +154,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Incoming Wood not found');
+            Flash::error('Kayu masuk tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
@@ -156,7 +178,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Incoming Wood not found');
+            Flash::error('Kayu masuk tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
