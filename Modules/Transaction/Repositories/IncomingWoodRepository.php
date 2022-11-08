@@ -4,6 +4,8 @@ namespace Modules\Transaction\Repositories;
 
 use Modules\Transaction\Models\IncomingWood;
 use App\Repositories\BaseRepository;
+use Modules\Master\Models\WoodCategory;
+use Modules\Master\Models\WoodSize;
 use Modules\Transaction\Models\IncomingWoodDetail;
 use Modules\Transaction\Models\IncomingWoodDetailItem;
 
@@ -124,5 +126,22 @@ class IncomingWoodRepository extends BaseRepository
         }
 
         return $item;
+    }
+
+    public static function getTemplate($id)
+    {
+        $wood_category = WoodCategory::where('template_wood_id',$id);
+        $data = null;
+        if($wood_category->count() > 0){
+            $data = $wood_category->get()->map(function($item){
+                $detail = WoodSize::
+                where('wood_category_id', $item->id)
+                ->get();
+                $item->detail = $detail;
+                return $item;
+            });
+        }
+
+        return $data;
     }
 }

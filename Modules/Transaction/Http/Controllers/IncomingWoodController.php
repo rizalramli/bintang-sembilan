@@ -13,6 +13,7 @@ use App\Http\Controllers\AppBaseController;
 use Carbon\Carbon;
 use Excel;
 use Modules\Master\Models\Supplier;
+use Modules\Master\Models\TemplateWood;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
 use Response;
@@ -58,7 +59,11 @@ class IncomingWoodController extends AppBaseController
      */
     public function create()
     {
-        return view('incoming_woods.create');
+        $template_wood = TemplateWood::pluck('name', 'id');
+        $supplier = Supplier::pluck('name', 'id');
+        $warehouse = Warehouse::pluck('name', 'id');
+        $wood_type = WoodType::pluck('name', 'id');
+        return view('transaction::incoming_woods.create',compact('template_wood','supplier','warehouse','wood_type'));
     }
 
     /**
@@ -225,6 +230,36 @@ class IncomingWoodController extends AppBaseController
         $query = IncomingWoodRepository::getData($param)->get();
         
         return Excel::download(new TemplateExcel($query, new IncomingWood), 'kayu_masuk.xlsx'); 
+    }
+
+    public function getTemplate()
+    {
+        $id = request()->id;
+        $data = IncomingWoodRepository::getTemplate($id);
+        is_null($data) ? $status = false : $status = true;  
+        return response()->json(['status' => $status, 'data' => $data]);
+    }
+
+    public function getTotal()
+    {
+        $array = [];
+        $total_volume = 0;
+        $total_qty = 0;
+        foreach(request()->item2_diameter as $key => $value) {
+            $sub_qty = 0;
+            $sub_total_volume  = 0;
+            foreach(request()->item2_diameter[$key] as $key2 => $value2) {
+                $item_2_qty = request()->item2_qty[$key][$key2] ?? 0;
+                $item_2_volume = request()->item2_volume[$key][$key2];
+
+                $sub_qty += $item_2_qty;
+                $sub_total_volume += $item_2_qty * $item_2_volume;
+            }
+            $array[] = round($sub_total_volume,4);
+            $total_volume += round($sub_total_volume,4);
+            $total_qty += $sub_qty;
+        }
+        return response()->json(['total_qty' => $total_qty,'total_volume' => $total_volume, 'sub_total_volume' => $array]);
     }
     
 }

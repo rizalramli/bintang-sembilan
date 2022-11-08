@@ -4,10 +4,21 @@
     {!! Form::label('serial_number', 'No Urut') !!}
     {!! Form::number('serial_number', isset($incomingWood) ? $incomingWood->serial_number : null, ['class' => 'form-control','readonly']) !!}
 </div>
+@else 
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('template_wood_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('template_wood_id', 'Template Kayu') !!}
+    {!! Form::select('template_wood_id', $template_wood, isset($incomingWood) ? $incomingWood->template_wood_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'template_wood_id']) !!}
+    @error('template_wood_id')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
 @endif
 
 <div class="form-group col-sm-6 mb-1">
-    {!! Form::label('date', 'Tanggal:') !!}
+    {!! Form::label('date', 'Tanggal') !!}
     @php $is_invalid = ''; $errors->has('date') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::text('date', isset($incomingWood) ? $incomingWood->date : null, ['class' => "form-control datetime-custom $is_invalid"]) !!}
     @error('date')
@@ -64,7 +75,7 @@
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('total_volume') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('total_volume', 'Total Volume') !!}
-    {!! Form::text('total_volume', isset($incomingWood) ? $incomingWood->total_volume : null, ['class' => "form-control $is_invalid",'readonly']) !!}
+    {!! Form::text('total_volume', isset($incomingWood) ? $incomingWood->total_volume : null, ['id' => 'total_volume','class' => "form-control $is_invalid",'readonly']) !!}
     @error('total_volume')
     <div class="invalid-feedback">
         {{ $message }}

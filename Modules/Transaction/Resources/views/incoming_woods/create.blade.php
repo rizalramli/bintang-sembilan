@@ -1,20 +1,22 @@
 @extends('layouts.app')
-@section('title', 'Tambah Incoming Wood')
+@section('title', 'Tambah Kayu Masuk')
+@include('layouts.library.style')
 @section('content')
-    
-
-        @include('adminlte-templates::common.errors')
 
         <div class="card">
 
-            {!! Form::open(['route' => 'incomingWoods.store']) !!}
+            {!! Form::open(['route' => 'incomingWoods.store','id' => 'formIncomingWood']) !!}
 
             <div class="card-body">
-
                 <div class="row">
-                    @include('incoming_woods.fields')
+                    @include('transaction::incoming_woods.fields')
                 </div>
+            </div>
 
+            <div class="card-body">
+                <div class="row">
+                    @include('transaction::incoming_woods.fields.table_detail')
+                </div>
             </div>
 
             <div class="card-footer">
@@ -27,3 +29,5 @@
         </div>
  
 @endsection
+@include('transaction::incoming_woods.fields.fields_js')
+@include('layouts.library.script')

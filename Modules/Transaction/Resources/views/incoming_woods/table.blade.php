@@ -41,7 +41,7 @@
         '&filter_date=' + filter_date + 
         '&filter_date_start=' + filter_date_start + 
         '&filter_date_end=' + filter_date_end;
-        var url = "{{ url('transaction/incomingWoods/excel') }}" + filter;
+        var url = "{{ url('transaction/incomingWood/excel') }}" + filter;
         window.open(
             url,
             '_blank'
