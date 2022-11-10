@@ -4,7 +4,7 @@
 @section('content')
         <div class="card">
 
-            {!! Form::model($incomingWood, ['route' => ['incomingWoods.update', $incomingWood->id], 'method' => 'patch']) !!}
+            {!! Form::open(['route' => 'incomingWoods.update','id' => 'formIncomingWood']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -28,5 +28,5 @@
         </div>
  
 @endsection
-
+@include('transaction::incoming_woods.fields.fields_js')
 @include('layouts.library.script')

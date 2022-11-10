@@ -16,18 +16,18 @@
             $sum_sub_total_volume = 0;
             $sum_qty = 0;
             @endphp 
-            @foreach($incomingWoodDetail as $item)
-                @foreach($item->detail as $key => $item2)
+            @foreach($incomingWoodDetail as $key => $item)
+                @foreach($item->detail as $key2 => $item2)
                     <tr>
                         <td>
-                            <input style="border: none;width:100%" type="text" id="item2_diameter{{$key}}" name="item2_diameter[]" value="{{ $item2->diameter }}" readonly>
+                            <input style="border: none;width:100%" type="text" id="item2_diameter{{$key.$key2}}" name="item2_diameter[{{$key}}][{{$key2}}]" value="{{ $item2->diameter }}" readonly>
                         </td>
-                        <td>|||||</td>
+                        <td>||||| |||||</td>
                         <td class="text-end">
-                            <input style="border: none;width:100%" type="text" id="item2_qty{{$key}}" name="item2_qty[]" value="{{ $item2->qty }}">
+                            <input class="item2_qty" style="border: none;width:100%" type="text" id="item2_qty{{$key.$key2}}" name="item2_qty[{{$key}}][{{$key2}}]" value="{{ $item2->qty }}">
                         </td>
                         <td class="text-end">
-                            <input style="border: none;width:100%" type="text" id="item2_volume{{$key}}" name="item2_volume[]" value="{{ $item2->volume }}" readonly>
+                            <input style="border: none;width:100%" type="text" id="item2_volume{{$key.$key2}}" name="item2_volume[{{$key}}][{{$key2}}]" value="{{ $item2->volume }}" readonly>
                         </td>
                     </tr>
                     @php 

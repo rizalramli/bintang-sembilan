@@ -4,6 +4,7 @@ namespace Modules\Transaction\Repositories;
 
 use Modules\Transaction\Models\IncomingWood;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 use Modules\Master\Models\WoodCategory;
 use Modules\Master\Models\WoodSize;
 use Modules\Transaction\Models\IncomingWoodDetail;
@@ -119,6 +120,7 @@ class IncomingWoodRepository extends BaseRepository
             $item = $result->get()->map(function($data){
                 $detail = IncomingWoodDetailItem::
                 where('incoming_wood_detail_id', $data->id)
+                ->orderBy('id','asc')
                 ->get();
                 $data->detail = $detail;
                 return $data;
@@ -143,5 +145,18 @@ class IncomingWoodRepository extends BaseRepository
         }
 
         return $data;
+    }
+
+    public static function generateSerialNumber($date)
+    {
+        $check = IncomingWood::whereMonth('date', Carbon::parse($date)->format('m'))->orderBy('id','desc')->first();
+        
+        if($check){
+            $serial_number = $check->serial_number + 1;
+        } else {
+            $serial_number = 1;
+        }
+
+        return $serial_number;
     }
 }

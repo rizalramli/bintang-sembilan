@@ -78,17 +78,17 @@ class IncomingWood extends Model
      * @var array
      */
     public static $rules = [
-        'template_wood_id' => 'nullable|integer',
-        'supplier_id' => 'nullable|integer',
-        'warehouse_id' => 'nullable|integer',
-        'wood_type_id' => 'nullable|integer',
-        'serial_number' => 'nullable|integer',
-        'date' => 'nullable',
-        'number_vehicles' => 'nullable|string|max:15',
+        'template_wood_id' => 'required',
+        'supplier_id' => 'required',
+        'warehouse_id' => 'required',
+        'wood_type_id' => 'required',
+        'serial_number' => 'nullable',
+        'date' => 'required',
+        'number_vehicles' => 'required|string|max:15',
         'type' => 'nullable|boolean',
-        'total_volume' => 'nullable|numeric',
-        'created_by' => 'nullable|integer',
-        'updated_by' => 'nullable|integer',
+        'total_volume' => 'required|numeric',
+        'created_by' => 'nullable',
+        'updated_by' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

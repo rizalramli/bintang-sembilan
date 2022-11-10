@@ -12,10 +12,13 @@ use Flash;
 use App\Http\Controllers\AppBaseController;
 use Carbon\Carbon;
 use Excel;
+use Illuminate\Support\Facades\Auth;
 use Modules\Master\Models\Supplier;
 use Modules\Master\Models\TemplateWood;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
+use Modules\Transaction\Models\IncomingWoodDetail;
+use Modules\Transaction\Models\IncomingWoodDetailItem;
 use Response;
 
 class IncomingWoodController extends AppBaseController
@@ -77,9 +80,35 @@ class IncomingWoodController extends AppBaseController
     {
         $input = $request->all();
 
+        $serial_number = IncomingWoodRepository::generateSerialNumber($input['date']);
+        
+        $input['serial_number'] = $serial_number;
+
+        $input['type'] = 1;
+        $input['created_by'] = Auth::id();
+        $input['updated_by'] = Auth::id();
+
         $incomingWood = $this->incomingWoodRepository->create($input);
 
-        Flash::success('Incoming Wood saved successfully.');
+        if(is_array($input['item2_diameter']) && count($input['item2_diameter']) > 0){
+            foreach($input['item2_diameter'] as $key => $value){
+                $incoming_wood_detail = IncomingWoodDetail::create([
+                    'incoming_wood_id' => $incomingWood->id,
+                    'seq' => $key + 1,
+                    'sub_total_volume' => $input['item_sub_total_volume'][$key]
+                ]);
+                foreach($value as $key2 => $value2){
+                    $incoming_wood_detail_item = IncomingWoodDetailItem::create([
+                        'incoming_wood_detail_id' =>  $incoming_wood_detail->id,
+                        'diameter' => $value2,
+                        'qty' =>  $input['item2_qty'][$key][$key2],
+                        'volume' => $input['item2_volume'][$key][$key2]
+                    ]);
+                }
+            }
+            
+        }
+        Flash::success('Kayu masuk berhasil disimpan.');
 
         return redirect(route('incomingWoods.index'));
     }
@@ -154,8 +183,12 @@ class IncomingWoodController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateIncomingWoodRequest $request)
+    public function update(UpdateIncomingWoodRequest $request)
     {
+        $input = $request->all();
+
+        $id = $input['id'];
+
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
@@ -164,9 +197,39 @@ class IncomingWoodController extends AppBaseController
             return redirect(route('incomingWoods.index'));
         }
 
-        $incomingWood = $this->incomingWoodRepository->update($request->all(), $id);
+        $incomingWood = $this->incomingWoodRepository->update($input, $id);
 
-        Flash::success('Incoming Wood updated successfully.');
+        if(is_array($input['item2_diameter']) && count($input['item2_diameter']) > 0){
+
+            // Delete Detail
+            $incoming_wood_detail = IncomingWoodDetail::where('incoming_wood_id',$id);
+            if($incoming_wood_detail->count() > 0){
+                foreach($incoming_wood_detail->get() as $value)
+                {
+                    IncomingWoodDetailItem::where('incoming_wood_detail_id',$value->id)->delete();
+                }
+                $incoming_wood_detail->delete();
+            }
+
+            foreach($input['item2_diameter'] as $key => $value){
+                $incoming_wood_detail = IncomingWoodDetail::create([
+                    'incoming_wood_id' => $incomingWood->id,
+                    'seq' => $key + 1,
+                    'sub_total_volume' => $input['item_sub_total_volume'][$key]
+                ]);
+                foreach($value as $key2 => $value2){
+                    $incoming_wood_detail_item = IncomingWoodDetailItem::create([
+                        'incoming_wood_detail_id' =>  $incoming_wood_detail->id,
+                        'diameter' => $value2,
+                        'qty' =>  $input['item2_qty'][$key][$key2],
+                        'volume' => $input['item2_volume'][$key][$key2]
+                    ]);
+                }
+            }
+            
+        }
+
+        Flash::success('Kayu masuk berhasil diperbarui.');
 
         return redirect(route('incomingWoods.index'));
     }
@@ -188,9 +251,19 @@ class IncomingWoodController extends AppBaseController
             return redirect(route('incomingWoods.index'));
         }
 
+        // Delete Detail
+        $incoming_wood_detail = IncomingWoodDetail::where('incoming_wood_id',$id);
+        if($incoming_wood_detail->count() > 0){
+            foreach($incoming_wood_detail->get() as $value)
+            {
+                IncomingWoodDetailItem::where('incoming_wood_detail_id',$value->id)->delete();
+            }
+            $incoming_wood_detail->delete();
+        }
+
         $this->incomingWoodRepository->delete($id);
 
-        Flash::success('Incoming Wood deleted successfully.');
+        Flash::success('Kayu masuk berhasil dihapus.');
 
         return redirect(route('incomingWoods.index'));
     }
@@ -256,10 +329,10 @@ class IncomingWoodController extends AppBaseController
                 $sub_total_volume += $item_2_qty * $item_2_volume;
             }
             $array[] = round($sub_total_volume,4);
-            $total_volume += round($sub_total_volume,4);
+            $total_volume += $sub_total_volume;
             $total_qty += $sub_qty;
         }
-        return response()->json(['total_qty' => $total_qty,'total_volume' => $total_volume, 'sub_total_volume' => $array]);
+        return response()->json(['total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
     }
     
 }

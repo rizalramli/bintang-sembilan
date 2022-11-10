@@ -1,6 +1,8 @@
 @if(isset($incomingWood))
 <!-- Serial Number Field -->
 <div class="form-group col-sm-6 mb-1">
+    {!! Form::hidden('id', isset($incomingWood) ? $incomingWood->id : null) !!}
+    {!! Form::hidden('template_wood_id', isset($incomingWood) ? $incomingWood->template_wood_id : null) !!}
     {!! Form::label('serial_number', 'No Urut') !!}
     {!! Form::number('serial_number', isset($incomingWood) ? $incomingWood->serial_number : null, ['class' => 'form-control','readonly']) !!}
 </div>
