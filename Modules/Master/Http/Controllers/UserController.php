@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Modules\Master\Models\Role;
+use Modules\Master\Models\Warehouse;
 use Response;
 
 class UserController extends AppBaseController
@@ -42,7 +43,8 @@ class UserController extends AppBaseController
     public function create()
     {
         $roles = Role::pluck('name', 'name');
-        return view('master::users.create',compact('roles'));
+        $warehouse = Warehouse::pluck('name', 'id');
+        return view('master::users.create',compact('roles','warehouse'));
     }
 
     /**
@@ -106,8 +108,10 @@ class UserController extends AppBaseController
 
         $roles = Role::pluck('name', 'name');
         $userRole = $user->roles->pluck('name', 'name');
+        $warehouse = Warehouse::pluck('name', 'id');
+        $userWarehouse = json_decode($user->warehouse_id);
 
-        return view('master::users.edit',compact('roles', 'userRole'))->with('user', $user);
+        return view('master::users.edit',compact('roles', 'userRole','warehouse','userWarehouse'))->with('user', $user);
     }
 
     /**
@@ -134,6 +138,8 @@ class UserController extends AppBaseController
         } else {
             $input = Arr::except($input, array('password'));
         }
+
+        $input['warehouse_id'] = json_encode($request->input('warehouse'));
 
         $user = $this->userRepository->update($input, $id);
 

@@ -35,6 +35,7 @@ class UpdateUserRequest extends FormRequest
             ],
             'password' => 'same:confirm-password',
             'roles' => 'required|array',
+            'warehouse' => 'required|array',
         ];
         
         return $rules;

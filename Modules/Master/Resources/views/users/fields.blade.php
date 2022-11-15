@@ -50,3 +50,18 @@
     </div>
     @enderror
 </div>
+
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('warehouse') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('warehouse', 'Hak Akses') !!}
+    @if(isset($user))
+    {!! Form::select('warehouse[]', $warehouse,$userWarehouse, array('id' => 'warehouse','class' => "select2 form-select form-control $is_invalid",'multiple')) !!}
+    @else
+    {!! Form::select('warehouse[]', $warehouse,[], array('id' => 'warehouse','class' => "select2 form-select form-control $is_invalid",'multiple')) !!}
+    @endif
+    @error('warehouse')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'remember_token',
+        'warehouse_id',
         'created_at',
         'updated_at'
     ];
@@ -52,16 +53,5 @@ class User extends Authenticatable
         'remember_token' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
-    ];
-
-    public static $rules = [
-        'name' => 'required|string|max:125',
-        'email' => 'required|email|unique:users,email',
-        'roles' => 'required|array',
-        'email_verified_at' => 'nullable',
-        'password' => 'required|same:confirm-password',
-        'remember_token' => 'nullable|string|max:100',
-        'created_at' => 'nullable',
-        'updated_at' => 'nullable'
     ];
 }

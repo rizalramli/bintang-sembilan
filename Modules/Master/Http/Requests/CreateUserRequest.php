@@ -25,6 +25,17 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return User::$rules;
+        $rules = [
+            'name' => 'required|string|max:125',
+            'email' => 'required|email|unique:users,email',
+            'roles' => 'required|array',
+            'warehouse' => 'required|array',
+            'email_verified_at' => 'nullable',
+            'password' => 'required|same:confirm-password',
+            'remember_token' => 'nullable|string|max:100',
+            'created_at' => 'nullable',
+            'updated_at' => 'nullable'
+        ];
+        return $rules;
     }
 }
