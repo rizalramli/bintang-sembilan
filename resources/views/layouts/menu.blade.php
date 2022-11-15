@@ -43,6 +43,12 @@
                 <span class="text text-custom">Gudang</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('master/employees') || Request::is('master/employees/create') || Request::is('master/employees/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/employees'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Karyawan</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('master/users') || Request::is('master/users/create') || Request::is('master/users/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/users'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -57,5 +63,3 @@
         </li>
     </ul>
 </li>
-
-

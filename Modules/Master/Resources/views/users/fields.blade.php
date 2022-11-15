@@ -53,7 +53,7 @@
 
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('warehouse') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('warehouse', 'Hak Akses') !!}
+    {!! Form::label('warehouse', 'Gudang') !!}
     @if(isset($user))
     {!! Form::select('warehouse[]', $warehouse,$userWarehouse, array('id' => 'warehouse','class' => "select2 form-select form-control $is_invalid",'multiple')) !!}
     @else
