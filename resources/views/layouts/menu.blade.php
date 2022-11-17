@@ -21,6 +21,20 @@
 </li>
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
+        <i class="ficon" data-feather="users"></i>
+        <span class="menu-title text-truncate text-custom">Karyawan</span>
+    </a>
+    <ul>
+        <li class="nav-item {{ Request::is('employee/attendances') || Request::is('employee/attendances/create') || Request::is('employee/attendances/*/edit') || Request::is('employee/attendances/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('employee/attendances'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Kehadiran</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i class="ficon" data-feather="settings"></i>
         <span class="menu-title text-truncate text-custom">Pengaturan</span>
     </a>
@@ -63,3 +77,11 @@
         </li>
     </ul>
 </li>
+<li class="nav-item">
+    <a href="{{ route('attendances.index') }}"
+       class="nav-link {{ Request::is('attendances*') ? 'active' : '' }}">
+        <p>Attendances</p>
+    </a>
+</li>
+
+

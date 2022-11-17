@@ -17,7 +17,9 @@
                 success: function(result) {
                     $('#table-detail tbody').empty();
                     if(result.status == false){
-
+                        Swal.fire('Informasi',
+                        'terjadi kesalahan.',
+                        'error');
                     } else {
                         var content = '';
                         $.each(result.data, function(key, value) {
@@ -45,7 +47,9 @@
                     }
                 },
                 error: function(request, msg, error) {
-                    // handle failure
+                    Swal.fire('Informasi',
+                        'terjadi kesalahan.',
+                        'error');
                 }
             });
         }
@@ -64,6 +68,9 @@
                 data: form_data,
                 success: function(result) {
                     if(result.status == false){
+                        Swal.fire('Informasi',
+                        'terjadi kesalahan.',
+                        'error');
                     } else {
                         $.each(result.sub_total_volume, function(key, value) {
                             $('#item_sub_total_volume'+key).val(value);
@@ -71,6 +78,11 @@
                         $('#total_volume').val(result.total_volume);
                         $('#total_qty_volume').val(result.total_qty + ' / ' + result.total_volume);
                     }
+                },
+                error: function(request, msg, error) {
+                    Swal.fire('Informasi',
+                        'terjadi kesalahan.',
+                        'error');
                 }
             });
         }
