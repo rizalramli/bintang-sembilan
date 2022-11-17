@@ -65,6 +65,8 @@ class EmployeeController extends AppBaseController
             'warehouse_id' => json_encode([$input['warehouse']])
         ]);
 
+        $user->assignRole(['karyawan']);
+
         $input['user_id'] = $user->id;
 
         $employee = $this->employeeRepository->create($input);
