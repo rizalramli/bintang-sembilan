@@ -48,6 +48,49 @@ class AttendanceRepository extends BaseRepository
         return Attendance::class;
     }
 
+    public static function getData($param = [])
+    {
+        $result = Attendance::query();
+        
+        $result->select(
+            'attendance.*',
+            'users.name as user_name'
+        );
+
+        $result->join('employee', 'employee.id', '=', 'attendance.employee_id');
+        $result->join('users', 'users.id', '=', 'employee.user_id');
+
+        if(isset($param['get_by_employee']) && !is_null($param['get_by_employee'])){
+            $result->where('attendance.employee_id', '=', $param['get_by_employee']);
+        }
+
+        if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
+            $result->where('attendance.warehouse_id', '=', $param['get_by_warehouse']);
+        }
+
+        // Filter Tanggal 
+
+        if (isset($param['get_by_date']) && !is_null($param['get_by_date'])) {
+            $result->whereDate('attendance.check_in', $param['get_by_date']);
+        }
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('attendance.check_in', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('attendance.check_in', $param['get_by_year']);
+        }
+
+        if (isset($param['get_by_date_start']) && !is_null($param['get_by_date_start']) && isset($param['get_by_date_end']) && !is_null($param['get_by_date_end'])) {
+            $result->whereBetween('attendance.check_in', [$param['get_by_date_start'], $param['get_by_date_end']]);
+        }
+
+        $result->orderBy('attendance.id', 'desc');
+
+        return $result;
+    }
+
     public static function getTemplate($warehouse_id,$type)
     {
         $attendance = Attendance::query();
@@ -68,6 +111,26 @@ class AttendanceRepository extends BaseRepository
 
         $employee->whereNotIn('employee.id', $attendance->pluck('employee_id'));
 
+        $employee->select('employee.id', 'users.name');
+
         return $employee->get();
+    }
+
+    public static function submit($input)
+    {
+        $attendance = Attendance::query();
+
+        $attendance->where('employee_id', $input['employee_id']);
+        $attendance->whereDate('created_at', Carbon::now()->format('Y-m-d'));
+
+        $attendance = $attendance->first();
+
+        if($attendance) {
+            $attendance->update($input);
+        } else {
+            $attendance = Attendance::create($input);
+        }
+
+        return $attendance;
     }
 }

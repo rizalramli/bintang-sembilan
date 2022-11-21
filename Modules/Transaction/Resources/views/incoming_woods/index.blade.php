@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group col-sm-3 mb-1">
                         {!! Form::label('filter_date', 'Filter Berdasarkan') !!}
-                        {!! Form::select('filter_date', ['day' => 'Hari ini','week' => '7 Hari Terakhir','month' => 'Bulan Ini','year' => 'Tahun Ini'], 'day', ['class' => 'form-control','id' => 'filter_date']) !!}
+                        {!! Form::select('filter_date', ['day' => 'Hari ini','week' => '7 Hari Terakhir','month' => 'Bulan Ini','year' => 'Tahun Ini'], 'day', ['class' => 'select2 form-control','id' => 'filter_date']) !!}
                     </div>
                     <div class="form-group col-sm-3 mb-1">
                         {!! Form::label('date', 'Filter Dari Tanggal') !!}

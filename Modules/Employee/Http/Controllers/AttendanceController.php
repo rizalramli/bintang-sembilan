@@ -8,6 +8,9 @@ use Modules\Employee\Http\Requests\UpdateAttendanceRequest;
 use Modules\Employee\Repositories\AttendanceRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Modules\Master\Models\Employee;
 use Modules\Master\Models\Warehouse;
 use Response;
 
@@ -29,7 +32,15 @@ class AttendanceController extends AppBaseController
      */
     public function index(AttendanceDataTable $attendanceDataTable)
     {
-        return $attendanceDataTable->render('employee::attendances.index');
+        $data['employee'] = Employee::join('users', 'users.id', '=', 'employee.user_id')->pluck('users.name', 'employee.id')->prepend('Semua Karyawan', null);
+        $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
+        return $attendanceDataTable->with([
+            'filter_employee' => request()->filter_employee,
+            'filter_warehouse' => request()->filter_warehouse,
+            'filter_date' => request()->filter_date,
+            'filter_date_start' => request()->filter_date_start,
+            'filter_date_end' => request()->filter_date_end,
+        ])->render('employee::attendances.index',$data);
     }
 
     /**
@@ -54,9 +65,28 @@ class AttendanceController extends AppBaseController
     {
         $input = $request->all();
 
-        $attendance = $this->attendanceRepository->create($input);
+        if($request->type == 'check_in')
+        {
+            $input['status_check_in'] = 1;
+            $input['check_in'] = Carbon::now();
+            $input['created_check_in'] = Auth::id();
+            $message = 'Sukses melakukan kehadiran masuk';
+        } else {
+            $input['status_check_out'] = 1;
+            $input['check_out'] = Carbon::now();
+            $input['created_check_out'] = Auth::id();
+            $message = 'Sukses melakukan kehadiran keluar';
+        }
 
-        Flash::success('Attendance saved successfully.');
+        if(is_array($input['checklist_employee']) && count($input['checklist_employee']) > 0){
+            foreach($input['checklist_employee'] as $key => $value)
+            {
+                $input['employee_id'] = $input['employees_id'][$key];
+                AttendanceRepository::submit($input);
+            }
+        }
+
+        Flash::success($message);
 
         return redirect(route('attendances.index'));
     }

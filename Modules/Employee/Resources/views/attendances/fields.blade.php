@@ -9,11 +9,13 @@
     @enderror
 </div>
 
+<div id="list_employee">
+{!! Form::hidden('type',request()->get('type')) !!}
 <div class="row py-2">
     <div class="form-group col-sm-6">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="administrator_access" value="checked" />
-            <label class="form-check-label" for="administrator_access">Pilih Semua</label>
+            <input class="form-check-input" type="checkbox" id="checklist_all" value="checked" />
+            <label class="form-check-label" for="checklist_all">Pilih Semua</label>
         </div>
     </div>
 </div>
@@ -23,10 +25,17 @@
         <thead>
             <tr>
                 <th width="5%" class="text-center">Checklist</th>
-                <th width="95%" class="text-left">Nama</th>
+                <th width="95%" class="text-left">Nama Karyawan</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>   
+</div>
+</div>
+
+<div id="warning_done">
+    <div class="alert alert-success" role="alert">
+        <div class="alert-body">Semua karyawan telah melakukan kehadiran.</div>
+    </div>
 </div>

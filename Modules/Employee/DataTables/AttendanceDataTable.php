@@ -2,7 +2,9 @@
 
 namespace Modules\Employee\DataTables;
 
+use Carbon\Carbon;
 use Modules\Employee\Models\Attendance;
+use Modules\Employee\Repositories\AttendanceRepository;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -18,7 +20,44 @@ class AttendanceDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'employee::attendances.datatables_actions');
+        $dataTable
+        ->editColumn('check_in', function ($data) {
+            return Carbon::parse($data->check_in)->format('d/m/Y H:i');
+        })
+        ->editColumn('check_out', function ($data) {
+            return Carbon::parse($data->check_out)->format('d/m/Y H:i');
+        })
+        ->editColumn('status_check_in', function ($row) {
+            foreach(Attendance::$statusCheckIn as $key => $value) {
+                if($key == 1) {
+                    $button = 'success';
+                } else if($key == 2) {
+                    $button = 'warning';
+                } else {
+                    $button = 'danger';
+                }
+                if ($row->status_check_in == $key) {
+                    return '<span class="badge rounded-pill badge-light-'.$button.' me-1">'.$value.'</span>';
+                }
+            }
+        })
+        ->editColumn('status_check_out', function ($row) {
+            if($row->status_check_out == 1) {
+                $button = 'success';
+            } else if($row->status_check_out == 2) {
+                $button = 'warning';
+            } else {
+                $button = 'danger';
+            }
+            foreach(Attendance::$statusCheckOut as $key => $value) {
+                if ($row->status_check_out == $key) {
+                    return '<span class="badge rounded-pill badge-light-'.$button.' me-1">'.$value.'</span>';
+                }
+            }
+        })
+        ->rawColumns(['status_check_in', 'status_check_out']);
+
+        return $dataTable;
     }
 
     /**
@@ -29,7 +68,37 @@ class AttendanceDataTable extends DataTable
      */
     public function query(Attendance $model)
     {
-        return $model->newQuery();
+        $param = [];
+
+        $filter_employee = $this->filter_employee;
+        $filter_warehouse = $this->filter_warehouse;
+        $filter_date = $this->filter_date;
+        $filter_date_start = $this->filter_date_start;
+        $filter_date_end = $this->filter_date_end;
+
+        $param['get_by_employee'] = $filter_employee;
+        $param['get_by_warehouse'] = $filter_warehouse;
+
+        if ($filter_date_start != null && $filter_date_end != null) {
+            $param['get_by_date_start'] = $filter_date_start.' 00:00:00';
+            $param['get_by_date_end'] = $filter_date_end.' 23:59:59';
+        } else {
+            if ($filter_date == 'day') {
+                $param['get_by_date'] = Carbon::today();
+            } else if ($filter_date == 'week') {
+                $from_date = Carbon::now()->subDays(7);
+                $to_date =  Carbon::today()->endOfDay();
+                $param['get_by_date_start'] = $from_date;
+                $param['get_by_date_end'] = $to_date;
+            } else if ($filter_date == 'month') {
+                $param['get_by_month'] = Carbon::now()->month;
+                $param['get_by_year'] = Carbon::now()->year;
+            } else if ($filter_date == 'year') {
+                $param['get_by_year'] = Carbon::now()->year;
+            }
+        }
+
+        return AttendanceRepository::getData($param);
     }
 
     /**
@@ -42,7 +111,17 @@ class AttendanceDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['title'=>'aksi','width' => '100px', 'printable' => false])
+            ->ajax([
+                'data' => '
+                    function(d) {
+                        d.filter_employee= $("#filter_employee").val();
+                        d.filter_warehouse= $("#filter_warehouse").val();
+                        d.filter_date= $("#filter_date").val();
+                        d.filter_date_start= $("#filter_date_start").val();
+                        d.filter_date_end = $("#filter_date_end").val();
+                    }
+                '
+            ])
             ->parameters([
                 'dom'       => '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 'stateSave' => true,
@@ -73,15 +152,11 @@ class AttendanceDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'employee_id',
-            'check_in',
-            'check_out',
-            'status_check_in',
-            'status_check_out',
-            'created_check_in',
-            'created_check_out',
-            'created_at',
-            'updated_at'
+            'user_name' => ['title' => 'Karyawan','name' => 'users.name'],
+            'check_in' => ['title' => 'Jam Masuk'],
+            'status_check_in' => ['title' => 'Status Kehadiran Masuk'],
+            'check_out' => ['title' => 'Jam Keluar'],
+            'status_check_out' => ['title' => 'Status Kehadiran Keluar'],
         ];
     }
 

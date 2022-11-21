@@ -31,6 +31,7 @@ class Attendance extends Model
     public $timestamps = true;
 
     public $fillable = [
+        'warehouse_id',
         'employee_id',
         'check_in',
         'check_out',
@@ -52,10 +53,10 @@ class Attendance extends Model
         'employee_id' => 'integer',
         'check_in' => 'datetime',
         'check_out' => 'datetime',
-        'status_check_in' => 'boolean',
-        'status_check_out' => 'boolean',
-        'created_check_in' => 'boolean',
-        'created_check_out' => 'boolean',
+        'status_check_in' => 'integer',
+        'status_check_out' => 'integer',
+        'created_check_in' => 'integer',
+        'created_check_out' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
@@ -70,12 +71,24 @@ class Attendance extends Model
         'employee_id' => 'nullable|integer',
         'check_in' => 'nullable',
         'check_out' => 'nullable',
-        'status_check_in' => 'nullable|boolean',
-        'status_check_out' => 'nullable|boolean',
-        'created_check_in' => 'nullable|boolean',
-        'created_check_out' => 'nullable|boolean',
+        'status_check_in' => 'nullable',
+        'status_check_out' => 'nullable',
+        'created_check_in' => 'nullable',
+        'created_check_out' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
+    ];
+
+    public static $statusCheckIn =[
+        1=>'Tepat Waktu',
+        2=>'Terlambat Dengan Toleransi',
+        3=>'Terlambat Tanpa Toleransi',
+    ];
+
+    public static $statusCheckOut =[
+        1=>'Tepat Waktu',
+        2=>'Pulang Lebih Cepat',
+        3=>'Belum Pulang',
     ];
 
     
