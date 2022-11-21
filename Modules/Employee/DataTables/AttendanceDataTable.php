@@ -130,12 +130,12 @@ class AttendanceDataTable extends DataTable
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
                     [
-                        'text'     => '<i data-feather="check-circle"></i> Check In',
+                        'text'     => '<i data-feather="check-circle"></i> Kehadiran Masuk',
                         'className' => 'create-new btn btn-success',
                         'action'    => 'function() { window.location = "' . route('attendances.create')  . '?type=check_in"; }',
                     ],
                     [
-                        'text'     => '<i data-feather="check-square"></i> Check Out',
+                        'text'     => '<i data-feather="check-square"></i> Kehadiran Keluar',
                         'className' => 'create-new btn btn-success',
                         'action'    => 'function() { window.location = "' . route('attendances.create')  . '?type=check_out"; }',
                     ],

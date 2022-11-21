@@ -68,6 +68,7 @@ class AttendanceController extends AppBaseController
         if($request->type == 'check_in')
         {
             $input['status_check_in'] = 1;
+            $input['status_check_out'] = 3;
             $input['check_in'] = Carbon::now();
             $input['created_check_in'] = Auth::id();
             $message = 'Sukses melakukan kehadiran masuk';
