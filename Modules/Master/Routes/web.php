@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('warehouses', 'WarehouseController');
         Route::resource('users', 'UserController');
         Route::resource('roles', 'RoleController');
+        Route::resource('companies', 'CompanyController');
     });
 
 });

@@ -75,6 +75,12 @@
                 <span class="text text-custom">Hak Akses</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('master/companies/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/companies/1/edit'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Perusahaan</span>
+            </a>
+        </li>
     </ul>
 </li>
 
