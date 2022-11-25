@@ -79,11 +79,7 @@ class IncomingWoodController extends AppBaseController
     public function store(CreateIncomingWoodRequest $request)
     {
         $input = $request->all();
-
-        $serial_number = IncomingWoodRepository::generateSerialNumber($input['date']);
         
-        $input['serial_number'] = $serial_number;
-
         $input['type'] = 1;
         $input['created_by'] = Auth::id();
         $input['updated_by'] = Auth::id();
@@ -130,6 +126,7 @@ class IncomingWoodController extends AppBaseController
             return redirect(route('incomingWoods.index'));
         }
 
+        $template_wood = TemplateWood::pluck('name', 'id');
         $supplier = Supplier::pluck('name', 'id');
         $warehouse = Warehouse::pluck('name', 'id');
         $wood_type = WoodType::pluck('name', 'id');
@@ -140,7 +137,7 @@ class IncomingWoodController extends AppBaseController
 
         $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
         
-        return view('transaction::incoming_woods.show',compact('supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
+        return view('transaction::incoming_woods.show',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
 
     }
 
@@ -161,6 +158,7 @@ class IncomingWoodController extends AppBaseController
             return redirect(route('incomingWoods.index'));
         }
 
+        $template_wood = TemplateWood::pluck('name', 'id');
         $supplier = Supplier::pluck('name', 'id');
         $warehouse = Warehouse::pluck('name', 'id');
         $wood_type = WoodType::pluck('name', 'id');
@@ -172,7 +170,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
         
 
-        return view('transaction::incoming_woods.edit',compact('supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
+        return view('transaction::incoming_woods.edit',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
     }
 
     /**
@@ -332,7 +330,7 @@ class IncomingWoodController extends AppBaseController
             $total_volume += $sub_total_volume;
             $total_qty += $sub_qty;
         }
-        return response()->json(['total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
+        return response()->json(['status' => true,'total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
     }
     
 }

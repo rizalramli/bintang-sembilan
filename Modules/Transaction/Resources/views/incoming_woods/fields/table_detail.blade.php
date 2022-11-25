@@ -22,9 +22,29 @@
                         <td>
                             <input style="border: none;width:100%" type="text" id="item2_diameter{{$key.$key2}}" name="item2_diameter[{{$key}}][{{$key2}}]" value="{{ $item2->diameter }}" readonly>
                         </td>
-                        <td>||||| |||||</td>
+                        <td><span id="turus{{$key.$key2}}">
+                            @php 
+                            $content = '';
+                            @endphp
+                            @for($i = 1; $i <= $item2->qty; $i++)
+                                @php
+                                $content .= '|';
+                                @endphp
+                                @if($i % 5 == 0)
+                                    @php
+                                    $content .= '&nbsp;&nbsp;&nbsp;';
+                                    @endphp
+                                @endif
+                                @if($i % 70 == 0)
+                                    @php
+                                    $content .= '<br>';
+                                    @endphp
+                                @endif
+                            @endfor
+                            {!! $content !!}
+                        </span></td>
                         <td class="text-end">
-                            <input class="item2_qty" style="border: none;width:100%" type="text" id="item2_qty{{$key.$key2}}" name="item2_qty[{{$key}}][{{$key2}}]" value="{{ $item2->qty }}">
+                            <input class="item2_qty" style="border: none;width:100%" type="text" index="{{$key.$key2}}" id="item2_qty{{$key.$key2}}" name="item2_qty[{{$key}}][{{$key2}}]" value="{{ $item2->qty }}">
                         </td>
                         <td class="text-end">
                             <input style="border: none;width:100%" type="text" id="item2_volume{{$key.$key2}}" name="item2_volume[{{$key}}][{{$key2}}]" value="{{ $item2->volume }}" readonly>
@@ -37,7 +57,7 @@
             <tr>
                 <td class="text-end" colspan="4">JML</td>
                 <td class="text-end">
-                    <input style="border: none;width:100%" type="text" id="item_sub_total_volume{{$key}}" name="item_sub_total_volume[]" value="{{ $item->sub_total_volume }}" readonly>
+                    <input style="text-align:right;border: none;width:100%" type="text" id="item_sub_total_volume{{$key}}" name="item_sub_total_volume[]" value="{{ $item->sub_total_volume }}" readonly>
                 </td>
             </tr>
             @php 
@@ -45,8 +65,8 @@
             @endphp
             @endforeach
             <tr>
-                <td class="text-start" colspan="4">JUMLAH :</td>
-                <td class="text-start">{{$sum_qty.' / '.$sum_sub_total_volume}}</td>
+                <td class="text-start" colspan="2">Total Batang / Total Volume :</td>
+                <td class="text-end" colspan="3">{{$sum_qty.' / '.$sum_sub_total_volume}}</td>
             </tr>
             @endif
         </tbody>

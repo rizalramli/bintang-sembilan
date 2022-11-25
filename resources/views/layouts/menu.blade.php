@@ -77,11 +77,5 @@
         </li>
     </ul>
 </li>
-<li class="nav-item">
-    <a href="{{ route('attendances.index') }}"
-       class="nav-link {{ Request::is('attendances*') ? 'active' : '' }}">
-        <p>Attendances</p>
-    </a>
-</li>
 
 
