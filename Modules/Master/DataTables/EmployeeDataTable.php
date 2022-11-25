@@ -85,12 +85,6 @@ class EmployeeDataTable extends DataTable
                 'defaultContent' => '-',
             ],
             [
-                'name' => 'users.email',
-                'data' => 'email',
-                'title' => 'Email',
-                'defaultContent' => '-',
-            ],
-            [
                 'name' => 'address',
                 'data' => 'address',
                 'title' => 'Alamat',

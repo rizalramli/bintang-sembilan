@@ -61,7 +61,6 @@ class EmployeeController extends AppBaseController
 
         $user = User::create([
             'name' => $input['name'],
-            'email' => $input['email'],
             'warehouse_id' => json_encode([$input['warehouse']])
         ]);
 
@@ -115,7 +114,6 @@ class EmployeeController extends AppBaseController
         $warehouse = Warehouse::pluck('name', 'id');
         $user = User::find($employee->user_id);
         $employee->name = $user->name;
-        $employee->email = $user->email;
         $employee->warehouse_id = implode("",json_decode($user->warehouse_id));
         return view('master::employees.edit',compact('warehouse'))->with('employee', $employee);
     }
@@ -143,7 +141,6 @@ class EmployeeController extends AppBaseController
         $user = User::where('id', $employee->user_id)
         ->update([
             'name' => $input['name'],
-            'email' => $input['email'],
             'warehouse_id' => json_encode([$input['warehouse']])
         ]);
 

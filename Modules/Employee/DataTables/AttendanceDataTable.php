@@ -25,6 +25,9 @@ class AttendanceDataTable extends DataTable
             return Carbon::parse($data->check_in)->format('d/m/Y H:i');
         })
         ->editColumn('check_out', function ($data) {
+            if($data->check_out == null){
+                return '-';
+            }
             return Carbon::parse($data->check_out)->format('d/m/Y H:i');
         })
         ->editColumn('status_check_in', function ($row) {
