@@ -121,13 +121,16 @@ class CompanyController extends AppBaseController
 
         if ($request->file('logo')) {
             $file = $request->file('logo');
-            $file_name = time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->extension();
-            $filepath = $file->storeAs(
-                'logo',
-                $file_name,
-                'local');
+            $file_name = 'logo-' . time() . '.' . $file->extension();
 
-            $input['logo'] = $filepath;
+            $request->file('logo')->move('images/logo', $file_name);
+
+            $input['logo'] = $file_name;
+        } else {
+            $input['logo'] = $company->logo;
+            if($input['remove'] == 1) {
+                $input['logo'] = null;
+            }
         }
 
         $company = $this->companyRepository->update($input, $id);

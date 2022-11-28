@@ -1,14 +1,15 @@
 @php
 $configData = Helper::applClasses();
+$company = \Modules\Master\Models\Company::find(1);
 @endphp
 <div class="main-menu menu-fixed {{ (($configData['theme'] === 'dark') || ($configData['theme'] === 'semi-dark')) ? 'menu-dark' : 'menu-light'}} menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item me-auto">
-                <a class="navbar-brand" href="{{ url('home') }}">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     <span class="brand-logo">
                          
-                    <h2 class="brand-text" >Bintang Sembilan</h2>
+                    <h6 class="brand-text" style="font-size: 16px;">{{$company->name}}</h6>
                     </span>
                 </a>
             </li>

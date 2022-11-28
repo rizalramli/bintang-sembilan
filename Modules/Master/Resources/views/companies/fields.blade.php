@@ -50,12 +50,13 @@
 <div class="form-group col-sm-6 mb-1">
 {!! Form::label('image', 'Gambar:') !!}
     <input id="logo" type="file" class="form-control form-control-sm" name="logo">
+    <input id="remove" value="0" type="hidden" class="form-control form-control-sm" name="remove">
     <br>
     <button type="button" class="btn btn-danger btn-sm" id="btn-delete-image">Hapus</button>
     <br>
     <br>
     @if(isset($company) && $company->logo != null)
-    <img height="100" width="100" id="imgPreview" class="img-thumbnail" src="{{ storage_path($company->logo) }}" />
+    <img height="100" width="100" id="imgPreview" class="img-thumbnail" src="{{ asset('images/logo/' . $company->logo) }}" />
     @else
     <img height="100" width="100" id="imgPreview" class="img-thumbnail" src="{{ asset('images/noimage.png') }}" />
     @endif
@@ -81,7 +82,7 @@
 
         $('#btn-delete-image').click(function() {
             $('#imgPreview').attr('src', default_image);
-            $('#logo').val(null);
+            $('#remove').val(1);
         });
     });
 </script>

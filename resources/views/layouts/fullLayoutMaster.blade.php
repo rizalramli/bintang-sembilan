@@ -3,7 +3,10 @@
 @endisset
 
 <!DOCTYPE html>
-@php $configData = Helper::applClasses(); @endphp
+@php 
+$configData = Helper::applClasses(); 
+$company = \Modules\Master\Models\Company::find(1);
+@endphp
 
 <html class="loading {{ ($configData['theme'] === 'light') ? '' : $configData['layoutTheme'] }}"
 lang="@if(session()->has('locale')){{session()->get('locale')}}@else{{$configData['defaultLanguage']}}@endif"
@@ -17,9 +20,9 @@ data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="">
   <meta name="author" content="rumahkumbang.com">
-  <title>{{ env("APP_NAME") }} - @yield('title') </title>
-  <link rel="apple-touch-icon" href="{{asset('images/ico/apple-icon-120.png')}}">
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/logo/favicon.ico')}}">
+  <title>{{ $company->name }} - @yield('title') </title>
+  <link rel="apple-touch-icon" href="{{ asset('images/logo/' . $company->logo) }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo/' . $company->logo) }}">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
   {{-- Include core + vendor Styles --}}

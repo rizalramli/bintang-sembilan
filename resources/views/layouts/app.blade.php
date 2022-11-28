@@ -3,8 +3,10 @@
 @endisset
 
 <!DOCTYPE html>
+
 @php
-$configData = Helper::applClasses();
+$configData = Helper::applClasses(); 
+$company = \Modules\Master\Models\Company::find(1);
 @endphp
 
 <html class="loading {{ ($configData['theme'] === 'light') ? '' : $configData['layoutTheme']}}" lang="@if(session()->has('locale')){{session()->get('locale')}}@else{{$configData['defaultLanguage']}}@endif" data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}" @if($configData['theme']==='dark' ) data-layout="dark-layout" @endif>
@@ -16,9 +18,9 @@ $configData = Helper::applClasses();
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="">
   <meta name="author" content="toolsindo">
-  <title>{{ env("APP_NAME") }} - @yield('title') </title>
-  <link rel="apple-touch-icon" href="{{asset('images/ico/apple-icon-120.png')}}">
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/logo/favicon.ico')}}">
+  <title>{{ $company->name }} - @yield('title') </title>
+  <link rel="apple-touch-icon" href="{{ asset('images/logo/' . $company->logo) }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo/' . $company->logo) }}">
   <link href="{{asset('fonts/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
   <style type="text/css">
