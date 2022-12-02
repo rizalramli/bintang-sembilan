@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'TransactionController@index');
         Route::get('incomingWood/excel', 'IncomingWoodController@excel');
         Route::get('incomingWood/getTemplate', 'IncomingWoodController@getTemplate');
+        Route::get('incomingWood/getNumberVehicle', 'IncomingWoodController@getNumberVehicle');
         Route::post('incomingWood/getTotal', 'IncomingWoodController@getTotal');
         Route::post('incomingWood/update', 'IncomingWoodController@update')->name('incomingWoods.update');
         Route::resource('incomingWoods', 'IncomingWoodController')->except(['update']);

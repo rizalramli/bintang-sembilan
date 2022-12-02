@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Detail Pemasok')
+@section('title', 'Detail Supplier')
 @section('content')    
         <div class="card">
             <div class="card-body">

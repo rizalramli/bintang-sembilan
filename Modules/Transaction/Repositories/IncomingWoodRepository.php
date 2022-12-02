@@ -5,6 +5,7 @@ namespace Modules\Transaction\Repositories;
 use Modules\Transaction\Models\IncomingWood;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Modules\Master\Models\Supplier;
 use Modules\Master\Models\WoodCategory;
 use Modules\Master\Models\WoodSize;
 use Modules\Transaction\Models\IncomingWoodDetail;
@@ -145,6 +146,16 @@ class IncomingWoodRepository extends BaseRepository
         }
 
         return $data;
+    }
+    
+    public static function getNumberVehicle($id)
+    {
+        $data = Supplier::find($id);
+        if($data){
+            return $data->number_vehicles;
+        } else {
+            return null;
+        }
     }
 
     public static function generateSerialNumber($date)

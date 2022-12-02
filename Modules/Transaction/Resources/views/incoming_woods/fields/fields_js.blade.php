@@ -4,8 +4,21 @@
         @if(!isset($incomingWood))
 
         var id = $('#template_wood_id').val();
+        var supplier_id = $('#supplier_id').val();
 
         loadTemplate(id);
+        loadNumberVehicle(supplier_id);
+
+        $(document).on('change', '#template_wood_id', function() {
+            var id = $(this).val();
+            loadTemplate(id);
+        });
+
+        $(document).on('change', '#supplier_id', function() {
+            var supplier_id = $(this).val();
+            loadNumberVehicle(supplier_id);
+        });
+
 
         function loadTemplate(id){
             $.ajax({
@@ -41,6 +54,28 @@
                         content += '</tr>';
                         $("#table-detail tbody").append(content);
                         $("form :input").attr("autocomplete", "off");
+                    }
+                },
+                error: function(request, msg, error) {
+                    Swal.fire('Informasi',
+                        'terjadi kesalahan.',
+                        'error');
+                }
+            });
+        }
+
+        function loadNumberVehicle(id){
+            $.ajax({
+                url: "{{ url('transaction/incomingWood/getNumberVehicle') }}",
+                method: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(result) {
+                    if(result.status == true){
+                        $('#number_vehicles').val(result.data);
+                    } else {
+                        $('#number_vehicles').val('');
                     }
                 },
                 error: function(request, msg, error) {

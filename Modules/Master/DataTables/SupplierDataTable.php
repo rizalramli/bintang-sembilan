@@ -68,7 +68,9 @@ class SupplierDataTable extends DataTable
     {
         return [
             'name' => ['title' => 'Nama'],
-            'address' => ['title' => 'Alamat'],
+            'number_vehicles' => ['title' => 'Nopol'],
+            'address' => ['title' => 'Desa dan Kecamatan'],
+            'city' => ['title' => 'Kota'],
             'phone' => ['title' => 'No Hp'],
         ];
     }

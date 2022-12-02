@@ -311,6 +311,14 @@ class IncomingWoodController extends AppBaseController
         return response()->json(['status' => $status, 'data' => $data]);
     }
 
+    public function getNumberVehicle()
+    {
+        $id = request()->id;
+        $data = IncomingWoodRepository::getNumberVehicle($id);
+        is_null($data) ? $status = false : $status = true;  
+        return response()->json(['status' => $status, 'data' => $data]);
+    }
+
     public function getTotal()
     {
         $array = [];

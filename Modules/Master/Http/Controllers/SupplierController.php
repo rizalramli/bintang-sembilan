@@ -54,7 +54,7 @@ class SupplierController extends AppBaseController
 
         $supplier = $this->supplierRepository->create($input);
 
-        Flash::success('Pemasok berhasil disimpan.');
+        Flash::success('Supplier berhasil disimpan.');
 
         return redirect(route('suppliers.index'));
     }
@@ -71,7 +71,7 @@ class SupplierController extends AppBaseController
         $supplier = $this->supplierRepository->find($id);
 
         if (empty($supplier)) {
-            Flash::error('Pemasok tidak ditemukan.');
+            Flash::error('Supplier tidak ditemukan.');
 
             return redirect(route('suppliers.index'));
         }
@@ -91,7 +91,7 @@ class SupplierController extends AppBaseController
         $supplier = $this->supplierRepository->find($id);
 
         if (empty($supplier)) {
-            Flash::error('Pemasok tidak ditemukan.');
+            Flash::error('Supplier tidak ditemukan.');
 
             return redirect(route('suppliers.index'));
         }
@@ -112,14 +112,14 @@ class SupplierController extends AppBaseController
         $supplier = $this->supplierRepository->find($id);
 
         if (empty($supplier)) {
-            Flash::error('Pemasok tidak ditemukan.');
+            Flash::error('Supplier tidak ditemukan.');
 
             return redirect(route('suppliers.index'));
         }
 
         $supplier = $this->supplierRepository->update($request->all(), $id);
 
-        Flash::success('Pemasok berhasil diperbarui.');
+        Flash::success('Supplier berhasil diperbarui.');
 
         return redirect(route('suppliers.index'));
     }
@@ -136,14 +136,14 @@ class SupplierController extends AppBaseController
         $supplier = $this->supplierRepository->find($id);
 
         if (empty($supplier)) {
-            Flash::error('Pemasok tidak ditemukan.');
+            Flash::error('Supplier tidak ditemukan.');
 
             return redirect(route('suppliers.index'));
         }
 
         $this->supplierRepository->delete($id);
 
-        Flash::success('Pemasok berhasil dihapus.');
+        Flash::success('Supplier berhasil dihapus.');
 
         return redirect(route('suppliers.index'));
     }

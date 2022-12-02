@@ -28,7 +28,9 @@ class Supplier extends Model
 
     public $fillable = [
         'name',
+        'number_vehicles',
         'address',
+        'city',
         'phone',
         'created_at',
         'updated_at'

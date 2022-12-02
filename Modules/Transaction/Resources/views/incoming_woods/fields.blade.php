@@ -34,6 +34,17 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('number_vehicles') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('number_vehicles', 'Nopol') !!}
+    {!! Form::text('number_vehicles', isset($incomingWood) ? $incomingWood->number_vehicles : null, ['id' => 'number_vehicles','class' => "form-control $is_invalid"]) !!}
+    @error('number_vehicles')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('warehouse_id') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('warehouse_id', 'Gudang') !!}
     {!! Form::select('warehouse_id', $warehouse, isset($incomingWood) ? $incomingWood->warehouse_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'warehouse_id']) !!}
@@ -49,17 +60,6 @@
     {!! Form::label('wood_type_id', 'Jenis Kayu') !!}
     {!! Form::select('wood_type_id', $wood_type, isset($incomingWood) ? $incomingWood->wood_type_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'wood_type_id']) !!}
     @error('wood_type_id')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
-
-<div class="form-group col-sm-6 mb-1">
-    @php $is_invalid = ''; $errors->has('number_vehicles') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('number_vehicles', 'Nopol') !!}
-    {!! Form::text('number_vehicles', isset($incomingWood) ? $incomingWood->number_vehicles : null, ['class' => "form-control $is_invalid"]) !!}
-    @error('number_vehicles')
     <div class="invalid-feedback">
         {{ $message }}
     </div>
