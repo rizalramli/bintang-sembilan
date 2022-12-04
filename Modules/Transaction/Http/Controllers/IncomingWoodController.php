@@ -2,16 +2,12 @@
 
 namespace Modules\Transaction\Http\Controllers;
 
-use App\Exports\TemplateExcel;
-use App\Exports\Themes\IncomingWood;
 use Modules\Transaction\DataTables\IncomingWoodDataTable;
 use Modules\Transaction\Http\Requests\CreateIncomingWoodRequest;
 use Modules\Transaction\Http\Requests\UpdateIncomingWoodRequest;
 use Modules\Transaction\Repositories\IncomingWoodRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
-use Carbon\Carbon;
-use Excel;
 use Illuminate\Support\Facades\Auth;
 use Modules\Master\Models\Supplier;
 use Modules\Master\Models\TemplateWood;
@@ -104,7 +100,7 @@ class IncomingWoodController extends AppBaseController
             }
             
         }
-        Flash::success('Kayu Masuk SNI berhasil disimpan.');
+        Flash::success('Kayu Masuk SAKR berhasil disimpan.');
 
         return redirect(route('incomingWoods.index'));
     }
@@ -121,7 +117,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk SAKR tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
@@ -152,7 +148,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk SAKR tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
@@ -189,7 +185,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk SAKR tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
@@ -226,7 +222,7 @@ class IncomingWoodController extends AppBaseController
             
         }
 
-        Flash::success('Kayu Masuk SNI berhasil diperbarui.');
+        Flash::success('Kayu Masuk SAKR berhasil diperbarui.');
 
         return redirect(route('incomingWoods.index'));
     }
@@ -243,7 +239,7 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk SAKR tidak ditemukan.');
 
             return redirect(route('incomingWoods.index'));
         }
@@ -260,46 +256,9 @@ class IncomingWoodController extends AppBaseController
 
         $this->incomingWoodRepository->delete($id);
 
-        Flash::success('Kayu Masuk SNI berhasil dihapus.');
+        Flash::success('Kayu Masuk SAKR berhasil dihapus.');
 
         return redirect(route('incomingWoods.index'));
-    }
-
-    public function excel()
-    {
-        $filter_supplier = request()->filter_supplier;
-        $filter_warehouse = request()->filter_warehouse;
-        $filter_wood_type = request()->filter_wood_type;
-        $filter_date = request()->filter_date;
-        $filter_date_start = request()->filter_date_start;
-        $filter_date_end = request()->filter_date_end;
-
-        $param['get_by_supplier'] = $filter_supplier;
-        $param['get_by_warehouse'] = $filter_warehouse;
-        $param['get_by_wood_type'] = $filter_wood_type;
-
-        if ($filter_date_start != null && $filter_date_end != null) {
-            $param['get_by_date_start'] = $filter_date_start.' 00:00:00';
-            $param['get_by_date_end'] = $filter_date_end.' 23:59:59';
-        } else {
-            if ($filter_date == 'day') {
-                $param['get_by_date'] = Carbon::today();
-            } else if ($filter_date == 'week') {
-                $from_date = Carbon::now()->subDays(7);
-                $to_date =  Carbon::today()->endOfDay();
-                $param['get_by_date_start'] = $from_date;
-                $param['get_by_date_end'] = $to_date;
-            } else if ($filter_date == 'month') {
-                $param['get_by_month'] = Carbon::now()->month;
-                $param['get_by_year'] = Carbon::now()->year;
-            } else if ($filter_date == 'year') {
-                $param['get_by_year'] = Carbon::now()->year;
-            }
-        }
-
-        $query = IncomingWoodRepository::getData($param)->get();
-        
-        return Excel::download(new TemplateExcel($query, new IncomingWood), 'kayu_masuk.xlsx'); 
     }
 
     public function getTemplate()

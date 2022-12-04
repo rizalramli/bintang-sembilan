@@ -7,14 +7,14 @@
 </li>
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
-        <i class="ficon" data-feather="shopping-bag"></i>
+        <i data-feather='clipboard'></i>
         <span class="menu-title text-truncate text-custom">Transaksi</span>
     </a>
     <ul>
         <li class="nav-item {{ Request::is('transaction/incomingWoods') || Request::is('transaction/incomingWoods/create') || Request::is('transaction/incomingWoods/*/edit') || Request::is('transaction/incomingWoods/*') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('transaction/incomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Kayu Masuk SNI</span>
+                <span class="text text-custom">Kayu Masuk SAKR</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('transaction/incomingWoodTrades') || Request::is('transaction/incomingWoodTrades/create') || Request::is('transaction/incomingWoodTrades/*/edit') || Request::is('transaction/incomingWoodTrades/*') ? 'active ' : '' }}">
@@ -35,6 +35,20 @@
             <a class="submenu" href="{{ url('employee/attendances'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kehadiran</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a class="dropmenu d-flex align-items-center" target="_self" href="#">
+        <i data-feather='file-text'></i>
+        <span class="menu-title text-truncate text-custom">Laporan</span>
+    </a>
+    <ul>
+        <li class="nav-item {{ Request::is('report/incomingWoods') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/incomingWoods'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Kayu Masuk</span>
             </a>
         </li>
     </ul>

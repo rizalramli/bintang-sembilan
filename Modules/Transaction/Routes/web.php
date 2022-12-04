@@ -15,7 +15,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('transaction')->group(function() {
         Route::get('/', 'TransactionController@index');
-        Route::get('incomingWood/excel', 'IncomingWoodController@excel');
         Route::get('incomingWood/getTemplate', 'IncomingWoodController@getTemplate');
         Route::get('incomingWood/getNumberVehicle', 'IncomingWoodController@getNumberVehicle');
         Route::post('incomingWood/getTotal', 'IncomingWoodController@getTotal');

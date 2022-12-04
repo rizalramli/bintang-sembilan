@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kayu Masuk SNI')
+@section('title', 'Kayu Masuk SAKR')
 @include('layouts.library.style')
 @section('content')
 <div class="row">
@@ -41,9 +41,6 @@
                         {!! Form::text('filter_date_end', null, ['class' => 'form-control date-custom','id' => 'filter_date_end']) !!}
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-success" id="export-excel">Export Excel</button>
             </div>
         </div>
 

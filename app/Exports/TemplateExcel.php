@@ -8,8 +8,9 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithDrawings;
 
-class TemplateExcel implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles
+class TemplateExcel implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles, WithDrawings
 {
 
     public $data;
@@ -42,5 +43,14 @@ class TemplateExcel implements FromView, ShouldAutoSize, WithColumnFormatting, W
         if (method_exists($this->theme, 'setStyles')) {
             $this->theme->setStyles($sheet,$this->data);
         }
+    }
+
+    public function drawings()
+    {
+        if (method_exists($this->theme, 'setDrawings')) {
+            return $this->theme->setDrawings($this->data);
+        }
+
+        return [];
     }
 }

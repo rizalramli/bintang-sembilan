@@ -97,5 +97,8 @@ class IncomingWood extends Model
         'updated_at' => 'nullable'
     ];
 
-    
+    public static $status =[
+        1=>'SAKR',
+        2=>'Dagang'
+    ];
 }

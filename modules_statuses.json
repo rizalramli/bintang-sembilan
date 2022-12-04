@@ -1,5 +1,6 @@
 {
     "Master": true,
     "Transaction": true,
-    "Employee": true
+    "Employee": true,
+    "Report": true
 }

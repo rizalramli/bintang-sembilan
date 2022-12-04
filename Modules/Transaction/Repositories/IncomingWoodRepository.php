@@ -5,6 +5,7 @@ namespace Modules\Transaction\Repositories;
 use Modules\Transaction\Models\IncomingWood;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Modules\Master\Models\Company;
 use Modules\Master\Models\Supplier;
 use Modules\Master\Models\WoodCategory;
 use Modules\Master\Models\WoodSize;
@@ -130,6 +131,43 @@ class IncomingWoodRepository extends BaseRepository
         }
 
         return $item;
+    }
+
+    public static function getReport($param = [])
+    {
+        $result = IncomingWood::query();
+        
+        $result->select(
+            'incoming_wood.*',
+            'supplier.name as supplier_name',
+            'supplier.address as supplier_address',
+            'supplier.city as supplier_city',
+            'wood_type.name as wood_type_name',
+        );
+
+        $result->leftJoin('supplier', 'supplier.id', '=', 'incoming_wood.supplier_id');
+        $result->leftJoin('wood_type', 'wood_type.id', '=', 'incoming_wood.wood_type_id');
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('incoming_wood.date', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('incoming_wood.date', $param['get_by_year']);
+        }
+
+        if (isset($param['get_by_status']) && !is_null($param['get_by_status'])) {
+            $result->where('incoming_wood.type', $param['get_by_status']);
+        }
+
+        $result->orderBy('incoming_wood.date', 'asc');
+
+        $company = Company::find(1);
+
+        $data['data'] = $result->get();
+        $data['company'] = $company;
+
+        return $data;
     }
 
     public static function getTemplate($id)

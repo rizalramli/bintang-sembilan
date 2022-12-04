@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tambah Kayu Masuk SNI')
+@section('title', 'Tambah Kayu Masuk SAKR')
 @include('layouts.library.style')
 @section('content')
 
