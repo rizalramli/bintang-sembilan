@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kayu Masuk SNI')
+@section('title', 'Kayu Masuk Dagang')
 @include('layouts.library.style')
 @section('content')
 <div class="row">
@@ -51,7 +51,7 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('transaction::incoming_woods.table')
+                @include('transaction::incoming_wood_trades.table')
 
                 <div class="card-footer clearfix">
                     <div class="float-right">

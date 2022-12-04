@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Kayu Masuk')
+@section('title', 'Edit Kayu Masuk SNI')
 @include('layouts.library.style')
 @section('content')
         <div class="card">

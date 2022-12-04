@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Ukuran Kayu')
+@section('title', 'Template Kayu Masuk')
 @section('content')
 <div class="row">
 <div class="col-12">

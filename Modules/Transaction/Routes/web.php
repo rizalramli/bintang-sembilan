@@ -21,6 +21,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('incomingWood/getTotal', 'IncomingWoodController@getTotal');
         Route::post('incomingWood/update', 'IncomingWoodController@update')->name('incomingWoods.update');
         Route::resource('incomingWoods', 'IncomingWoodController')->except(['update']);
+        Route::get('incomingWoodTrade/getTemplate', 'IncomingWoodTradeController@getTemplate');
+        Route::get('incomingWoodTrade/getNumberVehicle', 'IncomingWoodTradeController@getNumberVehicle');
+        Route::post('incomingWoodTrade/getTotal', 'IncomingWoodTradeController@getTotal');
+        Route::post('incomingWoodTrade/update', 'IncomingWoodTradeController@update')->name('incomingWoodTrades.update');
+        Route::resource('incomingWoodTrades', 'IncomingWoodTradeController')->except(['update']);
     });
 
 });

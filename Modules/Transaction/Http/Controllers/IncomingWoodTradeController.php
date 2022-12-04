@@ -4,10 +4,10 @@ namespace Modules\Transaction\Http\Controllers;
 
 use App\Exports\TemplateExcel;
 use App\Exports\Themes\IncomingWood;
-use Modules\Transaction\DataTables\IncomingWoodDataTable;
-use Modules\Transaction\Http\Requests\CreateIncomingWoodRequest;
-use Modules\Transaction\Http\Requests\UpdateIncomingWoodRequest;
-use Modules\Transaction\Repositories\IncomingWoodRepository;
+use Modules\Transaction\DataTables\IncomingWoodTradeDataTable;
+use Modules\Transaction\Http\Requests\CreateIncomingWoodTradeRequest;
+use Modules\Transaction\Http\Requests\UpdateIncomingWoodTradeRequest;
+use Modules\Transaction\Repositories\IncomingWoodTradeRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Carbon\Carbon;
@@ -21,12 +21,12 @@ use Modules\Transaction\Models\IncomingWoodDetail;
 use Modules\Transaction\Models\IncomingWoodDetailItem;
 use Response;
 
-class IncomingWoodController extends AppBaseController
+class IncomingWoodTradeController extends AppBaseController
 {
     /** @var  IncomingWoodRepository */
     private $incomingWoodRepository;
 
-    public function __construct(IncomingWoodRepository $incomingWoodRepo)
+    public function __construct(IncomingWoodTradeRepository $incomingWoodRepo)
     {
         $this->incomingWoodRepository = $incomingWoodRepo;
     }
@@ -37,7 +37,7 @@ class IncomingWoodController extends AppBaseController
      * @param IncomingWoodDataTable $incomingWoodDataTable
      * @return Response
      */
-    public function index(IncomingWoodDataTable $incomingWoodDataTable)
+    public function index(IncomingWoodTradeDataTable $incomingWoodDataTable)
     {
         $data['supplier'] = Supplier::selectRaw('concat(name, " | ", address) as name, id')->pluck('name', 'id')->prepend('Semua Supplier', null);
         $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
@@ -52,7 +52,7 @@ class IncomingWoodController extends AppBaseController
             'filter_date_start' => request()->filter_date_start,
             'filter_date_end' => request()->filter_date_end,
         ])
-        ->render('transaction::incoming_woods.index', $data);
+        ->render('transaction::incoming_wood_trades.index', $data);
     }
 
     /**
@@ -66,7 +66,7 @@ class IncomingWoodController extends AppBaseController
         $supplier = Supplier::selectRaw('concat(name, " | ", address) as name, id')->pluck('name', 'id');
         $warehouse = Warehouse::pluck('name', 'id');
         $wood_type = WoodType::pluck('name', 'id');
-        return view('transaction::incoming_woods.create',compact('template_wood','supplier','warehouse','wood_type'));
+        return view('transaction::incoming_wood_trades.create',compact('template_wood','supplier','warehouse','wood_type'));
     }
 
     /**
@@ -76,11 +76,11 @@ class IncomingWoodController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateIncomingWoodRequest $request)
+    public function store(CreateIncomingWoodTradeRequest $request)
     {
         $input = $request->all();
         
-        $input['type'] = 1;
+        $input['type'] = 2;
         $input['created_by'] = Auth::id();
         $input['updated_by'] = Auth::id();
 
@@ -104,9 +104,9 @@ class IncomingWoodController extends AppBaseController
             }
             
         }
-        Flash::success('Kayu Masuk SNI berhasil disimpan.');
+        Flash::success('Kayu Masuk Dagang berhasil disimpan.');
 
-        return redirect(route('incomingWoods.index'));
+        return redirect(route('incomingWoodTrades.index'));
     }
 
     /**
@@ -121,22 +121,23 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk Dagang tidak ditemukan.');
 
-            return redirect(route('incomingWoods.index'));
+            return redirect(route('incomingWoodTrades.index'));
         }
 
         $template_wood = TemplateWood::pluck('name', 'id');
-        $supplier = Supplier::selectRaw('concat(name, " | ", address) as name, id')->pluck('name', 'id');        $warehouse = Warehouse::pluck('name', 'id');
+        $supplier = Supplier::selectRaw('concat(name, " | ", address) as name, id')->pluck('name', 'id');
+        $warehouse = Warehouse::pluck('name', 'id');
         $wood_type = WoodType::pluck('name', 'id');
 
         $param = [];
         
         $param['get_by_incoming_wood_id'] = $id;
 
-        $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
+        $incomingWoodDetail = IncomingWoodTradeRepository::getDetail($param);
         
-        return view('transaction::incoming_woods.show',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
+        return view('transaction::incoming_wood_trades.show',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
 
     }
 
@@ -152,9 +153,9 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk Dagang tidak ditemukan.');
 
-            return redirect(route('incomingWoods.index'));
+            return redirect(route('incomingWoodTrades.index'));
         }
 
         $template_wood = TemplateWood::pluck('name', 'id');
@@ -166,10 +167,10 @@ class IncomingWoodController extends AppBaseController
         
         $param['get_by_incoming_wood_id'] = $id;
 
-        $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
+        $incomingWoodDetail = IncomingWoodTradeRepository::getDetail($param);
         
 
-        return view('transaction::incoming_woods.edit',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
+        return view('transaction::incoming_wood_trades.edit',compact('template_wood','supplier','warehouse','wood_type','incomingWoodDetail'))->with('incomingWood', $incomingWood);
     }
 
     /**
@@ -180,7 +181,7 @@ class IncomingWoodController extends AppBaseController
      *
      * @return Response
      */
-    public function update(UpdateIncomingWoodRequest $request)
+    public function update(UpdateIncomingWoodTradeRequest $request)
     {
         $input = $request->all();
 
@@ -189,9 +190,9 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk Dagang tidak ditemukan.');
 
-            return redirect(route('incomingWoods.index'));
+            return redirect(route('incomingWoodTrades.index'));
         }
 
         $incomingWood = $this->incomingWoodRepository->update($input, $id);
@@ -226,9 +227,9 @@ class IncomingWoodController extends AppBaseController
             
         }
 
-        Flash::success('Kayu Masuk SNI berhasil diperbarui.');
+        Flash::success('Kayu Masuk Dagang berhasil diperbarui.');
 
-        return redirect(route('incomingWoods.index'));
+        return redirect(route('incomingWoodTrades.index'));
     }
 
     /**
@@ -243,9 +244,9 @@ class IncomingWoodController extends AppBaseController
         $incomingWood = $this->incomingWoodRepository->find($id);
 
         if (empty($incomingWood)) {
-            Flash::error('Kayu Masuk SNI tidak ditemukan.');
+            Flash::error('Kayu Masuk Dagang tidak ditemukan.');
 
-            return redirect(route('incomingWoods.index'));
+            return redirect(route('incomingWoodTrades.index'));
         }
 
         // Delete Detail
@@ -260,9 +261,9 @@ class IncomingWoodController extends AppBaseController
 
         $this->incomingWoodRepository->delete($id);
 
-        Flash::success('Kayu Masuk SNI berhasil dihapus.');
+        Flash::success('Kayu Masuk Dagang berhasil dihapus.');
 
-        return redirect(route('incomingWoods.index'));
+        return redirect(route('incomingWoodTrades.index'));
     }
 
     public function excel()
@@ -297,7 +298,7 @@ class IncomingWoodController extends AppBaseController
             }
         }
 
-        $query = IncomingWoodRepository::getData($param)->get();
+        $query = IncomingWoodTradeRepository::getData($param)->get();
         
         return Excel::download(new TemplateExcel($query, new IncomingWood), 'kayu_masuk.xlsx'); 
     }
@@ -305,7 +306,7 @@ class IncomingWoodController extends AppBaseController
     public function getTemplate()
     {
         $id = request()->id;
-        $data = IncomingWoodRepository::getTemplate($id);
+        $data = IncomingWoodTradeRepository::getTemplate($id);
         is_null($data) ? $status = false : $status = true;  
         return response()->json(['status' => $status, 'data' => $data]);
     }
@@ -313,7 +314,7 @@ class IncomingWoodController extends AppBaseController
     public function getNumberVehicle()
     {
         $id = request()->id;
-        $data = IncomingWoodRepository::getNumberVehicle($id);
+        $data = IncomingWoodTradeRepository::getNumberVehicle($id);
         is_null($data) ? $status = false : $status = true;  
         return response()->json(['status' => $status, 'data' => $data]);
     }

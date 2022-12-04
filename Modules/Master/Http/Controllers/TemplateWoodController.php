@@ -71,7 +71,7 @@ class TemplateWoodController extends AppBaseController
         $templateWood = $this->templateWoodRepository->find($id);
 
         if (empty($templateWood)) {
-            Flash::error('Ukuran Kayu tidak ditemukan.');
+            Flash::error('Template Kayu Masuk tidak ditemukan.');
 
             return redirect(route('templateWoods.index'));
         }
@@ -91,7 +91,7 @@ class TemplateWoodController extends AppBaseController
         $templateWood = $this->templateWoodRepository->find($id);
 
         if (empty($templateWood)) {
-            Flash::error('Ukuran Kayu tidak ditemukan.');
+            Flash::error('Template Kayu Masuk tidak ditemukan.');
 
             return redirect(route('templateWoods.index'));
         }
@@ -112,7 +112,7 @@ class TemplateWoodController extends AppBaseController
         $templateWood = $this->templateWoodRepository->find($id);
 
         if (empty($templateWood)) {
-            Flash::error('Ukuran Kayu tidak ditemukan.');
+            Flash::error('Template Kayu Masuk tidak ditemukan.');
 
             return redirect(route('templateWoods.index'));
         }
@@ -136,7 +136,7 @@ class TemplateWoodController extends AppBaseController
         $templateWood = $this->templateWoodRepository->find($id);
 
         if (empty($templateWood)) {
-            Flash::error('Ukuran Kayu tidak ditemukan.');
+            Flash::error('Template Kayu Masuk tidak ditemukan.');
 
             return redirect(route('templateWoods.index'));
         }

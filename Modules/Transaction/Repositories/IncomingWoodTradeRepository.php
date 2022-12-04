@@ -17,7 +17,7 @@ use Modules\Transaction\Models\IncomingWoodDetailItem;
  * @version November 4, 2022, 7:10 pm WIB
 */
 
-class IncomingWoodRepository extends BaseRepository
+class IncomingWoodTradeRepository extends BaseRepository
 {
     /**
      * @var array
@@ -70,7 +70,7 @@ class IncomingWoodRepository extends BaseRepository
         $result->leftJoin('supplier', 'supplier.id', '=', 'incoming_wood.supplier_id');
         $result->leftJoin('warehouse', 'warehouse.id', '=', 'incoming_wood.warehouse_id');
         $result->leftJoin('wood_type', 'wood_type.id', '=', 'incoming_wood.wood_type_id');
-        $result->where('incoming_wood.type',1);
+        $result->where('incoming_wood.type',2);
 
         if(isset($param['get_by_supplier']) && !is_null($param['get_by_supplier'])){
             $result->where('incoming_wood.supplier_id', '=', $param['get_by_supplier']);
