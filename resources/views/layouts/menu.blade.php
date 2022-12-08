@@ -68,7 +68,13 @@
         <li class="nav-item {{ Request::is('master/woodTypes') || Request::is('master/woodTypes/create') || Request::is('master/woodTypes/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/woodTypes'); }}">
                 <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Jenis Kayu</span>
+                <span class="text text-custom">Jenis Kayu Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::is('master/woodTypeOuts') || Request::is('master/woodTypeOuts/create') || Request::is('master/woodTypeOuts/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/woodTypeOuts'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Jenis Kayu Keluar</span>
             </a>
         </li>
         <li class="nav-item {{ Request::is('master/customers') || Request::is('master/customers/create') || Request::is('master/customers/*/edit') ? 'active ' : '' }}">

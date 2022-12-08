@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Jenis Kayu Masuk')
+@section('title', 'Jenis Kayu Keluar')
 @section('content')
 <div class="row">
 <div class="col-12">
@@ -16,7 +16,7 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('master::wood_types.table')
+                @include('master::wood_type_outs.table')
 
                 <div class="card-footer clearfix">
                     <div class="float-right">

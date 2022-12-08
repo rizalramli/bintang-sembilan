@@ -54,7 +54,7 @@ class WoodTypeController extends AppBaseController
 
         $woodType = $this->woodTypeRepository->create($input);
 
-        Flash::success('Jenis kayu berhasil disimpan.');
+        Flash::success('Jenis Kayu Masuk berhasil disimpan.');
 
         return redirect(route('woodTypes.index'));
     }
@@ -71,7 +71,7 @@ class WoodTypeController extends AppBaseController
         $woodType = $this->woodTypeRepository->find($id);
 
         if (empty($woodType)) {
-            Flash::error('Jenis kayu tidak ditemukan.');
+            Flash::error('Jenis Kayu Masuk tidak ditemukan.');
 
             return redirect(route('woodTypes.index'));
         }
@@ -91,7 +91,7 @@ class WoodTypeController extends AppBaseController
         $woodType = $this->woodTypeRepository->find($id);
 
         if (empty($woodType)) {
-            Flash::error('Jenis kayu tidak ditemukan.');
+            Flash::error('Jenis Kayu Masuk tidak ditemukan.');
 
             return redirect(route('woodTypes.index'));
         }
@@ -112,14 +112,14 @@ class WoodTypeController extends AppBaseController
         $woodType = $this->woodTypeRepository->find($id);
 
         if (empty($woodType)) {
-            Flash::error('Jenis kayu tidak ditemukan.');
+            Flash::error('Jenis Kayu Masuk tidak ditemukan.');
 
             return redirect(route('woodTypes.index'));
         }
 
         $woodType = $this->woodTypeRepository->update($request->all(), $id);
 
-        Flash::success('Jenis kayu berhasil diperbarui.');
+        Flash::success('Jenis Kayu Masuk berhasil diperbarui.');
 
         return redirect(route('woodTypes.index'));
     }
@@ -136,14 +136,14 @@ class WoodTypeController extends AppBaseController
         $woodType = $this->woodTypeRepository->find($id);
 
         if (empty($woodType)) {
-            Flash::error('Jenis kayu tidak ditemukan.');
+            Flash::error('Jenis Kayu Masuk tidak ditemukan.');
 
             return redirect(route('woodTypes.index'));
         }
 
         $this->woodTypeRepository->delete($id);
 
-        Flash::success('Jenis kayu berhasil dihapus.');
+        Flash::success('Jenis Kayu Masuk berhasil dihapus.');
 
         return redirect(route('woodTypes.index'));
     }
