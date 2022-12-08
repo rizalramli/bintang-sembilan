@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('woodSizes', 'WoodSizeController');
         Route::resource('woodTypes', 'WoodTypeController');
         Route::resource('employees', 'EmployeeController');
+        Route::resource('customers', 'CustomerController');
         Route::resource('suppliers', 'SupplierController');
         Route::resource('warehouses', 'WarehouseController');
         Route::resource('users', 'UserController');
