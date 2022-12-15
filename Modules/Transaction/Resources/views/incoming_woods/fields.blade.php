@@ -14,7 +14,7 @@
 <div class="form-group col-sm-6 mb-1">
     {!! Form::label('date', 'Tanggal') !!}
     @php $is_invalid = ''; $errors->has('date') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::text('date', isset($incomingWood) ? $incomingWood->date : null, ['class' => "form-control date-custom $is_invalid"]) !!}
+    {!! Form::text('date', isset($incomingWood) ? $incomingWood->date : date('Y-m-d'), ['class' => "form-control date-custom $is_invalid"]) !!}
     @error('date')
     <div class="invalid-feedback">
         {{ $message }}
@@ -105,17 +105,6 @@
     {!! Form::label('total_volume', 'Total Volume') !!}
     {!! Form::text('total_volume', isset($incomingWood) ? $incomingWood->total_volume : 0, ['id' => 'total_volume','class' => "form-control $is_invalid",'readonly']) !!}
     @error('total_volume')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
-
-<div class="form-group col-sm-6 mb-1">
-    @php $is_invalid = ''; $errors->has('cost') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('cost', 'Biaya') !!}
-    {!! Form::text('cost', isset($incomingWood) ? \App\Helpers\Human::CreateFormatRupiah($incomingWood->cost) : 0, ['id' => 'cost','class' => "rupiah form-control $is_invalid"]) !!}
-    @error('cost')
     <div class="invalid-feedback">
         {{ $message }}
     </div>

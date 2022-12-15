@@ -4,6 +4,7 @@ namespace Modules\Transaction\Http\Controllers;
 
 use App\Exports\TemplateExcel;
 use App\Exports\Themes\IncomingWood;
+use App\Helpers\Human;
 use Modules\Transaction\DataTables\IncomingWoodTradeDataTable;
 use Modules\Transaction\Http\Requests\CreateIncomingWoodTradeRequest;
 use Modules\Transaction\Http\Requests\UpdateIncomingWoodTradeRequest;
@@ -19,7 +20,9 @@ use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
 use Modules\Transaction\Models\IncomingWoodDetail;
 use Modules\Transaction\Models\IncomingWoodDetailItem;
+use Modules\Transaction\Models\Finance;
 use Response;
+
 
 class IncomingWoodTradeController extends AppBaseController
 {
@@ -84,7 +87,32 @@ class IncomingWoodTradeController extends AppBaseController
         $input['created_by'] = Auth::id();
         $input['updated_by'] = Auth::id();
 
+        $cost = Human::removeFormatRupiah($input['cost']);
+
+        $input['cost'] = $cost;
+
         $incomingWood = $this->incomingWoodRepository->create($input);
+
+        if($incomingWood)
+        {
+            if($cost > 0)
+            {
+                $supplier = Supplier::find($request->supplier_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $description = 'Pembayaran kayu masuk di '.$warehouse->name.' atas nama '.$supplier->name.' dengan nopol '.$input['number_vehicles'];
+                Finance::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'date' => $request->date,
+                    'description' => $description,
+                    'type' => 1,
+                    'amount' => $cost,
+                    'ref_id' => $incomingWood->id,
+                    'ref_table' => 'incoming_wood',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        }
 
         if(is_array($input['item2_diameter']) && count($input['item2_diameter']) > 0){
             foreach($input['item2_diameter'] as $key => $value){
@@ -195,7 +223,48 @@ class IncomingWoodTradeController extends AppBaseController
             return redirect(route('incomingWoodTrades.index'));
         }
 
+        $cost = Human::removeFormatRupiah($input['cost']);
+
+        $input['cost'] = $cost;
+
         $incomingWood = $this->incomingWoodRepository->update($input, $id);
+
+        if($incomingWood)
+        {
+            if($cost > 0)
+            {
+                $supplier = Supplier::find($request->supplier_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $description = 'Pembayaran kayu masuk di '.$warehouse->name.' atas nama '.$supplier->name.' dengan nopol '.$input['number_vehicles'];
+                $finance = Finance::where(['ref_id' => $incomingWood->id,'ref_table' => 'incoming_wood'])->first();
+                if(empty($finance))
+                {
+                    Finance::create([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $cost,
+                        'ref_id' => $incomingWood->id,
+                        'ref_table' => 'incoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    Finance::where(['ref_id' => $incomingWood->id,'ref_table' => 'incoming_wood'])->update([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => Human::removeFormatRupiah($input['cost']),
+                        'ref_id' => $incomingWood->id,
+                        'ref_table' => 'incoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+        }
 
         if(is_array($input['item2_diameter']) && count($input['item2_diameter']) > 0){
 
@@ -258,6 +327,8 @@ class IncomingWoodTradeController extends AppBaseController
             }
             $incoming_wood_detail->delete();
         }
+
+        Finance::where(['ref_id' => $id,'ref_table' => 'incoming_wood'])->delete();
 
         $this->incomingWoodRepository->delete($id);
 
