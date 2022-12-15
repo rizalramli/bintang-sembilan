@@ -46,6 +46,7 @@ class IncomingWood extends Model
         'type',
         'total_qty',
         'total_volume',
+        'cost',
         'description',
         'created_by',
         'updated_by',

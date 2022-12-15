@@ -2,6 +2,7 @@
 
 namespace Modules\Transaction\Http\Controllers;
 
+use App\Helpers\Human;
 use Modules\Transaction\DataTables\IncomingWoodDataTable;
 use Modules\Transaction\Http\Requests\CreateIncomingWoodRequest;
 use Modules\Transaction\Http\Requests\UpdateIncomingWoodRequest;
@@ -79,6 +80,7 @@ class IncomingWoodController extends AppBaseController
         $input['type'] = 1;
         $input['created_by'] = Auth::id();
         $input['updated_by'] = Auth::id();
+        $input['cost'] = Human::removeFormatRupiah($input['cost']);
 
         $incomingWood = $this->incomingWoodRepository->create($input);
 
@@ -189,6 +191,8 @@ class IncomingWoodController extends AppBaseController
 
             return redirect(route('incomingWoods.index'));
         }
+
+        $input['cost'] = Human::removeFormatRupiah($input['cost']);
 
         $incomingWood = $this->incomingWoodRepository->update($input, $id);
 

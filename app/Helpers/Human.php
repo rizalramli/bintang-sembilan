@@ -5,11 +5,19 @@ namespace App\Helpers;
  */
 class Human 
 {
+	public static function createFormatRupiah($string)
+    {
+        if (intVal($string) < 0) {
+            return '-' . number_format(intval($string), 0, ',', '.');
+        } else {
+            return number_format(intval($string), 0, ',', '.');
+        }
+    }
 
-	public static function numFormat($value='')
-	{
-		return number_format($value,0,",","."); 
-	}
+    public static function removeFormatRupiah($string)
+    {
+        return intval(str_replace(".", "", $string));
+    }
 
 	public static function datetimeFormat($datetime)
 	{

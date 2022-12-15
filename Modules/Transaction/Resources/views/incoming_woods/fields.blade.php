@@ -111,7 +111,18 @@
     @enderror
 </div>
 
-<div class="form-group col-sm-12 mb-1">
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('cost') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('cost', 'Biaya') !!}
+    {!! Form::text('cost', isset($incomingWood) ? \App\Helpers\Human::CreateFormatRupiah($incomingWood->cost) : 0, ['id' => 'cost','class' => "rupiah form-control $is_invalid"]) !!}
+    @error('cost')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<div class="form-group col-sm-6 mb-1">
     {!! Form::label('description', 'Keterangan') !!}
     {!! Form::text('description', isset($incomingWood) ? $incomingWood->description : null, ['id' => 'description','class' => "form-control"]) !!}
 </div>
