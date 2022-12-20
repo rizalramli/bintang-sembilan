@@ -29,6 +29,12 @@
                 <span class="text text-custom">Pemasukan</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('transaction/expenses') || Request::is('transaction/expenses/create') || Request::is('transaction/expenses/*/edit') || Request::is('transaction/expenses/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('transaction/expenses'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pengeluaran</span>
+            </a>
+        </li>
     </ul>
 </li>
 <li>
