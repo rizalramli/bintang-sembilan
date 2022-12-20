@@ -23,6 +23,12 @@
                 <span class="text text-custom">Kayu Masuk Dagang</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('transaction/incomes') || Request::is('transaction/incomes/create') || Request::is('transaction/incomes/*/edit') || Request::is('transaction/incomes/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('transaction/incomes'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pemasukan</span>
+            </a>
+        </li>
     </ul>
 </li>
 <li>
