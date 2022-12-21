@@ -12,6 +12,7 @@ use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
 use Modules\Master\Models\Warehouse;
+use Modules\Transaction\Models\IncomingWood;
 
 class ExpenseController extends AppBaseController
 {
@@ -138,6 +139,16 @@ class ExpenseController extends AppBaseController
         $input['amount'] = Human::removeFormatRupiah($input['amount']);
 
         $expense = $this->expenseRepository->update($input, $id);
+
+        if($expense->ref_id != null && $expense->ref_table != null){
+            if($expense->ref_table == 'incoming_wood'){
+                $incomingWood = IncomingWood::find($expense->ref_id);
+                $incomingWood->update([
+                    'warehouse_id' => $input['warehouse_id'],
+                    'cost' => $input['amount'],
+                ]);
+            }
+        }
 
         Flash::success('Pengeluaran berhasil diperbarui.');
 
