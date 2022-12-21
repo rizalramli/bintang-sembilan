@@ -80,4 +80,32 @@ class ExpenseRepository extends BaseRepository
 
         return $result;
     }
+
+    public static function getReport($param = [])
+    {
+        $result = Finance::query();
+        
+        $result->select('finance.*');
+
+        $result->leftJoin('warehouse', 'warehouse.id', '=', 'finance.warehouse_id');
+        $result->where('finance.type',1);
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('finance.date', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('finance.date', $param['get_by_year']);
+        }
+
+        if (isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])) {
+            $result->where('finance.warehouse_id', $param['get_by_warehouse']);
+        }
+
+        $result->orderBy('finance.date', 'asc');
+
+        $data['data'] = $result->get();
+
+        return $data;
+    }
 }

@@ -69,6 +69,12 @@
                 <span class="text text-custom">Pemasukan</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('report/expense') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/expense'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pengeluaran</span>
+            </a>
+        </li>
     </ul>
 </li>
 <li>
