@@ -63,6 +63,12 @@
                 <span class="text text-custom">Kayu Masuk</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('report/income') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/income'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pemasukan</span>
+            </a>
+        </li>
     </ul>
 </li>
 <li>
