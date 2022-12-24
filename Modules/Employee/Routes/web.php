@@ -15,4 +15,5 @@ Route::prefix('employee')->group(function() {
     Route::get('/', 'EmployeeController@index');
     Route::get('attendance/getTemplate', 'AttendanceController@getTemplate');
     Route::resource('attendances', 'AttendanceController');
+    Route::resource('salaries', 'SalaryController');
 });

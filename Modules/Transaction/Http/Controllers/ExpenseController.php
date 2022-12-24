@@ -10,6 +10,7 @@ use Modules\Transaction\Http\Requests\UpdateExpenseRequest;
 use Modules\Transaction\Repositories\ExpenseRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Modules\Employee\Models\Salary;
 use Response;
 use Modules\Master\Models\Warehouse;
 use Modules\Transaction\Models\IncomingWood;
@@ -146,6 +147,12 @@ class ExpenseController extends AppBaseController
                 $incomingWood->update([
                     'warehouse_id' => $input['warehouse_id'],
                     'cost' => $input['amount'],
+                ]);
+            } else if($expense->ref_table == 'salary'){
+                $salary = Salary::find($expense->ref_id);
+                $salary->update([
+                    'warehouse_id' => $input['warehouse_id'],
+                    'total' => $input['amount'],
                 ]);
             }
         }

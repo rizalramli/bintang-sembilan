@@ -49,6 +49,12 @@
                 <span class="text text-custom">Kehadiran</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('employee/salaries') || Request::is('employee/salaries/create') || Request::is('employee/salaries/*/edit') || Request::is('employee/salaries/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('employee/salaries'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Penggajian</span>
+            </a>
+        </li>
     </ul>
 </li>
 <li>
@@ -151,5 +157,4 @@
         </li>
     </ul>
 </li>
-
 
