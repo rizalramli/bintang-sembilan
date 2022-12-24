@@ -88,4 +88,34 @@ class SalaryRepository extends BaseRepository
 
         return $result;
     }
+
+    public static function getReport($param = [])
+    {
+        $result = Salary::query();
+        
+        $result->select(
+            'salary.*',
+            'users.name as user_name'
+        );
+        $result->join('employee', 'employee.id', '=', 'salary.employee_id');
+        $result->join('users', 'users.id', '=', 'employee.user_id');
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('salary.date', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('salary.date', $param['get_by_year']);
+        }
+
+        if (isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])) {
+            $result->where('salary.warehouse_id', $param['get_by_warehouse']);
+        }
+
+        $result->orderBy('salary.date', 'asc');
+
+        $data['data'] = $result->get();
+
+        return $data;
+    }
 }
