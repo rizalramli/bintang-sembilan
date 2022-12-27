@@ -23,6 +23,12 @@
                 <span class="text text-custom">Kayu Masuk Dagang</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('transaction/outcomingWoods') || Request::is('transaction/outcomingWoods/create') || Request::is('transaction/outcomingWoods/*/edit') || Request::is('transaction/outcomingWoods/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('transaction/outcomingWoods'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('transaction/incomes') || Request::is('transaction/incomes/create') || Request::is('transaction/incomes/*/edit') || Request::is('transaction/incomes/*') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('transaction/incomes'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -163,4 +169,5 @@
         </li>
     </ul>
 </li>
+
 
