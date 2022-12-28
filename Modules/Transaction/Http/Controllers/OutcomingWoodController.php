@@ -10,6 +10,7 @@ use Modules\Transaction\Repositories\OutcomingWoodRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Modules\Master\Models\Customer;
+use Modules\Master\Models\TemplateWoodOut;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
 use Response;
@@ -55,6 +56,7 @@ class OutcomingWoodController extends AppBaseController
      */
     public function create()
     {
+        $data['template_wood'] = TemplateWoodOut::pluck('name', 'id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type'] = WoodType::pluck('name', 'id');
@@ -166,5 +168,35 @@ class OutcomingWoodController extends AppBaseController
         Flash::success('Kayu keluar berhasil dihapus.');
 
         return redirect(route('outcomingWoods.index'));
+    }
+
+    public function getTemplate()
+    {
+        $id = request()->id;
+        $data = OutcomingWoodRepository::getTemplate($id);
+        is_null($data) ? $status = false : $status = true;  
+        return response()->json(['status' => $status, 'data' => $data]);
+    }
+
+    public function getTotal()
+    {
+        $array = [];
+        $total_volume = 0;
+        $total_qty = 0;
+        foreach(request()->item2_length as $key => $value) {
+            $sub_qty = 0;
+            $sub_total_volume  = 0;
+            foreach(request()->item2_length[$key] as $key2 => $value2) {
+                $item_2_qty = request()->item2_qty[$key][$key2] ?? 0;
+                $item_2_volume = request()->item2_volume[$key][$key2];
+
+                $sub_qty += $item_2_qty;
+                $sub_total_volume += $item_2_volume;
+            }
+            $array[] = round($sub_total_volume,4);
+            $total_volume += $sub_total_volume;
+            $total_qty += $sub_qty;
+        }
+        return response()->json(['status' => true,'total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
     }
 }

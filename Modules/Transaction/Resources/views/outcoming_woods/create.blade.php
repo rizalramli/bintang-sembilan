@@ -5,7 +5,7 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'outcomingWoods.store']) !!}
+            {!! Form::open(['route' => 'outcomingWoods.store','id' => 'formOutcomingWood']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -29,4 +29,5 @@
         </div>
  
 @endsection
+@include('transaction::outcoming_woods.fields.fields_js')
 @include('layouts.library.script')

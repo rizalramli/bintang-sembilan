@@ -4,6 +4,8 @@ namespace Modules\Transaction\Repositories;
 
 use Modules\Transaction\Models\OutcomingWood;
 use App\Repositories\BaseRepository;
+use Modules\Master\Models\WoodCategoryOut;
+use Modules\Master\Models\WoodSizeOut;
 
 /**
  * Class OutcomingWoodRepository
@@ -96,5 +98,29 @@ class OutcomingWoodRepository extends BaseRepository
         }
 
         return $result;
+    }
+
+    public static function getTemplate($id)
+    {
+        $wood_category = WoodCategoryOut::select(
+            'wood_category_out.*',
+            'product.name as product_name',
+            'wood_type.name as wood_type_name'
+        )
+        ->join('product', 'product.id', '=', 'wood_category_out.product_id')
+        ->join('wood_type', 'wood_type.id', '=', 'wood_category_out.wood_type_id')
+        ->where('template_wood_out_id',$id);
+        $data = null;
+        if($wood_category->count() > 0){
+            $data = $wood_category->get()->map(function($item){
+                $detail = WoodSizeOut::
+                where('wood_category_out_id', $item->id)
+                ->get();
+                $item->detail = $detail;
+                return $item;
+            });
+        }
+
+        return $data;
     }
 }
