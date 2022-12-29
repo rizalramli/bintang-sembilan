@@ -25,8 +25,8 @@
                         {!! Form::select('filter_warehouse', $warehouse, null, ['class' => 'select2 form-control','id' => 'filter_warehouse']) !!}
                     </div>
                     <div class="form-group col-sm-3 mb-1">   
-                        {!! Form::label('filter_wood_type', 'Filter Jenis Kayu') !!}
-                        {!! Form::select('filter_wood_type', $wood_type, null, ['class' => 'select2 form-control','id' => 'filter_wood_type']) !!}
+                        {!! Form::label('filter_wood_type_out', 'Filter Jenis Kayu') !!}
+                        {!! Form::select('filter_wood_type_out', $wood_type_out, null, ['class' => 'select2 form-control','id' => 'filter_wood_type_out']) !!}
                     </div>
                     <div class="form-group col-sm-3 mb-1">
                         {!! Form::label('filter_date', 'Filter Berdasarkan') !!}

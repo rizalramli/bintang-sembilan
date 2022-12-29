@@ -50,6 +50,8 @@
                                 content += '</tr>';
                                 sub_total_volume += parseFloat(value2.volume);
                             });
+                            content += '<td><input style="border: none;width:100%" type="hidden" id="item_product_id'+key+'" name="item_product_id['+key+']" value="'+value.product_id+'" readonly></td>';
+                            content += '<td><input style="border: none;width:100%" type="hidden" id="item_wood_type_id'+key+'" name="item_wood_type_id['+key+']" value="'+value.wood_type_id+'" readonly></td>';
                             content += '<tr>';
                             content += '<td class="text-end" colspan="7">JML</td>';
                             content += '<td class="text-end"><input style="border: none;width:100%" type="text" id="item_sub_total_volume'+key+'" name="item_sub_total_volume[]" value="0" readonly></td>';

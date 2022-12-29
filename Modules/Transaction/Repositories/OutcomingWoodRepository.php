@@ -60,12 +60,12 @@ class OutcomingWoodRepository extends BaseRepository
             'outcoming_wood.*',
             'customer.name as customer_name',
             'warehouse.name as warehouse_name',
-            'wood_type.name as wood_type_name',
+            'wood_type_out.name as wood_type_out_name',
         );
 
         $result->leftJoin('customer', 'customer.id', '=', 'outcoming_wood.customer_id');
         $result->leftJoin('warehouse', 'warehouse.id', '=', 'outcoming_wood.warehouse_id');
-        $result->leftJoin('wood_type', 'wood_type.id', '=', 'outcoming_wood.wood_type_id');
+        $result->leftJoin('wood_type_out', 'wood_type_out.id', '=', 'outcoming_wood.wood_type_out_id');
 
         if(isset($param['get_by_customer']) && !is_null($param['get_by_customer'])){
             $result->where('outcoming_wood.customer_id', '=', $param['get_by_customer']);
@@ -76,7 +76,7 @@ class OutcomingWoodRepository extends BaseRepository
         }
 
         if(isset($param['get_by_wood_type']) && !is_null($param['get_by_wood_type'])){
-            $result->where('outcoming_wood.wood_type_id', '=', $param['get_by_wood_type']);
+            $result->where('outcoming_wood.wood_type_out_id', '=', $param['get_by_wood_type']);
         }
 
         // Filter Tanggal 

@@ -37,7 +37,7 @@ class OutcomingWood extends Model
     public $fillable = [
         'customer_id',
         'warehouse_id',
-        'wood_type_id',
+        'wood_type_out_id',
         'serial_number',
         'date',
         'number_vehicles',
@@ -45,7 +45,6 @@ class OutcomingWood extends Model
         'total_volume',
         'cost',
         'description',
-        'type',
         'created_at',
         'updated_at'
     ];
@@ -59,15 +58,14 @@ class OutcomingWood extends Model
         'id' => 'integer',
         'customer_id' => 'integer',
         'warehouse_id' => 'integer',
-        'wood_type_id' => 'integer',
-        'serial_number' => 'integer',
+        'wood_type_out_id' => 'integer',
+        'serial_number' => 'string',
         'date' => 'datetime',
         'number_vehicles' => 'string',
         'total_qty' => 'integer',
         'total_volume' => 'float',
         'cost' => 'integer',
         'description' => 'string',
-        'type' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
@@ -78,17 +76,16 @@ class OutcomingWood extends Model
      * @var array
      */
     public static $rules = [
-        'customer_id' => 'required|integer',
-        'warehouse_id' => 'required|integer',
-        'wood_type_id' => 'required|integer',
-        'serial_number' => 'required|integer',
+        'customer_id' => 'required',
+        'warehouse_id' => 'required',
+        'wood_type_out_id' => 'required',
+        'serial_number' => 'required',
         'date' => 'required',
         'number_vehicles' => 'required|string|max:15',
-        'total_qty' => 'required|integer',
-        'total_volume' => 'required|numeric',
-        'cost' => 'required|integer',
+        'total_qty' => 'required',
+        'total_volume' => 'required',
+        'cost' => 'required',
         'description' => 'nullable|string|max:125',
-        'type' => 'nullable|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

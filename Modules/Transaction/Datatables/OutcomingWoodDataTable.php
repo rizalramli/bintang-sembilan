@@ -23,7 +23,7 @@ class OutcomingWoodDataTable extends DataTable
 
         return $dataTable->addColumn('action', 'transaction::outcoming_woods.datatables_actions')
         ->editColumn('date', function ($data) {
-            return Human::datetimeFormat($data->date);
+            return Human::dateFormat($data->date);
         })
         ->editColumn('total_volume', function ($row) {
             return '<div style="text-align:right">' . $row->total_volume . '</div>';
@@ -92,7 +92,7 @@ class OutcomingWoodDataTable extends DataTable
                     function(d) {
                         d.filter_customer= $("#filter_supplier").val();
                         d.filter_warehouse= $("#filter_warehouse").val();
-                        d.filter_wood_type= $("#filter_wood_type").val();
+                        d.filter_wood_type_out= $("#filter_wood_type_out").val();
                         d.filter_date= $("#filter_date").val();
                         d.filter_date_start= $("#filter_date_start").val();
                         d.filter_date_end = $("#filter_date_end").val();
@@ -128,7 +128,7 @@ class OutcomingWoodDataTable extends DataTable
             'date' => ['title' => 'Tanggal'],
             'customer_name' => ['title' => 'Customer','name' => 'customer.name'],
             'warehouse_name' => ['title' => 'Gudang','name' => 'warehouse.name'],
-            'wood_type_name' => ['title' => 'Jenis Kayu','name' => 'wood_type.name'],
+            'wood_type_out_name' => ['title' => 'Jenis Kayu','name' => 'wood_type.name'],
             'number_vehicles' => ['title' => 'Nopol'],
             'total_volume' => ['title' => 'Total Volume'],
             'cost' => ['title' => 'Total Biaya'],

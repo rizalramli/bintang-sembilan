@@ -67,10 +67,10 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
-    @php $is_invalid = ''; $errors->has('wood_type_id') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('wood_type_id', 'Jenis Kayu') !!}
-    {!! Form::select('wood_type_id', $wood_type, isset($outcomingWood) ? $outcomingWood->wood_type_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'wood_type_id']) !!}
-    @error('wood_type_id')
+    @php $is_invalid = ''; $errors->has('wood_type_out_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('wood_type_out_id', 'Jenis Kayu') !!}
+    {!! Form::select('wood_type_out_id', $wood_type_out, isset($outcomingWood) ? $outcomingWood->wood_type_out_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'wood_type_out_id']) !!}
+    @error('wood_type_out_id')
     <div class="invalid-feedback">
         {{ $message }}
     </div>

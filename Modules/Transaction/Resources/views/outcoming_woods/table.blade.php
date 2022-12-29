@@ -14,7 +14,7 @@
     $('#filter_warehouse').on('change', function() {
         window.LaravelDataTables["dataTableBuilder"].ajax.reload();
     });
-    $('#filter_wood_type').on('change', function() {
+    $('#filter_wood_type_out').on('change', function() {
         window.LaravelDataTables["dataTableBuilder"].ajax.reload();
     });
     $('#filter_date').on('change', function() {

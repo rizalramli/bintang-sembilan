@@ -2,6 +2,7 @@
 
 namespace Modules\Transaction\Http\Controllers;
 
+use App\Helpers\Human;
 use Modules\Transaction\DataTables\OutcomingWoodDataTable;
 use Modules\Transaction\Http\Requests;
 use Modules\Transaction\Http\Requests\CreateOutcomingWoodRequest;
@@ -13,7 +14,12 @@ use Modules\Master\Models\Customer;
 use Modules\Master\Models\TemplateWoodOut;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
+use Modules\Master\Models\WoodTypeOut;
+use Modules\Transaction\Models\Finance;
+use Modules\Transaction\Models\OutcomingWoodDetail;
+use Modules\Transaction\Models\OutcomingWoodDetailItem;
 use Response;
+use Carbon\Carbon;
 
 class OutcomingWoodController extends AppBaseController
 {
@@ -35,13 +41,13 @@ class OutcomingWoodController extends AppBaseController
     {
         $data['customer'] = Customer::pluck('name', 'id')->prepend('Semua Customer', null);
         $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
-        $data['wood_type'] = WoodType::pluck('name', 'id')->prepend('Semua Jenis', null);
+        $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id')->prepend('Semua Jenis', null);
 
         return $outcomingWoodDataTable
         ->with([
             'filter_customer' => request()->filter_customer,
             'filter_warehouse' => request()->filter_warehouse,
-            'filter_wood_type' => request()->filter_wood_type,
+            'filter_wood_type_out' => request()->filter_wood_type_out,
             'filter_date' => request()->filter_date,
             'filter_date_start' => request()->filter_date_start,
             'filter_date_end' => request()->filter_date_end,
@@ -59,7 +65,7 @@ class OutcomingWoodController extends AppBaseController
         $data['template_wood'] = TemplateWoodOut::pluck('name', 'id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
-        $data['wood_type'] = WoodType::pluck('name', 'id');
+        $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
         return view('transaction::outcoming_woods.create',$data);
     }
 
@@ -74,7 +80,53 @@ class OutcomingWoodController extends AppBaseController
     {
         $input = $request->all();
 
+        $cost = Human::removeFormatRupiah($input['cost']);
+
+        $input['cost'] = $cost;
+
         $outcomingWood = $this->outcomingWoodRepository->create($input);
+
+        if($outcomingWood)
+        {
+            if($cost > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles'];
+                Finance::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'date' => $request->date,
+                    'description' => $description,
+                    'type' => 0,
+                    'amount' => $cost,
+                    'ref_id' => $outcomingWood->id,
+                    'ref_table' => 'outcoming_wood',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        }
+
+        if(is_array($input['item2_length']) && count($input['item2_length']) > 0){
+            foreach($input['item2_length'] as $key => $value){
+                $outcoming_wood_detail = OutcomingWoodDetail::create([
+                    'outcoming_wood_id' => $outcomingWood->id,
+                    'product_id' => $input['item_product_id'][$key],
+                    'wood_type_id' => $input['item_wood_type_id'][$key],
+                    'sub_total_volume' => $input['item_sub_total_volume'][$key]
+                ]);
+                foreach($value as $key2 => $value2){
+                    $outcoming_wood_detail_item = OutcomingWoodDetailItem::create([
+                        'outcoming_wood_detail_id' =>  $outcoming_wood_detail->id,
+                        'length' =>  $input['item2_length'][$key][$key2],
+                        'width' =>  $input['item2_width'][$key][$key2],
+                        'height' =>  $input['item2_height'][$key][$key2],
+                        'qty' =>  $input['item2_qty'][$key][$key2],
+                        'volume' => $input['item2_volume'][$key][$key2]
+                    ]);
+                }
+            }
+        }
 
         Flash::success('Kayu keluar berhasil disimpan.');
 
@@ -162,6 +214,17 @@ class OutcomingWoodController extends AppBaseController
 
             return redirect(route('outcomingWoods.index'));
         }
+
+        $outcoming_wood_detail = OutcomingWoodDetail::where('outcoming_wood_id',$id);
+        if($outcoming_wood_detail->count() > 0){
+            foreach($outcoming_wood_detail->get() as $value)
+            {
+                OutcomingWoodDetailItem::where('outcoming_wood_detail_id',$value->id)->delete();
+            }
+            $outcoming_wood_detail->delete();
+        }
+
+        Finance::where(['ref_id' => $id,'ref_table' => 'outcoming_wood'])->delete();
 
         $this->outcomingWoodRepository->delete($id);
 

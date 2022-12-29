@@ -23,7 +23,7 @@ class IncomingWoodDataTable extends DataTable
 
         return $dataTable->addColumn('action', 'transaction::incoming_woods.datatables_actions')
         ->editColumn('date', function ($data) {
-            return Human::datetimeFormat($data->date);
+            return Human::dateFormat($data->date);
         })
         ->editColumn('total_volume', function ($row) {
             return '<div style="text-align:right">' . $row->total_volume . '</div>';
