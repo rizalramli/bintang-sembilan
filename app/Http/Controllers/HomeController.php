@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $pdf = \PDF::loadView('invoice');
+        return $pdf->stream('Invoice.pdf', array("Attachment" => false));
     }
 }
