@@ -46,7 +46,7 @@
                                 content += '<td><input style="border: none;width:100%" type="text" id="item2_width'+key+key2+'" name="item2_width['+key+']['+key2+']" value="'+value2.width+'" readonly></td>';
                                 content += '<td><input style="border: none;width:100%" type="text" id="item2_height'+key+key2+'" name="item2_height['+key+']['+key2+']" value="'+value2.height+'" readonly></td>';
                                 content += '<td><input style="border: none;width:100%" type="text" class="item2_qty" index="'+key+key2+'" id="item2_qty'+key2+'" name="item2_qty['+key+']['+key2+']"></td>';
-                                content += '<td><input style="border: none;width:100%" type="text" id="item2_volume'+key+key2+'" name="item2_volume['+key+']['+key2+']" value="" readonly></td>';
+                                content += '<td><input style="text-align:right;border: none;width:100%" type="text" id="item2_volume'+key+key2+'" name="item2_volume['+key+']['+key2+']" value="" readonly></td>';
                                 content += '</tr>';
                                 sub_total_volume += parseFloat(value2.volume);
                             });

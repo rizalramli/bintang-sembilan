@@ -6,6 +6,8 @@ use Modules\Transaction\Models\OutcomingWood;
 use App\Repositories\BaseRepository;
 use Modules\Master\Models\WoodCategoryOut;
 use Modules\Master\Models\WoodSizeOut;
+use Modules\Transaction\Models\OutcomingWoodDetail;
+use Modules\Transaction\Models\OutcomingWoodDetailItem;
 
 /**
  * Class OutcomingWoodRepository
@@ -98,6 +100,39 @@ class OutcomingWoodRepository extends BaseRepository
         }
 
         return $result;
+    }
+
+    public static function getDetail($param = [])
+    {
+        $result = OutcomingWoodDetail::query();
+
+        $result->select(
+            'outcoming_wood_detail.*',
+            'product.name as product_name',
+            'wood_type.name as wood_type_name'
+        );
+        $result->leftJoin('product', 'product.id', '=', 'outcoming_wood_detail.product_id');
+        $result->leftJoin('wood_type', 'wood_type.id', '=', 'outcoming_wood_detail.wood_type_id');
+
+        if(isset($param['get_by_outcoming_wood_id']) && !is_null($param['get_by_outcoming_wood_id'])){
+            $result->where('outcoming_wood_detail.outcoming_wood_id', '=', $param['get_by_outcoming_wood_id']);
+        }
+
+        $result->orderBy('outcoming_wood_detail.id', 'asc');
+
+        $item = null;
+        if($result->count() > 0){
+            $item = $result->get()->map(function($data){
+                $detail = OutcomingWoodDetailItem::
+                where('outcoming_wood_detail_id', $data->id)
+                ->orderBy('id','asc')
+                ->get();
+                $data->detail = $detail;
+                return $data;
+            });
+        }
+
+        return $item;
     }
 
     public static function getTemplate($id)

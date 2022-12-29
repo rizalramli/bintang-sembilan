@@ -62,7 +62,7 @@ class OutcomingWoodController extends AppBaseController
      */
     public function create()
     {
-        $data['template_wood'] = TemplateWoodOut::pluck('name', 'id');
+        $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
@@ -150,7 +150,18 @@ class OutcomingWoodController extends AppBaseController
             return redirect(route('outcomingWoods.index'));
         }
 
-        return view('transaction::outcoming_woods.show')->with('outcomingWood', $outcomingWood);
+        $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
+        $data['customer'] = Customer::pluck('name', 'id');
+        $data['warehouse'] = Warehouse::pluck('name', 'id');
+        $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
+
+        $param = [];
+        
+        $param['get_by_outcoming_wood_id'] = $id;
+
+        $data['outcomingWoodDetail'] = OutcomingWoodRepository::getDetail($param);
+
+        return view('transaction::outcoming_woods.show',$data)->with('outcomingWood', $outcomingWood);
     }
 
     /**
@@ -170,7 +181,18 @@ class OutcomingWoodController extends AppBaseController
             return redirect(route('outcomingWoods.index'));
         }
 
-        return view('transaction::outcoming_woods.edit')->with('outcomingWood', $outcomingWood);
+        $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
+        $data['customer'] = Customer::pluck('name', 'id');
+        $data['warehouse'] = Warehouse::pluck('name', 'id');
+        $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
+
+        $param = [];
+        
+        $param['get_by_outcoming_wood_id'] = $id;
+
+        $data['outcomingWoodDetail'] = OutcomingWoodRepository::getDetail($param);
+
+        return view('transaction::outcoming_woods.edit',$data)->with('outcomingWood', $outcomingWood);
     }
 
     /**
@@ -181,8 +203,12 @@ class OutcomingWoodController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateOutcomingWoodRequest $request)
+    public function update(UpdateOutcomingWoodRequest $request)
     {
+        $input = $request->all();
+
+        $id = $input['id'];
+
         $outcomingWood = $this->outcomingWoodRepository->find($id);
 
         if (empty($outcomingWood)) {
@@ -191,7 +217,78 @@ class OutcomingWoodController extends AppBaseController
             return redirect(route('outcomingWoods.index'));
         }
 
-        $outcomingWood = $this->outcomingWoodRepository->update($request->all(), $id);
+        $cost = Human::removeFormatRupiah($input['cost']);
+
+        $input['cost'] = $cost;
+
+        $outcomingWood = $this->outcomingWoodRepository->update($input, $id);
+
+        if($outcomingWood)
+        {
+            if($cost > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles'];
+                if(empty($finance))
+                {
+                    Finance::create([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 0,
+                        'amount' => $cost,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])->update([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 0,
+                        'amount' => Human::removeFormatRupiah($input['cost']),
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+        }
+
+        if(is_array($input['item2_length']) && count($input['item2_length']) > 0){
+            // Delete Detail
+            $outcoming_wood_detail = OutcomingWoodDetail::where('outcoming_wood_id',$id);
+            if($outcoming_wood_detail->count() > 0){
+                foreach($outcoming_wood_detail->get() as $value)
+                {
+                    OutcomingWoodDetailItem::where('outcoming_wood_detail_id',$value->id)->delete();
+                }
+                $outcoming_wood_detail->delete();
+            }
+
+            foreach($input['item2_length'] as $key => $value){
+                $outcoming_wood_detail = OutcomingWoodDetail::create([
+                    'outcoming_wood_id' => $outcomingWood->id,
+                    'product_id' => $input['item_product_id'][$key],
+                    'wood_type_id' => $input['item_wood_type_id'][$key],
+                    'sub_total_volume' => $input['item_sub_total_volume'][$key]
+                ]);
+                foreach($value as $key2 => $value2){
+                    $outcoming_wood_detail_item = OutcomingWoodDetailItem::create([
+                        'outcoming_wood_detail_id' =>  $outcoming_wood_detail->id,
+                        'length' =>  $input['item2_length'][$key][$key2],
+                        'width' =>  $input['item2_width'][$key][$key2],
+                        'height' =>  $input['item2_height'][$key][$key2],
+                        'qty' =>  $input['item2_qty'][$key][$key2],
+                        'volume' => $input['item2_volume'][$key][$key2]
+                    ]);
+                }
+            }            
+        }
 
         Flash::success('Kayu keluar berhasil diperbarui.');
 

@@ -65,8 +65,10 @@
             @endphp
             @endforeach
             <tr>
-                <td class="text-start" colspan="2">Total Batang / Total Volume :</td>
-                <td class="text-end" colspan="3">{{$sum_qty.' / '.$sum_sub_total_volume}}</td>
+                <td class="text-end" colspan="4">Total Batang / Total Volume</td>
+                <td class="text-end">
+                    <input style="text-align:right;border: none;width:100%" type="text" id="total_qty_volume" name="total_qty_volume" value="{{$sum_qty}} / {{$sum_sub_total_volume}}" readonly>
+                </td>
             </tr>
             @endif
         </tbody>

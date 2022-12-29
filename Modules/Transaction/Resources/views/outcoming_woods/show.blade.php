@@ -1,10 +1,17 @@
 @extends('layouts.app')
 @section('title', 'Detail Kayu Keluar')
+@include('layouts.library.style')
 @section('content')    
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('transaction::outcoming_woods.show_fields')
+                    @include('transaction::outcoming_woods.fields')
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @include('transaction::outcoming_woods.fields.table_detail')
                 </div>
             </div>
         </div>
@@ -19,3 +26,5 @@
     </div>
 </div>
 @endsection
+@include('transaction::outcoming_woods.fields.fields_js')
+@include('layouts.library.script')

@@ -3,7 +3,7 @@
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('template_wood_out_id') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('template_wood_out_id', 'Template Kayu') !!}
-    {!! Form::select('template_wood_out_id', $template_wood, isset($outcomingWood) ? $outcomingWood->template_wood_out_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'template_wood_out_id']) !!}
+    {!! Form::select('template_wood_out_id', $template_wood_out, isset($outcomingWood) ? $outcomingWood->template_wood_out_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'template_wood_out_id']) !!}
     @error('template_wood_out_id')
     <div class="invalid-feedback">
         {{ $message }}

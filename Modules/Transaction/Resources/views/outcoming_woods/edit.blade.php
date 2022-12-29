@@ -1,13 +1,20 @@
 @extends('layouts.app')
 @section('title', 'Edit Kayu Keluar')
+@include('layouts.library.style')
 @section('content')
         <div class="card">
 
-            {!! Form::model($outcomingWood, ['route' => ['outcomingWoods.update', $outcomingWood->id], 'method' => 'patch']) !!}
-
+            {!! Form::open(['route' => 'outcomingWoods.update','id' => 'formOutcomingWood']) !!}
+            
             <div class="card-body">
                 <div class="row">
                     @include('transaction::outcoming_woods.fields')
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @include('transaction::outcoming_woods.fields.table_detail')
                 </div>
             </div>
 
@@ -21,3 +28,5 @@
         </div>
  
 @endsection
+@include('transaction::outcoming_woods.fields.fields_js')
+@include('layouts.library.script')

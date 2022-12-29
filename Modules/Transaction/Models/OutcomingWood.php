@@ -60,7 +60,7 @@ class OutcomingWood extends Model
         'warehouse_id' => 'integer',
         'wood_type_out_id' => 'integer',
         'serial_number' => 'string',
-        'date' => 'datetime',
+        'date' => 'date',
         'number_vehicles' => 'string',
         'total_qty' => 'integer',
         'total_volume' => 'float',
