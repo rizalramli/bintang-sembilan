@@ -75,6 +75,12 @@
                 <span class="text text-custom">Kayu Masuk</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('report/outcomingWoods') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('report/salaries') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/salaries'); }}">
                 <i class="ficon" data-feather="circle"></i>

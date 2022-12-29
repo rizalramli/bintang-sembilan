@@ -4,6 +4,7 @@ namespace Modules\Transaction\Repositories;
 
 use Modules\Transaction\Models\OutcomingWood;
 use App\Repositories\BaseRepository;
+use Modules\Master\Models\Company;
 use Modules\Master\Models\WoodCategoryOut;
 use Modules\Master\Models\WoodSizeOut;
 use Modules\Transaction\Models\OutcomingWoodDetail;
@@ -155,6 +156,35 @@ class OutcomingWoodRepository extends BaseRepository
                 return $item;
             });
         }
+
+        return $data;
+    }
+
+    public static function getReport($param = [])
+    {
+        $result = OutcomingWood::query();
+        
+        $result->select(
+            'outcoming_wood.*',
+            'customer.name as customer_name',
+        );
+
+        $result->leftJoin('customer', 'customer.id', '=', 'outcoming_wood.customer_id');
+
+        if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+            $result->whereMonth('outcoming_wood.date', $param['get_by_month']);
+        }
+
+        if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+            $result->whereYear('outcoming_wood.date', $param['get_by_year']);
+        }
+
+        $result->orderBy('outcoming_wood.date', 'asc');
+
+        $company = Company::find(1);
+
+        $data['data'] = $result->get();
+        $data['company'] = $company;
 
         return $data;
     }
