@@ -113,6 +113,12 @@
                 <span class="text text-custom">Template Kayu Masuk</span>
             </a>
         </li>
+        <li class="nav-item {{ Request::is('master/products') || Request::is('master/products/create') || Request::is('master/products/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/products'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Produk</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('master/woodTypes') || Request::is('master/woodTypes/create') || Request::is('master/woodTypes/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/woodTypes'); }}">
                 <i class="ficon" data-feather="circle"></i>
