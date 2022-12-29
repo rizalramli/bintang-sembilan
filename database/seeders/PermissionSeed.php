@@ -18,8 +18,33 @@ class PermissionSeed extends Seeder
         Permission::truncate();
 
         $permissions = [
-            'dashboard-lihat',
+            'dashboard-dashboard',
+            'transaksi-kayu masuk sakr',
+            'transaksi-kayu masuk dagang',
+            'transaksi-kayu keluar',
+            'transaksi-pemasukan',
+            'transaksi-pengeluaran',
+            'karyawan-kehadiran',
+            'karyawan-penggajian',
+            'laporan-kayu masuk',
+            'laporan-kayu keluar',
+            'laporan-kehadiran',
+            'laporan-penggajian',
+            'laporan-laba rugi',
+            'laporan-pemasukan',
+            'laporan-pengeluaran',
+            'pengaturan-template kayu masuk',
+            'pengaturan-template kayu keluar',
+            'pengaturan-produk',
+            'pengaturan-jenis kayu masuk',
+            'pengaturan-jenis kayu keluar',
+            'pengaturan-customer',
+            'pengaturan-supplier',
+            'pengaturan-gudang',
+            'pengaturan-karyawan',
+            'pengaturan-pengguna',
             'pengaturan-hak akses',
+            'pengaturan-perusahaan',
         ];
 
         foreach ($permissions as $permission) {

@@ -35,6 +35,9 @@ class Permission extends Model
 
     public static $permission_type = [
         'dashboard' => 'Dashboard',
+        'transaksi' => 'Transaksi',
+        'karyawan' => 'Karyawan',
+        'laporan' => 'Laporan',
         'pengaturan' => 'Pengaturan',
     ];
 

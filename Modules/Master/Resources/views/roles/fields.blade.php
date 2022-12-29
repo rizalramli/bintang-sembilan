@@ -36,7 +36,7 @@
                     <td>
                         <div class="form-control border-0">
                             @foreach ($value['data'] as $key_data => $value_data)
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-inline mb-1">
                                 @php
                                 $is_checked = false;
                                 if (isset($permissions_checked)) {
