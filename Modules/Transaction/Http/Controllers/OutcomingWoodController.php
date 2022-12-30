@@ -4,7 +4,6 @@ namespace Modules\Transaction\Http\Controllers;
 
 use App\Helpers\Human;
 use Modules\Transaction\DataTables\OutcomingWoodDataTable;
-use Modules\Transaction\Http\Requests;
 use Modules\Transaction\Http\Requests\CreateOutcomingWoodRequest;
 use Modules\Transaction\Http\Requests\UpdateOutcomingWoodRequest;
 use Modules\Transaction\Repositories\OutcomingWoodRepository;
@@ -20,6 +19,8 @@ use Modules\Transaction\Models\OutcomingWoodDetail;
 use Modules\Transaction\Models\OutcomingWoodDetailItem;
 use Response;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Modules\Master\Models\Company;
 
 class OutcomingWoodController extends AppBaseController
 {
@@ -358,5 +359,35 @@ class OutcomingWoodController extends AppBaseController
             $total_qty += $sub_qty;
         }
         return response()->json(['status' => true,'total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
+    }
+
+    public function invoice(Request $request)
+    {
+        $type = $request->type;
+        $id = $request->id;
+        if($request->type == 1)
+        {
+            $param['get_by_outcoming_wood_id'] = $id;
+
+            $data['outcomingWood'] = OutcomingWoodRepository::getData($param)->first();
+
+            $data['outcomingWoodDetail'] = OutcomingWoodRepository::getDetail($param);
+
+            $data['company'] = Company::find(1);
+
+            $date_start = $request->date_start;
+            $date_end = $request->date_end;
+
+            $diff = Carbon::parse($date_start)->diffInDays(Carbon::parse($date_end));
+
+            $data['date_start'] = $date_start;
+
+            $data['date_end'] = $date_end;
+
+            $data['diff'] = $diff;
+
+            $pdf = \PDF::loadView('transaction::outcoming_woods.invoice1',$data);
+        }
+        return $pdf->stream('Invoice.pdf', array("Attachment" => false));
     }
 }

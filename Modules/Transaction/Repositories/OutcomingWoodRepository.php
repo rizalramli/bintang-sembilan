@@ -62,6 +62,8 @@ class OutcomingWoodRepository extends BaseRepository
         $result->select(
             'outcoming_wood.*',
             'customer.name as customer_name',
+            'customer.address as customer_address',
+            'customer.phone as customer_phone',
             'warehouse.name as warehouse_name',
             'wood_type_out.name as wood_type_out_name',
         );
@@ -80,6 +82,10 @@ class OutcomingWoodRepository extends BaseRepository
 
         if(isset($param['get_by_wood_type']) && !is_null($param['get_by_wood_type'])){
             $result->where('outcoming_wood.wood_type_out_id', '=', $param['get_by_wood_type']);
+        }
+
+        if(isset($param['get_by_outcoming_wood_id']) && !is_null($param['get_by_outcoming_wood_id'])){
+            $result->where('outcoming_wood.id', '=', $param['get_by_outcoming_wood_id']);
         }
 
         // Filter Tanggal 
