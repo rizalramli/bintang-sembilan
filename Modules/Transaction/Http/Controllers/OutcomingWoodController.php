@@ -365,16 +365,16 @@ class OutcomingWoodController extends AppBaseController
     {
         $type = $request->type;
         $id = $request->id;
-        if($request->type == 1)
+
+        $param['get_by_outcoming_wood_id'] = $id;
+
+        $data['outcomingWood'] = OutcomingWoodRepository::getData($param)->first();
+
+        $data['outcomingWoodDetail'] = OutcomingWoodRepository::getDetail($param);
+
+        $data['company'] = Company::find(1);
+        if($type == 1)
         {
-            $param['get_by_outcoming_wood_id'] = $id;
-
-            $data['outcomingWood'] = OutcomingWoodRepository::getData($param)->first();
-
-            $data['outcomingWoodDetail'] = OutcomingWoodRepository::getDetail($param);
-
-            $data['company'] = Company::find(1);
-
             $date_start = $request->date_start;
             $date_end = $request->date_end;
 
@@ -387,6 +387,8 @@ class OutcomingWoodController extends AppBaseController
             $data['diff'] = $diff;
 
             $pdf = \PDF::loadView('transaction::outcoming_woods.invoice1',$data);
+        } else {
+            $pdf = \PDF::loadView('transaction::outcoming_woods.invoice2',$data);
         }
         return $pdf->stream('Invoice.pdf', array("Attachment" => false));
     }

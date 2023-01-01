@@ -56,6 +56,9 @@
                     var url = "{{url('transaction/outcomingWood/invoice')}}" + "?id=" + id + "&type=" + type + "&date_start=" + date_start + "&date_end=" + date_end;
                     window.open(url, '_blank');
                 })
+        } else {
+            var url = "{{url('transaction/outcomingWood/invoice')}}" + "?id=" + id + "&type=" + type;
+            window.open(url, '_blank');
         }
     });
 </script>
