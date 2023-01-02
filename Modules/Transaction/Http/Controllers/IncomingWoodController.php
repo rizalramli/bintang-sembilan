@@ -59,7 +59,7 @@ class IncomingWoodController extends AppBaseController
      */
     public function create()
     {
-        $template_wood = TemplateWood::pluck('name', 'id');
+        $template_wood = TemplateWood::where('is_active',1)->pluck('name', 'id');
         $supplier = Supplier::selectRaw('concat(name, " | ", address) as name, id')->pluck('name', 'id');
         $warehouse = Warehouse::pluck('name', 'id');
         $wood_type = WoodType::pluck('name', 'id');

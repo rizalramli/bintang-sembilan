@@ -6,6 +6,18 @@ use Eloquent as Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class WoodSizeOut
+ * @package App\Models
+ * @version January 2, 2023, 11:22 am WIB
+ *
+ * @property integer $wood_category_out_id
+ * @property number $length
+ * @property number $width
+ * @property number $height
+ * @property string|\Carbon\Carbon $created_at
+ * @property string|\Carbon\Carbon $updated_at
+ */
 class WoodSizeOut extends Model
 {
 
@@ -31,9 +43,10 @@ class WoodSizeOut extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'wood_category_id' => 'integer',
-        'name' => 'string',
-        'volume' => 'float',
+        'wood_category_out_id' => 'integer',
+        'length' => 'float',
+        'width' => 'float',
+        'height' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
@@ -44,9 +57,10 @@ class WoodSizeOut extends Model
      * @var array
      */
     public static $rules = [
-        'wood_category_id' => 'nullable|integer',
-        'name' => 'nullable|string|max:125',
-        'volume' => 'nullable|numeric',
+        'wood_category_out_id' => 'nullable',
+        'length' => 'required',
+        'width' => 'required',
+        'height' => 'required',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

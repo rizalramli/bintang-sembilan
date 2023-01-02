@@ -179,7 +179,12 @@
         @endcan
 
         @can('pengaturan-template kayu keluar')
-
+        <li class="nav-item {{ Request::is('master/templateWoodOuts') || Request::is('master/templateWoodOuts/create') || Request::is('master/templateWoodOuts/*/edit') || Request::is('master/woodCategoryOuts') || Request::is('master/woodCategoryOuts/create') || Request::is('master/woodCategoryOuts/*/edit') || Request::is('master/woodSizeOuts') || Request::is('master/woodSizeOuts/create') || Request::is('master/woodSizeOuts/*/edit') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('master/templateWoodOuts'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Template Kayu Keluar</span>
+            </a>
+        </li>
         @endcan
 
         @can('pengaturan-produk')

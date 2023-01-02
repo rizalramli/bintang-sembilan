@@ -63,7 +63,7 @@ class OutcomingWoodController extends AppBaseController
      */
     public function create()
     {
-        $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
+        $data['template_wood_out'] = TemplateWoodOut::where('is_active',1)->pluck('name', 'id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');

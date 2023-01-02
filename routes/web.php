@@ -19,6 +19,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'getData'])->name('dashboard');
 });
-
-
-Route::resource('products', App\Http\Controllers\ProductController::class);

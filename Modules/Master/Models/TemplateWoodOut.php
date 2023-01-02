@@ -6,6 +6,16 @@ use Eloquent as Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * Class TemplateWoodOut
+ * @package App\Models
+ * @version January 2, 2023, 11:21 am WIB
+ *
+ * @property string $name
+ * @property boolean $is_active
+ * @property string|\Carbon\Carbon $created_at
+ * @property string|\Carbon\Carbon $updated_at
+ */
 class TemplateWoodOut extends Model
 {
 
@@ -21,4 +31,31 @@ class TemplateWoodOut extends Model
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'name' => 'string',
+        'is_active' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => 'required|string|max:125',
+        'is_active' => 'nullable|boolean',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable'
+    ];
+
+    
 }

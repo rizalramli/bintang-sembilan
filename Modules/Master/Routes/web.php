@@ -18,6 +18,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('templateWoods', 'TemplateWoodController');
         Route::resource('woodCategories', 'WoodCategoryController');
         Route::resource('woodSizes', 'WoodSizeController');
+        Route::resource('templateWoodOuts', 'TemplateWoodOutController');
+        Route::resource('woodCategoryOuts', 'WoodCategoryOutController');
+        Route::resource('woodSizeOuts', 'WoodSizeOutController');
         Route::resource('woodTypes', 'WoodTypeController');
         Route::resource('woodTypeOuts', 'WoodTypeOutController');
         Route::resource('employees', 'EmployeeController');

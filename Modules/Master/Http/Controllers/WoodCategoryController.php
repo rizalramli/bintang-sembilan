@@ -153,7 +153,7 @@ class WoodCategoryController extends AppBaseController
 
         $template_wood_id = $woodCategory->template_wood_id;
 
-        $wood_size = WoodSize::where('wood_category_id',$id);
+        $wood_size = WoodSize::where('wood_category_id',$id)->delete();
 
         $this->woodCategoryRepository->delete($id);
 
