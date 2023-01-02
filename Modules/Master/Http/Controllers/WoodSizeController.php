@@ -28,7 +28,7 @@ class WoodSizeController extends AppBaseController
      */
     public function index(WoodSizeDataTable $woodSizeDataTable)
     {
-        return $woodSizeDataTable->render('wood_sizes.index');
+        return $woodSizeDataTable->render('master::wood_sizes.index');
     }
 
     /**
@@ -38,7 +38,7 @@ class WoodSizeController extends AppBaseController
      */
     public function create()
     {
-        return view('wood_sizes.create');
+        return view('master::wood_sizes.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class WoodSizeController extends AppBaseController
 
         $woodSize = $this->woodSizeRepository->create($input);
 
-        Flash::success('Wood Size saved successfully.');
+        Flash::success('Ukuran kayu berhasil diperbarui.');
 
         return redirect(route('woodSizes.index'));
     }
@@ -71,12 +71,12 @@ class WoodSizeController extends AppBaseController
         $woodSize = $this->woodSizeRepository->find($id);
 
         if (empty($woodSize)) {
-            Flash::error('Wood Size not found');
+            Flash::error('Ukuran kayu tidak ditemukan');
 
             return redirect(route('woodSizes.index'));
         }
 
-        return view('wood_sizes.show')->with('woodSize', $woodSize);
+        return view('master::wood_sizes.show')->with('woodSize', $woodSize);
     }
 
     /**
@@ -91,12 +91,12 @@ class WoodSizeController extends AppBaseController
         $woodSize = $this->woodSizeRepository->find($id);
 
         if (empty($woodSize)) {
-            Flash::error('Wood Size not found');
+            Flash::error('Ukuran kayu tidak ditemukan');
 
             return redirect(route('woodSizes.index'));
         }
 
-        return view('wood_sizes.edit')->with('woodSize', $woodSize);
+        return view('master::wood_sizes.edit')->with('woodSize', $woodSize);
     }
 
     /**
@@ -112,14 +112,14 @@ class WoodSizeController extends AppBaseController
         $woodSize = $this->woodSizeRepository->find($id);
 
         if (empty($woodSize)) {
-            Flash::error('Wood Size not found');
+            Flash::error('Ukuran kayu tidak ditemukan');
 
             return redirect(route('woodSizes.index'));
         }
 
         $woodSize = $this->woodSizeRepository->update($request->all(), $id);
 
-        Flash::success('Wood Size updated successfully.');
+        Flash::success('Ukuran kayu berhasil diperbarui.');
 
         return redirect(route('woodSizes.index'));
     }
@@ -136,14 +136,14 @@ class WoodSizeController extends AppBaseController
         $woodSize = $this->woodSizeRepository->find($id);
 
         if (empty($woodSize)) {
-            Flash::error('Wood Size not found');
+            Flash::error('Ukuran kayu tidak ditemukan');
 
             return redirect(route('woodSizes.index'));
         }
 
         $this->woodSizeRepository->delete($id);
 
-        Flash::success('Wood Size deleted successfully.');
+        Flash::success('Ukuran kayu berhasil dihapus.');
 
         return redirect(route('woodSizes.index'));
     }

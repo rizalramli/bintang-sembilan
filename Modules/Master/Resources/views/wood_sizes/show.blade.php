@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Detail Wood Size')
+@section('title', 'Detail Ukuran Kayu')
 @section('content')    
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('wood_sizes.show_fields')
+                    @include('master::wood_sizes.show_fields')
                 </div>
             </div>
         </div>

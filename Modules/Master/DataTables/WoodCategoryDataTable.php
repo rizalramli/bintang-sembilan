@@ -67,11 +67,7 @@ class WoodCategoryDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'template_wood_id',
-            'name',
-            'price',
-            'created_at',
-            'updated_at'
+            'name' => ['title' => 'Nama Kategori'],
         ];
     }
 

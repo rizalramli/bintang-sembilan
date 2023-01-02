@@ -54,9 +54,9 @@ class WoodSize extends Model
      * @var array
      */
     public static $rules = [
-        'wood_category_id' => 'nullable|integer',
-        'name' => 'nullable|string|max:125',
-        'volume' => 'nullable|numeric',
+        'wood_category_id' => 'nullable',
+        'name' => 'required|string|max:125',
+        'volume' => 'required',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

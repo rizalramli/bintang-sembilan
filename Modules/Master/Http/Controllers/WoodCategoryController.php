@@ -28,7 +28,7 @@ class WoodCategoryController extends AppBaseController
      */
     public function index(WoodCategoryDataTable $woodCategoryDataTable)
     {
-        return $woodCategoryDataTable->render('wood_categories.index');
+        return $woodCategoryDataTable->render('master::wood_categories.index');
     }
 
     /**
@@ -38,7 +38,7 @@ class WoodCategoryController extends AppBaseController
      */
     public function create()
     {
-        return view('wood_categories.create');
+        return view('master::wood_categories.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class WoodCategoryController extends AppBaseController
 
         $woodCategory = $this->woodCategoryRepository->create($input);
 
-        Flash::success('Wood Category saved successfully.');
+        Flash::success('Kategori kayu berhasil disimpan.');
 
         return redirect(route('woodCategories.index'));
     }
@@ -71,12 +71,12 @@ class WoodCategoryController extends AppBaseController
         $woodCategory = $this->woodCategoryRepository->find($id);
 
         if (empty($woodCategory)) {
-            Flash::error('Wood Category not found');
+            Flash::error('Kategori Kayu tidak ditemukan.');
 
             return redirect(route('woodCategories.index'));
         }
 
-        return view('wood_categories.show')->with('woodCategory', $woodCategory);
+        return view('master::wood_categories.show')->with('woodCategory', $woodCategory);
     }
 
     /**
@@ -91,12 +91,12 @@ class WoodCategoryController extends AppBaseController
         $woodCategory = $this->woodCategoryRepository->find($id);
 
         if (empty($woodCategory)) {
-            Flash::error('Wood Category not found');
+            Flash::error('Kategori Kayu tidak ditemukan.');
 
             return redirect(route('woodCategories.index'));
         }
 
-        return view('wood_categories.edit')->with('woodCategory', $woodCategory);
+        return view('master::wood_categories.edit')->with('woodCategory', $woodCategory);
     }
 
     /**
@@ -112,14 +112,14 @@ class WoodCategoryController extends AppBaseController
         $woodCategory = $this->woodCategoryRepository->find($id);
 
         if (empty($woodCategory)) {
-            Flash::error('Wood Category not found');
+            Flash::error('Kategori Kayu tidak ditemukan.');
 
             return redirect(route('woodCategories.index'));
         }
 
         $woodCategory = $this->woodCategoryRepository->update($request->all(), $id);
 
-        Flash::success('Wood Category updated successfully.');
+        Flash::success('Kategori kayu berhasil diperbarui.');
 
         return redirect(route('woodCategories.index'));
     }
@@ -136,14 +136,14 @@ class WoodCategoryController extends AppBaseController
         $woodCategory = $this->woodCategoryRepository->find($id);
 
         if (empty($woodCategory)) {
-            Flash::error('Wood Category not found');
+            Flash::error('Kategori Kayu tidak ditemukan.');
 
             return redirect(route('woodCategories.index'));
         }
 
         $this->woodCategoryRepository->delete($id);
 
-        Flash::success('Wood Category deleted successfully.');
+        Flash::success('Kategori kayu berhasil dihapus.');
 
         return redirect(route('woodCategories.index'));
     }

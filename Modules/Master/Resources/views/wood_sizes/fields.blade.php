@@ -1,49 +1,21 @@
-<!-- Wood Category Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('wood_category_id', 'Wood Category Id:') !!}
-    {!! Form::number('wood_category_id', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('name') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('name', 'Diameter') !!}
+    {!! Form::text('name', null, ['class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
+    @error('name')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
 
-<!-- Name Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control','maxlength' => 125,'maxlength' => 125]) !!}
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('volume') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('volume', 'Volume') !!}
+    {!! Form::text('volume', null, ['class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
+    @error('volume')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
 </div>
-
-<!-- Volume Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('volume', 'Volume:') !!}
-    {!! Form::number('volume', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Created At Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('created_at', 'Created At:') !!}
-    {!! Form::text('created_at', null, ['class' => 'form-control','id'=>'created_at']) !!}
-</div>
-
-@push('page_scripts')
-    <script type="text/javascript">
-        $('#created_at').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: true,
-            sideBySide: true
-        })
-    </script>
-@endpush
-
-<!-- Updated At Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    {!! Form::text('updated_at', null, ['class' => 'form-control','id'=>'updated_at']) !!}
-</div>
-
-@push('page_scripts')
-    <script type="text/javascript">
-        $('#updated_at').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: true,
-            sideBySide: true
-        })
-    </script>
-@endpush

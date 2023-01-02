@@ -1,9 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Tambah Wood Category')
+@section('title', 'Tambah Kategori Kayu')
 @section('content')
-    
-
-        @include('adminlte-templates::common.errors')
 
         <div class="card">
 
@@ -12,7 +9,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('wood_categories.fields')
+                    @include('master::wood_categories.fields')
                 </div>
 
             </div>

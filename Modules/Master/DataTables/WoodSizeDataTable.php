@@ -67,11 +67,8 @@ class WoodSizeDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'wood_category_id',
-            'name',
-            'volume',
-            'created_at',
-            'updated_at'
+            'name' => ['title' => 'Diameter'],
+            'volume' => ['title' => 'Volume'],
         ];
     }
 

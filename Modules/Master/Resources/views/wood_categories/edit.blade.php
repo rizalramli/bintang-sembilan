@@ -1,17 +1,13 @@
 @extends('layouts.app')
-@section('title', 'Edit Wood Category')
+@section('title', 'Edit Kategori Kayu')
 @section('content')
-    
- 
-        @include('adminlte-templates::common.errors')
-
         <div class="card">
 
             {!! Form::model($woodCategory, ['route' => ['woodCategories.update', $woodCategory->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('wood_categories.fields')
+                    @include('master::wood_categories.fields')
                 </div>
             </div>
 

@@ -51,7 +51,7 @@ class TemplateWood extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'nullable|string|max:125',
+        'name' => 'required|string|max:125',
         'is_active' => 'nullable|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'

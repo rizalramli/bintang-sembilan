@@ -1,8 +1,8 @@
 {!! Form::open(['route' => ['woodSizes.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    <a href="{{ route('woodSizes.show', $id) }}" class='btn btn-info btn-sm'>
+    <!-- <a href="{{ route('woodSizes.show', $id) }}" class='btn btn-info btn-sm'>
         <i data-feather='eye'></i> Detail
-    </a>
+    </a> -->
     <a href="{{ route('woodSizes.edit', $id) }}" class='btn btn-warning btn-sm'>
         <i data-feather='edit'></i> Edit
     </a>

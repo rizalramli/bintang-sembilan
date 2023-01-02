@@ -1,9 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Edit Wood Size')
+@section('title', 'Edit Ukuran Kayu')
 @section('content')
-    
- 
-        @include('adminlte-templates::common.errors')
 
         <div class="card">
 
@@ -11,7 +8,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('wood_sizes.fields')
+                    @include('master::wood_sizes.fields')
                 </div>
             </div>
 

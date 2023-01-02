@@ -54,9 +54,9 @@ class WoodCategory extends Model
      * @var array
      */
     public static $rules = [
-        'template_wood_id' => 'nullable|integer',
-        'name' => 'nullable|string|max:125',
-        'price' => 'nullable|integer',
+        'template_wood_id' => 'nullable',
+        'name' => 'required|string|max:125',
+        'price' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
