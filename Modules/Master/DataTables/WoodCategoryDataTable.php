@@ -29,7 +29,10 @@ class WoodCategoryDataTable extends DataTable
      */
     public function query(WoodCategory $model)
     {
-        return $model->newQuery();
+        $id = $this->id;
+        return $model->newQuery()
+        ->where('template_wood_id', $id)
+        ->orderBy('id', 'asc');
     }
 
     /**
@@ -52,7 +55,7 @@ class WoodCategoryDataTable extends DataTable
                 'buttons'   => [
                     ['text'     => '<i data-feather="plus"></i> Tambah Data',
                         'className' => 'create-new btn btn-success',
-                        'action'    => 'function() { window.location = "' . route('woodCategories.create')  . '"; }',
+                        'action'    => 'function() { window.location = "' . url('master/woodCategories/create?template_wood_id=').$this->id  . '"; }',
                     ],
                 ],
                 'drawCallback'  => 'function() { feather.replace() }',

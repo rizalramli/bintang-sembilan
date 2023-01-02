@@ -20,5 +20,10 @@
             {!! Form::close() !!}
 
         </div>
+        
+        @include('flash::message')
+        <div class="card">
+            @include('master::wood_categories.table')
+        </div>
  
 @endsection

@@ -8,6 +8,9 @@ use Modules\Master\Http\Requests\UpdateTemplateWoodRequest;
 use Modules\Master\Repositories\TemplateWoodRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Modules\Master\DataTables\WoodCategoryDataTable;
+use Modules\Master\Models\WoodCategory;
+use Modules\Master\Models\WoodSize;
 use Response;
 
 class TemplateWoodController extends AppBaseController
@@ -86,7 +89,7 @@ class TemplateWoodController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,WoodCategoryDataTable $woodCategoryDataTable)
     {
         $templateWood = $this->templateWoodRepository->find($id);
 
@@ -96,7 +99,9 @@ class TemplateWoodController extends AppBaseController
             return redirect(route('templateWoods.index'));
         }
 
-        return view('master::template_woods.edit')->with('templateWood', $templateWood);
+        return $woodCategoryDataTable
+        ->with('id',$id)
+        ->render('master::template_woods.edit',compact('templateWood'));
     }
 
     /**
@@ -139,6 +144,16 @@ class TemplateWoodController extends AppBaseController
             Flash::error('Template Kayu Masuk tidak ditemukan.');
 
             return redirect(route('templateWoods.index'));
+        }
+
+        // Delete Detail
+        $wood_category_id = WoodCategory::where('template_wood_id',$id);
+        if($wood_category_id->count() > 0){
+            foreach($wood_category_id->get() as $value)
+            {
+                WoodSize::where('wood_category_id',$value->id)->delete();
+            }
+            $wood_category_id->delete();
         }
 
         $this->templateWoodRepository->delete($id);

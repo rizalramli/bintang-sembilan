@@ -170,7 +170,7 @@
     <ul>
 
         @can('pengaturan-template kayu masuk')
-        <li class="nav-item {{ Request::is('master/templateWoods') || Request::is('master/templateWoods/create') || Request::is('master/templateWoods/*/edit') ? 'active ' : '' }}">
+        <li class="nav-item {{ Request::is('master/templateWoods') || Request::is('master/templateWoods/create') || Request::is('master/templateWoods/*/edit') || Request::is('master/woodCategories') || Request::is('master/woodCategories/create') || Request::is('master/woodCategories/*/edit') || Request::is('master/woodSizes') || Request::is('master/woodSizes/create') || Request::is('master/woodSizes/*/edit') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('master/templateWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Template Kayu Masuk</span>

@@ -1,3 +1,6 @@
+@if(!isset($woodSize))
+<input type="hidden" name="wood_category_id" value="{{$_GET['wood_category_id']}}">
+@endif
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('name') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('name', 'Diameter') !!}

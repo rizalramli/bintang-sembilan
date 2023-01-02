@@ -16,7 +16,7 @@
 
             <div class="card-footer">
                 {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('woodCategories.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ url('master/templateWoods/'.$_GET['template_wood_id'].'/edit') }}" class="btn btn-secondary">Batal</a>
             </div>
 
             {!! Form::close() !!}

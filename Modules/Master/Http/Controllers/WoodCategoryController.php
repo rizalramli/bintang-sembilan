@@ -8,6 +8,8 @@ use Modules\Master\Http\Requests\UpdateWoodCategoryRequest;
 use Modules\Master\Repositories\WoodCategoryRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Modules\Master\DataTables\WoodSizeDataTable;
+use Modules\Master\Models\WoodSize;
 use Response;
 
 class WoodCategoryController extends AppBaseController
@@ -52,11 +54,13 @@ class WoodCategoryController extends AppBaseController
     {
         $input = $request->all();
 
+        $template_wood_id = $request->template_wood_id;
+
         $woodCategory = $this->woodCategoryRepository->create($input);
 
         Flash::success('Kategori kayu berhasil disimpan.');
 
-        return redirect(route('woodCategories.index'));
+        return redirect(url('master/templateWoods/'.$template_wood_id.'/edit'));
     }
 
     /**
@@ -86,7 +90,7 @@ class WoodCategoryController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,WoodSizeDataTable $woodSizeDataTable)
     {
         $woodCategory = $this->woodCategoryRepository->find($id);
 
@@ -96,7 +100,9 @@ class WoodCategoryController extends AppBaseController
             return redirect(route('woodCategories.index'));
         }
 
-        return view('master::wood_categories.edit')->with('woodCategory', $woodCategory);
+        return $woodSizeDataTable
+        ->with('id',$id)
+        ->render('master::wood_categories.edit',compact('woodCategory'));
     }
 
     /**
@@ -121,7 +127,9 @@ class WoodCategoryController extends AppBaseController
 
         Flash::success('Kategori kayu berhasil diperbarui.');
 
-        return redirect(route('woodCategories.index'));
+        $template_wood_id = $woodCategory->template_wood_id;
+
+        return redirect(url('master/templateWoods/'.$template_wood_id.'/edit'));
     }
 
     /**
@@ -141,10 +149,16 @@ class WoodCategoryController extends AppBaseController
             return redirect(route('woodCategories.index'));
         }
 
+        // delete wood size
+
+        $template_wood_id = $woodCategory->template_wood_id;
+
+        $wood_size = WoodSize::where('wood_category_id',$id);
+
         $this->woodCategoryRepository->delete($id);
 
         Flash::success('Kategori kayu berhasil dihapus.');
 
-        return redirect(route('woodCategories.index'));
+        return redirect(url('master/templateWoods/'.$template_wood_id.'/edit'));
     }
 }

@@ -29,7 +29,9 @@ class WoodSizeDataTable extends DataTable
      */
     public function query(WoodSize $model)
     {
-        return $model->newQuery();
+        $id = $this->id;
+        return $model->newQuery()->where('wood_category_id', $id)
+        ->orderBy('id', 'asc');
     }
 
     /**
@@ -52,7 +54,7 @@ class WoodSizeDataTable extends DataTable
                 'buttons'   => [
                     ['text'     => '<i data-feather="plus"></i> Tambah Data',
                         'className' => 'create-new btn btn-success',
-                        'action'    => 'function() { window.location = "' . route('woodSizes.create')  . '"; }',
+                        'action'    => 'function() { window.location = "' . url('master/woodSizes/create?wood_category_id=').$this->id  . '"; }',
                     ],
                 ],
                 'drawCallback'  => 'function() { feather.replace() }',

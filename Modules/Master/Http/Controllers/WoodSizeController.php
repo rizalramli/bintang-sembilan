@@ -52,11 +52,13 @@ class WoodSizeController extends AppBaseController
     {
         $input = $request->all();
 
+        $wood_category_id = $request->wood_category_id;
+
         $woodSize = $this->woodSizeRepository->create($input);
 
         Flash::success('Ukuran kayu berhasil diperbarui.');
 
-        return redirect(route('woodSizes.index'));
+        return redirect(url('master/woodCategories/'.$wood_category_id.'/edit'));
     }
 
     /**
@@ -121,7 +123,10 @@ class WoodSizeController extends AppBaseController
 
         Flash::success('Ukuran kayu berhasil diperbarui.');
 
-        return redirect(route('woodSizes.index'));
+        $wood_category_id = $woodSize->wood_category_id;
+
+        return redirect(url('master/woodCategories/'.$wood_category_id.'/edit'));
+
     }
 
     /**
@@ -141,10 +146,12 @@ class WoodSizeController extends AppBaseController
             return redirect(route('woodSizes.index'));
         }
 
+        $wood_category_id = $woodSize->wood_category_id;
+
         $this->woodSizeRepository->delete($id);
 
         Flash::success('Ukuran kayu berhasil dihapus.');
 
-        return redirect(route('woodSizes.index'));
+        return redirect(url('master/woodCategories/'.$wood_category_id.'/edit'));
     }
 }
