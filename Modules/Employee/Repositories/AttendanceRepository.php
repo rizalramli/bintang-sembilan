@@ -91,6 +91,62 @@ class AttendanceRepository extends BaseRepository
         return $result;
     }
 
+    public static function getReport($param = [])
+    {
+        $employee  = Employee::query();
+
+        $employee->select(
+            'employee.*',
+            'users.name as employee_name'
+        );
+
+        $employee->join('users', 'users.id', '=', 'employee.user_id');
+
+        if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
+            $employee->whereJsonContains('users.warehouse_id', $param['get_by_warehouse']);
+        }
+
+        $data = null;
+        if($employee->count() > 0){
+            $data = $employee->get()->map(function($item) use ($param) {
+                // get all attendance by employee
+                $attendance = Attendance::query();
+                
+                $attendance->selectRaw('DATE_FORMAT(attendance.check_in, "%Y-%m-%d") as check_in');
+
+                $attendance->join('employee', 'employee.id', '=', 'attendance.employee_id');
+                $attendance->join('users', 'users.id', '=', 'employee.user_id');
+
+                $attendance->where('attendance.employee_id', '=', $item->id);
+
+                // Filter Tanggal
+
+                if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
+                    $attendance->whereMonth('attendance.check_in', $param['get_by_month']);
+                }
+        
+                if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
+                    $attendance->whereYear('attendance.check_in', $param['get_by_year']);
+                }
+        
+                if (isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])) {
+                    $attendance->where('attendance.warehouse_id', $param['get_by_warehouse']);
+                }
+
+                $attendance->orderBy('attendance.id', 'desc');
+
+                $item->attendance = $attendance->get();
+
+                return $item;
+
+            });
+        }
+
+        $data['data'] = collect($data)->sortBy('employee_name')->values()->all();
+
+        return $data;
+    }
+
     public static function getTemplate($warehouse_id,$type)
     {
         $attendance = Attendance::query();

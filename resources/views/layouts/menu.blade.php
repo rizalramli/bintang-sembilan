@@ -93,7 +93,7 @@
 </li>
 @endcanany
 
-@canany(['laporan-kayu masuk','laporan-kayu keluar','lapiran-kehadiran','laporan-penggajian','laporan-laba rugi','laporan-pemasukan','laporan-pengeluaran'])
+@canany(['laporan-kayu masuk','laporan-kayu keluar','laporan-kehadiran','laporan-penggajian','laporan-laba rugi','laporan-pemasukan','laporan-pengeluaran'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='file-text'></i>
@@ -118,7 +118,13 @@
         </li>
         @endcan
 
-        @can('lapiran-kehadiran')
+        @can('laporan-kehadiran')
+        <li class="nav-item {{ Request::is('report/attendances') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/attendances'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Kehadiran</span>
+            </a>
+        </li>
         @endcan
 
         @can('laporan-penggajian')
