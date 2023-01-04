@@ -47,10 +47,7 @@
                        
                         @if (Auth::check())
                          <a class="dropdown-item" href="{{ url('profile') }}">
-                            <i class="me-50" data-feather="user"></i> Profile
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="me-50" data-feather="settings"></i> Settings
+                            <i class="me-50" data-feather="settings"></i> Ubah Password
                         </a>
                         @endif
                         

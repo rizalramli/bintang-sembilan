@@ -10,6 +10,8 @@ use Modules\Master\Models\Warehouse;
 use Modules\Transaction\Models\Finance;
 use Modules\Transaction\Models\IncomingWood;
 use Modules\Transaction\Models\OutcomingWood;
+use Illuminate\Support\Facades\Hash;
+use Flash;
 
 class HomeController extends Controller
 {
@@ -139,5 +141,33 @@ class HomeController extends Controller
         ];
 
         return json_encode($data);
+    }
+
+    public function profile()
+    {
+        $user = \Auth::user();
+        return view('profile', compact('user'));
+    }
+
+    public function updateProfile()
+    {
+        request()->validate([
+            'old_password' => 'required',
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $current_password = auth()->user()->password;
+        $old_password = request('old_password');
+
+        if (Hash::check($old_password, $current_password)) {
+            auth()->user()->update([
+                'password' => bcrypt(request('password')),
+            ]);
+            Flash::success('Password berhasil diubah');
+            return redirect(route('profile'));
+        } else {
+            Flash::error('Password lama tidak sesuai');
+            return redirect(route('profile'));
+        }
     }
 }
