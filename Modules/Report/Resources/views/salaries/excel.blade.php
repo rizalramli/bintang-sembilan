@@ -25,7 +25,7 @@ $sum = 0;
     <tr>
         <td>{{$key+1}}</td>
         <td>{{App\Helpers\Human::dateFormat($value->date)}}</td>
-        <td>{{$value->users_name}}</td>
+        <td>{{$value->user_name}}</td>
         <td>{{$value->description}}</td>
         <td>{{$value->price}}</td>
         <td>{{$value->volume}}</td>
