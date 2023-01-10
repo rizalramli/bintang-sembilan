@@ -21,6 +21,7 @@ use Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Modules\Master\Models\Company;
+use Modules\Master\Models\Employee;
 
 class OutcomingWoodController extends AppBaseController
 {
@@ -40,9 +41,11 @@ class OutcomingWoodController extends AppBaseController
      */
     public function index(OutcomingWoodDataTable $outcomingWoodDataTable)
     {
+        $data['employee'] = Employee::join('users', 'users.id', '=', 'employee.user_id')->pluck('users.name', 'employee.id')->prepend('Semua Sopir', null);
         $data['customer'] = Customer::pluck('name', 'id')->prepend('Semua Customer', null);
         $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id')->prepend('Semua Jenis', null);
+        $data['number_vehicle'] = Human::getVehicleNumber();
 
         return $outcomingWoodDataTable
         ->with([
@@ -50,6 +53,8 @@ class OutcomingWoodController extends AppBaseController
             'filter_warehouse' => request()->filter_warehouse,
             'filter_wood_type_out' => request()->filter_wood_type_out,
             'filter_date' => request()->filter_date,
+            'filter_employee' => request()->filter_employee,
+            'filter_number_vehicle' => request()->filter_number_vehicle,
             'filter_date_start' => request()->filter_date_start,
             'filter_date_end' => request()->filter_date_end,
         ])
@@ -64,6 +69,7 @@ class OutcomingWoodController extends AppBaseController
     public function create()
     {
         $data['template_wood_out'] = TemplateWoodOut::where('is_active',1)->pluck('name', 'id');
+        $data['employee'] = Employee::join('users', 'users.id', '=', 'employee.user_id')->pluck('users.name', 'employee.id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
@@ -82,8 +88,14 @@ class OutcomingWoodController extends AppBaseController
         $input = $request->all();
 
         $cost = Human::removeFormatRupiah($input['cost']);
+        $cargo_fee = Human::removeFormatRupiah($input['cargo_fee']);
+        $driver_salary = Human::removeFormatRupiah($input['driver_salary']);
+        $fuel_cost = Human::removeFormatRupiah($input['fuel_cost']);
 
         $input['cost'] = $cost;
+        $input['cargo_fee'] = $cargo_fee;
+        $input['driver_salary'] = $driver_salary;
+        $input['fuel_cost'] = $fuel_cost;
 
         $outcomingWood = $this->outcomingWoodRepository->create($input);
 
@@ -93,13 +105,71 @@ class OutcomingWoodController extends AppBaseController
             {
                 $customer = Customer::find($request->customer_id);
                 $warehouse = Warehouse::find($request->warehouse_id);
-                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles'];
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
                 Finance::create([
                     'warehouse_id' => $request->warehouse_id,
                     'date' => $request->date,
                     'description' => $description,
                     'type' => 0,
                     'amount' => $cost,
+                    'ref_id' => $outcomingWood->id,
+                    'ref_table' => 'outcoming_wood',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+
+            if($cargo_fee > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                Finance::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'date' => $request->date,
+                    'description' => $description,
+                    'type' => 1,
+                    'amount' => $cargo_fee,
+                    'ref_id' => $outcomingWood->id,
+                    'ref_table' => 'outcoming_wood',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+
+            if($driver_salary > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                Finance::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'date' => $request->date,
+                    'description' => $description,
+                    'type' => 1,
+                    'amount' => $driver_salary,
+                    'ref_id' => $outcomingWood->id,
+                    'ref_table' => 'outcoming_wood',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+
+            if($fuel_cost > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                Finance::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'date' => $request->date,
+                    'description' => $description,
+                    'type' => 1,
+                    'amount' => $fuel_cost,
                     'ref_id' => $outcomingWood->id,
                     'ref_table' => 'outcoming_wood',
                     'created_at' => Carbon::now(),
@@ -152,6 +222,7 @@ class OutcomingWoodController extends AppBaseController
         }
 
         $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
+        $data['employee'] = Employee::join('users', 'users.id', '=', 'employee.user_id')->pluck('users.name', 'employee.id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
@@ -183,6 +254,7 @@ class OutcomingWoodController extends AppBaseController
         }
 
         $data['template_wood_out'] = TemplateWoodOut::pluck('name', 'id');
+        $data['employee'] = Employee::join('users', 'users.id', '=', 'employee.user_id')->pluck('users.name', 'employee.id');
         $data['customer'] = Customer::pluck('name', 'id');
         $data['warehouse'] = Warehouse::pluck('name', 'id');
         $data['wood_type_out'] = WoodTypeOut::pluck('name', 'id');
@@ -219,8 +291,14 @@ class OutcomingWoodController extends AppBaseController
         }
 
         $cost = Human::removeFormatRupiah($input['cost']);
+        $cargo_fee = Human::removeFormatRupiah($input['cargo_fee']);
+        $driver_salary = Human::removeFormatRupiah($input['driver_salary']);
+        $fuel_cost = Human::removeFormatRupiah($input['fuel_cost']);
 
         $input['cost'] = $cost;
+        $input['cargo_fee'] = $cargo_fee;
+        $input['driver_salary'] = $driver_salary;
+        $input['fuel_cost'] = $fuel_cost;
 
         $outcomingWood = $this->outcomingWoodRepository->update($input, $id);
 
@@ -230,8 +308,11 @@ class OutcomingWoodController extends AppBaseController
             {
                 $customer = Customer::find($request->customer_id);
                 $warehouse = Warehouse::find($request->warehouse_id);
-                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles'];
-                if(empty($finance))
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Pendapatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                $finance_cost = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                ->where('description','LIKE','%Pendapatan kayu keluar%')->first();
+                if(empty($finance_cost))
                 {
                     Finance::create([
                         'warehouse_id' => $request->warehouse_id,
@@ -245,12 +326,124 @@ class OutcomingWoodController extends AppBaseController
                         'updated_at' => Carbon::now(),
                     ]);
                 } else {
-                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])->update([
+                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                    ->where('description','LIKE','%Pendapatan kayu keluar%')->update([
                         'warehouse_id' => $request->warehouse_id,
                         'date' => $request->date,
                         'description' => $description,
                         'type' => 0,
                         'amount' => Human::removeFormatRupiah($input['cost']),
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            if($cargo_fee > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                $finance_cargo_fee = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                ->where('description','LIKE','%Ongkos Muatan%')->first();
+                if(empty($finance_cargo_fee))
+                {
+                    Finance::create([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $cargo_fee,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                    ->where('description','LIKE','%Ongkos Muatan%')->update([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $cargo_fee,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            if($driver_salary > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                $finance_driver_salary = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                ->where('description','LIKE','%Gaji Sopir%')->first();
+                if(empty($finance_driver_salary))
+                {
+                    Finance::create([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $driver_salary,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                    ->where('description','LIKE','%Gaji Sopir%')->update([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $driver_salary,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
+
+            if($fuel_cost > 0)
+            {
+                $customer = Customer::find($request->customer_id);
+                $warehouse = Warehouse::find($request->warehouse_id);
+                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+                $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+                $finance_fuel_cost = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                ->where('description','LIKE','%Biaya Solar%')->first();
+                if(empty($finance_fuel_cost))
+                {
+                    Finance::create([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $fuel_cost,
+                        'ref_id' => $outcomingWood->id,
+                        'ref_table' => 'outcoming_wood',
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                } else {
+                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+                    ->where('description','LIKE','%Biaya Solar%')->update([
+                        'warehouse_id' => $request->warehouse_id,
+                        'date' => $request->date,
+                        'description' => $description,
+                        'type' => 1,
+                        'amount' => $fuel_cost,
                         'ref_id' => $outcomingWood->id,
                         'ref_table' => 'outcoming_wood',
                         'created_at' => Carbon::now(),

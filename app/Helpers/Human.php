@@ -1,5 +1,8 @@
 <?php
 namespace App\Helpers;
+
+use Modules\Transaction\Models\OutcomingWood;
+
 /**
  * 
  */
@@ -27,6 +30,12 @@ class Human
 	public static function dateFormat($datetime)
 	{
 		return date('d/m/Y', strtotime($datetime));
+	}
+
+	public static function getVehicleNumber()
+	{
+		$outcomingWood = OutcomingWood::pluck('number_vehicles','number_vehicles')->prepend('Semua Nopol', null);
+		return $outcomingWood;
 	}
 
 	public static function monthIndonesia()

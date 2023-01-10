@@ -32,6 +32,14 @@
                         {!! Form::label('filter_date', 'Filter Berdasarkan') !!}
                         {!! Form::select('filter_date', ['day' => 'Hari ini','week' => '7 Hari Terakhir','month' => 'Bulan Ini','year' => 'Tahun Ini'], 'day', ['class' => 'select2 form-control','id' => 'filter_date']) !!}
                     </div>
+                    <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_employee', 'Filter Sopir') !!}
+                        {!! Form::select('filter_employee', $employee, null, ['class' => 'select2 form-control','id' => 'filter_employee']) !!}
+                    </div>
+                    <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_number_vehicle', 'Filter Nopol') !!}
+                        {!! Form::select('filter_number_vehicle', $number_vehicle, null, ['class' => 'select2 form-control','id' => 'filter_number_vehicle']) !!}
+                    </div>
                     <div class="form-group col-sm-3 mb-1">
                         {!! Form::label('date', 'Filter Dari Tanggal') !!}
                         {!! Form::text('filter_date_start', null, ['class' => 'form-control date-custom','id' => 'filter_date_start']) !!}

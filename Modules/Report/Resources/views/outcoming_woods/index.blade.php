@@ -24,6 +24,10 @@
                         {!! Form::label('filter_year', 'Filter Tahun') !!}
                         {!! Form::select('filter_year', $year, date('Y'), ['class' => 'select2 form-control','id' => 'filter_year']) !!}
                     </div>
+                    <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_number_vehicle', 'Filter Nopol') !!}
+                        {!! Form::select('filter_number_vehicle', $number_vehicle, null, ['class' => 'select2 form-control','id' => 'filter_number_vehicle']) !!}
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
@@ -42,8 +46,10 @@
     $('#export-excel').on('click', function() {
         var filter_month = $('#filter_month').val();
         var filter_year = $('#filter_year').val();
+        var filter_number_vehicle = $('#filter_number_vehicle').val();
         var filter = '?filter_month=' + filter_month + 
-        '&filter_year=' + filter_year;
+        '&filter_year=' + filter_year + 
+        '&filter_number_vehicle=' + filter_number_vehicle;
         var url = "{{ url('report/outcomingWoods/excel') }}" + filter;
         window.open(
             url,

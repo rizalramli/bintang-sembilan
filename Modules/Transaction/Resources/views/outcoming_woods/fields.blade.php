@@ -36,8 +36,19 @@
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('customer_id') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('customer_id', 'Customer') !!}
-    {!! Form::select('customer_id', $customer, isset($incomingWood) ? $incomingWood->customer_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'customer_id']) !!}
+    {!! Form::select('customer_id', $customer, isset($outcomingWood) ? $outcomingWood->customer_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'customer_id']) !!}
     @error('customer_id')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('employee_id') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('employee_id', 'Sopir') !!}
+    {!! Form::select('employee_id', $employee, isset($outcomingWood) ? $outcomingWood->employee_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'employee_id']) !!}
+    @error('employee_id')
     <div class="invalid-feedback">
         {{ $message }}
     </div>
@@ -109,6 +120,43 @@
     {!! Form::label('cost', 'Biaya') !!}
     {!! Form::text('cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->cost) : 0, ['id' => 'cost','class' => "rupiah form-control $is_invalid"]) !!}
     @error('cost')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<hr>
+<h5>Pengeluaran</h5>
+<hr>
+
+<div class="form-group col-sm-4 mb-1">
+    @php $is_invalid = ''; $errors->has('cargo_fee') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('cargo_fee', 'Ongkos Muatan') !!}
+    {!! Form::text('cargo_fee', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->cargo_fee) : 0, ['id' => 'cargo_fee','class' => "rupiah form-control $is_invalid"]) !!}
+    @error('cargo_fee')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<div class="form-group col-sm-4 mb-1">
+    @php $is_invalid = ''; $errors->has('driver_salary') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('driver_salary', 'Gaji Sopir') !!}
+    {!! Form::text('driver_salary', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->driver_salary) : 0, ['id' => 'driver_salary','class' => "rupiah form-control $is_invalid"]) !!}
+    @error('driver_salary')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+    @enderror
+</div>
+
+<div class="form-group col-sm-4 mb-1">
+    @php $is_invalid = ''; $errors->has('fuel_cost') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('fuel_cost', 'Biaya Solar') !!}
+    {!! Form::text('fuel_cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->fuel_cost) : 0, ['id' => 'fuel_cost','class' => "rupiah form-control $is_invalid"]) !!}
+    @error('fuel_cost')
     <div class="invalid-feedback">
         {{ $message }}
     </div>

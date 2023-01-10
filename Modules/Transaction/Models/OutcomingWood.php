@@ -36,6 +36,7 @@ class OutcomingWood extends Model
 
     public $fillable = [
         'customer_id',
+        'employee_id',
         'warehouse_id',
         'wood_type_out_id',
         'serial_number',
@@ -44,6 +45,9 @@ class OutcomingWood extends Model
         'total_qty',
         'total_volume',
         'cost',
+        'cargo_fee',
+        'driver_salary',
+        'fuel_cost',
         'description',
         'created_at',
         'updated_at'
@@ -77,6 +81,7 @@ class OutcomingWood extends Model
      */
     public static $rules = [
         'customer_id' => 'required',
+        'employee_id' => 'required',
         'warehouse_id' => 'required',
         'wood_type_out_id' => 'required',
         'serial_number' => 'required',

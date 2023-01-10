@@ -76,6 +76,14 @@ class OutcomingWoodRepository extends BaseRepository
             $result->where('outcoming_wood.customer_id', '=', $param['get_by_customer']);
         }
 
+        if(isset($param['get_by_employee']) && !is_null($param['get_by_employee'])){
+            $result->where('outcoming_wood.employee_id', '=', $param['get_by_employee']);
+        }
+
+        if(isset($param['get_by_number_vehicle']) && !is_null($param['get_by_number_vehicle'])){
+            $result->where('outcoming_wood.number_vehicles', 'LIKE', "%{$param['get_by_number_vehicle']}%");
+        }
+
         if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
             $result->where('outcoming_wood.warehouse_id', '=', $param['get_by_warehouse']);
         }
@@ -183,6 +191,10 @@ class OutcomingWoodRepository extends BaseRepository
 
         if (isset($param['get_by_year']) && !is_null($param['get_by_year'])) {
             $result->whereYear('outcoming_wood.date', $param['get_by_year']);
+        }
+
+        if(isset($param['get_by_number_vehicle']) && !is_null($param['get_by_number_vehicle'])){
+            $result->where('outcoming_wood.number_vehicles', 'LIKE', "%{$param['get_by_number_vehicle']}%");
         }
 
         $result->orderBy('outcoming_wood.date', 'asc');

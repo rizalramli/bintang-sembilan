@@ -16,11 +16,13 @@ class OutcomingWoodController extends AppBaseController
     {
         $data['month'] = Human::monthIndonesia();
         $data['year'] = Human::yearReport();
+        $data['number_vehicle'] = Human::getVehicleNumber();
         return view('report::outcoming_woods.index', $data);
     }
 
     public function excel()
     {
+        $param['get_by_number_vehicle'] = request()->filter_number_vehicle;
         $param['get_by_month'] = request()->filter_month;
         $param['get_by_year'] = request()->filter_year;
 

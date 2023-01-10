@@ -22,6 +22,12 @@
         $('#filter_date_end').val('');
         window.LaravelDataTables["dataTableBuilder"].ajax.reload();
     });
+    $('#filter_employee').on('change', function() {
+        window.LaravelDataTables["dataTableBuilder"].ajax.reload();
+    });
+    $('#filter_number_vehicle').on('change', function() {
+        window.LaravelDataTables["dataTableBuilder"].ajax.reload();
+    });
     $('#filter_date_start').on('change', function() {
         window.LaravelDataTables["dataTableBuilder"].ajax.reload();
     });

@@ -48,10 +48,14 @@ class OutcomingWoodDataTable extends DataTable
         $filter_warehouse = $this->filter_warehouse;
         $filter_wood_type = $this->filter_wood_type;
         $filter_date = $this->filter_date;
+        $filter_employee = $this->filter_employee;
+        $filter_number_vehicle = $this->filter_number_vehicle;
         $filter_date_start = $this->filter_date_start;
         $filter_date_end = $this->filter_date_end;
 
         $param['get_by_customer'] = $filter_customer;
+        $param['get_by_employee'] = $filter_employee;
+        $param['get_by_number_vehicle'] = $filter_number_vehicle;
         $param['get_by_warehouse'] = $filter_warehouse;
         $param['get_by_wood_type'] = $filter_wood_type;
 
@@ -90,10 +94,12 @@ class OutcomingWoodDataTable extends DataTable
             ->ajax([
                 'data' => '
                     function(d) {
-                        d.filter_customer= $("#filter_supplier").val();
+                        d.filter_customer= $("#filter_customer").val();
                         d.filter_warehouse= $("#filter_warehouse").val();
                         d.filter_wood_type_out= $("#filter_wood_type_out").val();
                         d.filter_date= $("#filter_date").val();
+                        d.filter_employee= $("#filter_employee").val();
+                        d.filter_number_vehicle= $("#filter_number_vehicle").val();
                         d.filter_date_start= $("#filter_date_start").val();
                         d.filter_date_end = $("#filter_date_end").val();
                     }
