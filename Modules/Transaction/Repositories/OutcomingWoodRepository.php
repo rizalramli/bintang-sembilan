@@ -81,7 +81,7 @@ class OutcomingWoodRepository extends BaseRepository
         }
 
         if(isset($param['get_by_number_vehicle']) && !is_null($param['get_by_number_vehicle'])){
-            $result->where('outcoming_wood.number_vehicles', 'LIKE', "%{$param['get_by_number_vehicle']}%");
+            $result->whereRaw('LOWER(outcoming_wood.number_vehicles) LIKE ?', ['%'.strtolower($param['get_by_number_vehicle']).'%']);
         }
 
         if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
@@ -194,7 +194,7 @@ class OutcomingWoodRepository extends BaseRepository
         }
 
         if(isset($param['get_by_number_vehicle']) && !is_null($param['get_by_number_vehicle'])){
-            $result->where('outcoming_wood.number_vehicles', 'LIKE', "%{$param['get_by_number_vehicle']}%");
+            $result->whereRaw('LOWER(outcoming_wood.number_vehicles) LIKE ?', ['%'.strtolower($param['get_by_number_vehicle']).'%']);
         }
 
         $result->orderBy('outcoming_wood.date', 'asc');

@@ -348,7 +348,7 @@ class OutcomingWoodController extends AppBaseController
                 $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
                 $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
                 $finance_cargo_fee = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Ongkos Muatan%')->first();
+                ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->first();
                 if(empty($finance_cargo_fee))
                 {
                     Finance::create([
@@ -364,7 +364,7 @@ class OutcomingWoodController extends AppBaseController
                     ]);
                 } else {
                     Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Ongkos Muatan%')->update([
+                    ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->update([
                         'warehouse_id' => $request->warehouse_id,
                         'date' => $request->date,
                         'description' => $description,
@@ -385,7 +385,7 @@ class OutcomingWoodController extends AppBaseController
                 $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
                 $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
                 $finance_driver_salary = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Gaji Sopir%')->first();
+                ->where('description','LIKE','%Gaji Sopir kayu keluar%')->first();
                 if(empty($finance_driver_salary))
                 {
                     Finance::create([
@@ -401,7 +401,7 @@ class OutcomingWoodController extends AppBaseController
                     ]);
                 } else {
                     Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Gaji Sopir%')->update([
+                    ->where('description','LIKE','%Gaji Sopir kayu keluar%')->update([
                         'warehouse_id' => $request->warehouse_id,
                         'date' => $request->date,
                         'description' => $description,
@@ -422,7 +422,7 @@ class OutcomingWoodController extends AppBaseController
                 $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
                 $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
                 $finance_fuel_cost = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Biaya Solar%')->first();
+                ->where('description','LIKE','%Biaya Solar kayu keluar%')->first();
                 if(empty($finance_fuel_cost))
                 {
                     Finance::create([
@@ -438,7 +438,7 @@ class OutcomingWoodController extends AppBaseController
                     ]);
                 } else {
                     Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Biaya Solar%')->update([
+                    ->where('description','LIKE','%Biaya Solar kayu keluar%')->update([
                         'warehouse_id' => $request->warehouse_id,
                         'date' => $request->date,
                         'description' => $description,
