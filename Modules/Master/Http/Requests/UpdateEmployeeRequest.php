@@ -28,11 +28,6 @@ class UpdateEmployeeRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string|max:125',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($this->input('user_id')),
-            ],
             'user_id' => 'nullable|integer',
             'address' => 'required|string|max:125',
             'phone' => 'required|string|max:15',
