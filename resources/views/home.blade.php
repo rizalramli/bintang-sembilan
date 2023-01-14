@@ -99,6 +99,21 @@
                     </a>
                 </div>
                 <div class="col-xl-3 col-sm-6 col-12 mb-2">
+                    <a href="{{url('transaction/truckRentals')}}" class="text-black">
+                        <div class="d-flex flex-row">
+                            <div class="avatar bg-light-primary me-2">
+                                <div class="avatar-content">
+                                    <i data-feather="layers" class="avatar-icon"></i>
+                                </div>
+                            </div>
+                            <div class="my-auto">
+                                <h4 class="fw-bolder mb-0">Penyewaan Truk</h4>
+                                <p class="card-text font-small-3 mb-0" id="truckRentals"></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12 mb-2">
                     <a href="{{url('employee/salaries')}}" class="text-black">
                         <div class="d-flex flex-row">
                             <div class="avatar bg-light-info me-2">
@@ -169,6 +184,7 @@
                 $('#incomingWoods').html(data.count_incomingWoods);
                 $('#incomingWoodTrades').html(data.count_incomingWoodTrades);
                 $('#outcomingWoods').html(data.count_outcomingWoods);
+                $('#truckRentals').html(data.count_truckRentals);
                 $('#salaries').html(data.count_salaries);
                 $('#incomes').html(data.count_incomes);
                 $('#expenses').html(data.count_expenses);

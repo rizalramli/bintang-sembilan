@@ -55,7 +55,7 @@ class IncomeDataTable extends DataTable
             if ($filter_date == 'day') {
                 $param['get_by_date'] = Carbon::today();
             } else if ($filter_date == 'week') {
-                $from_date = Carbon::now()->subDays(7);
+                $from_date = Carbon::now()->subDays(7)->startOfDay();
                 $to_date =  Carbon::today()->endOfDay();
                 $param['get_by_date_start'] = $from_date;
                 $param['get_by_date_end'] = $to_date;

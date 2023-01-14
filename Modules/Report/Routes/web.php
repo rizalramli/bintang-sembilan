@@ -17,6 +17,8 @@ Route::prefix('report')->group(function() {
     Route::get('incomingWoods', 'IncomingWoodController@index');
     Route::get('outcomingWoods/excel', 'OutcomingWoodController@excel');
     Route::get('outcomingWoods', 'OutcomingWoodController@index');
+    Route::get('truckRentals/excel', 'TruckRentalController@excel');
+    Route::get('truckRentals', 'TruckRentalController@index');
     Route::get('attendances/excel', 'AttendanceController@excel');
     Route::get('attendances', 'AttendanceController@index');
     Route::get('salaries/excel', 'SalaryController@excel');

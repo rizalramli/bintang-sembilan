@@ -8,7 +8,7 @@
 </li>
 @endcan
 
-@canany(['transaksi-kayu masuk sakr','transaksi-kayu masuk dagang','transaksi-kayu keluar','transaksi-pemasukan','transaksi-pengeluaran'])
+@canany(['transaksi-kayu masuk sakr','transaksi-kayu masuk dagang','transaksi-kayu keluar','transaksi-pemasukan','transaksi-pengeluaran','transaksi-penyewaan truk'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='clipboard'></i>
@@ -38,6 +38,15 @@
             <a class="submenu" href="{{ url('transaction/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('transaksi-penyewaan truk')
+        <li class="nav-item {{ Request::is('transaction/truckRentals') || Request::is('transaction/truckRentals/create') || Request::is('transaction/truckRentals/*/edit') || Request::is('transaction/truckRentals/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('transaction/truckRentals'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Penyewaan Truk</span>
             </a>
         </li>
         @endcan
@@ -93,7 +102,7 @@
 </li>
 @endcanany
 
-@canany(['laporan-kayu masuk','laporan-kayu keluar','laporan-kehadiran','laporan-penggajian','laporan-laba rugi','laporan-pemasukan','laporan-pengeluaran'])
+@canany(['laporan-kayu masuk','laporan-kayu keluar','laporan-kehadiran','laporan-penggajian','laporan-laba rugi','laporan-pemasukan','laporan-pengeluaran','laporan-penyewaan truk'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='file-text'></i>
@@ -114,6 +123,15 @@
             <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('laporan-penyewaan truk')
+        <li class="nav-item {{ Request::is('report/truckRentals') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/truckRentals'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Penyewaan Truk</span>
             </a>
         </li>
         @endcan
@@ -286,5 +304,4 @@
     </ul>
 </li>
 @endcanany
-
 

@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use Modules\Transaction\Models\OutcomingWood;
+use Modules\Transaction\Models\TruckRental;
 
 /**
  * 
@@ -36,6 +37,12 @@ class Human
 	{
 		$outcomingWood = OutcomingWood::pluck('number_vehicles','number_vehicles')->prepend('Semua Nopol', null);
 		return $outcomingWood;
+	}
+
+	public static function getVehicleNumberTruckRental()
+	{
+		$truckRental = TruckRental::pluck('number_vehicles','number_vehicles')->prepend('Semua Nopol', null);
+		return $truckRental;
 	}
 
 	public static function monthIndonesia()

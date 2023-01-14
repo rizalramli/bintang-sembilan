@@ -153,12 +153,5 @@
 </div>
 
 <div class="form-group col-sm-4 mb-1">
-    @php $is_invalid = ''; $errors->has('fuel_cost') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('fuel_cost', 'Biaya Solar') !!}
-    {!! Form::text('fuel_cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->fuel_cost) : 0, ['id' => 'fuel_cost','class' => "rupiah form-control $is_invalid"]) !!}
-    @error('fuel_cost')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
+    {!! Form::hidden('fuel_cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->fuel_cost) : 0, ['id' => 'fuel_cost','class' => "rupiah form-control $is_invalid"]) !!}
 </div>

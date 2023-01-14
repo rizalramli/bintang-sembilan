@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Employee\DataTables;
+namespace Modules\Transaction\DataTables;
 
 use App\Helpers\Human;
-use Modules\Employee\Models\Salary;
+use Modules\Transaction\Models\TruckRental;
+use Modules\Transaction\Repositories\TruckRentalRepository;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Carbon\Carbon;
-use Modules\Employee\Repositories\SalaryRepository;
 
-class SalaryDataTable extends DataTable
+class TruckRentalDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,37 +21,42 @@ class SalaryDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable
+        return $dataTable->addColumn('action', 'transaction::truck_rentals.datatables_actions')
         ->editColumn('date', function ($data) {
             return Human::dateFormat($data->date);
         })
-        ->editColumn('price', function ($data) {
-            return '<div style="text-align:right">' . Human::createFormatRupiah($data->price) . '</div>';
+        ->editColumn('truck_cost', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->truck_cost) . '</div>';
         })
-        ->editColumn('total', function ($data) {
-            return '<div style="text-align:right">' . Human::createFormatRupiah($data->total) . '</div>';
+        ->editColumn('driver_cost', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->driver_cost) . '</div>';
         })
-        ->addColumn('action', 'employee::salaries.datatables_actions')
-        ->rawColumns(['action', 'price', 'total']);
+        ->editColumn('solar_cost', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->solar_cost) . '</div>';
+        })
+        ->editColumn('damage_cost', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->damage_cost) . '</div>';
+        })
+        ->rawColumns(['action', 'truck_cost', 'driver_cost','solar_cost','damage_cost']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Salary $model
+     * @param \App\Models\TruckRental $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Salary $model)
+    public function query(TruckRental $model)
     {
         $param = [];
 
-        $filter_employee = $this->filter_employee;
+        $filter_number_vehicle = $this->filter_number_vehicle;
         $filter_warehouse = $this->filter_warehouse;
         $filter_date = $this->filter_date;
         $filter_date_start = $this->filter_date_start;
         $filter_date_end = $this->filter_date_end;
-
-        $param['get_by_employee'] = $filter_employee;
+        
+        $param['get_by_number_vehicle'] = $filter_number_vehicle;
         $param['get_by_warehouse'] = $filter_warehouse;
 
         if ($filter_date_start != null && $filter_date_end != null) {
@@ -73,7 +78,7 @@ class SalaryDataTable extends DataTable
             }
         }
 
-        return SalaryRepository::getData($param);
+        return TruckRentalRepository::getData($param);
     }
 
     /**
@@ -89,7 +94,7 @@ class SalaryDataTable extends DataTable
             ->ajax([
                 'data' => '
                     function(d) {
-                        d.filter_employee= $("#filter_employee").val();
+                        d.filter_number_vehicle= $("#filter_number_vehicle").val();
                         d.filter_warehouse= $("#filter_warehouse").val();
                         d.filter_date= $("#filter_date").val();
                         d.filter_date_start= $("#filter_date_start").val();
@@ -107,7 +112,7 @@ class SalaryDataTable extends DataTable
                 'buttons'   => [
                     ['text'     => '<i data-feather="plus"></i> Tambah Data',
                         'className' => 'create-new btn btn-success',
-                        'action'    => 'function() { window.location = "' . route('salaries.create')  . '"; }',
+                        'action'    => 'function() { window.location = "' . route('truckRentals.create')  . '"; }',
                     ],
                 ],
                 'drawCallback'  => 'function() { feather.replace() }',
@@ -122,12 +127,15 @@ class SalaryDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'number_vehicles' => ['title' => 'Nopol'],
             'date' => ['title' => 'Tanggal'],
-            'user_name' => ['title' => 'Mandor','name' => 'users.name'],
-            'price' => ['title' => 'Harga / m3'],
-            'volume' => ['title' => 'Volume'],
-            'total' => ['title' => 'Total Gaji'],
-            'description' => ['title' => 'Keterangan'],
+            'driver_name' => ['title' => 'Sopir'],
+            'loading_place' => ['title' => 'Tempat Muat'],
+            'purpose' => ['title' => 'Tujuan'],
+            'truck_cost' => ['title' => 'Truk'],
+            'driver_cost' => ['title' => 'Gaji Sopir'],
+            'solar_cost' => ['title' => 'Solar'],
+            'damage_cost' => ['title' => 'Kerusakan'],
         ];
     }
 
@@ -138,6 +146,6 @@ class SalaryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'salaries_datatable_' . time();
+        return 'truck_rentals_datatable_' . time();
     }
 }

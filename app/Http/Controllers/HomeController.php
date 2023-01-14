@@ -12,6 +12,8 @@ use Modules\Transaction\Models\IncomingWood;
 use Modules\Transaction\Models\OutcomingWood;
 use Illuminate\Support\Facades\Hash;
 use Flash;
+use Modules\Transaction\Models\TruckRental;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -47,6 +49,7 @@ class HomeController extends Controller
         $count_incomingWoods = 0;
         $count_incomingWoodTrades = 0;
         $count_outcomingWoods = 0;
+        $count_truckRentals = 0;
         $total_salaries = 0;
         $total_incomes = 0;
         $total_expenses = 0;
@@ -55,6 +58,7 @@ class HomeController extends Controller
         $count_incomingWoods = IncomingWood::select('id')->where('type', 1);
         $count_incomingWoodTrades = IncomingWood::select('id')->where('type', 2);
         $count_outcomingWoods = OutcomingWood::select('id');
+        $count_truckRentals = TruckRental::select('id');
         $total_salaries = Salary::select('id');
         $total_incomes = Finance::select('id')->where('type', 0);
         $total_expenses = Finance::select('id')->where('type', 1);
@@ -65,6 +69,7 @@ class HomeController extends Controller
             $count_incomingWoods->where('warehouse_id', $filter_warehouse);
             $count_incomingWoodTrades->where('warehouse_id', $filter_warehouse);
             $count_outcomingWoods->where('warehouse_id', $filter_warehouse);
+            $count_truckRentals->where('warehouse_id', $filter_warehouse);
             $total_salaries->where('warehouse_id', $filter_warehouse);
             $total_incomes->where('warehouse_id', $filter_warehouse);
             $total_expenses->where('warehouse_id', $filter_warehouse);
@@ -75,6 +80,7 @@ class HomeController extends Controller
             $count_incomingWoods->whereBetween('date', [$filter_date_start, $filter_date_end]);
             $count_incomingWoodTrades->whereBetween('date', [$filter_date_start, $filter_date_end]);
             $count_outcomingWoods->whereBetween('date', [$filter_date_start, $filter_date_end]);
+            $count_truckRentals->whereBetween('date', [$filter_date_start, $filter_date_end]);
             $total_salaries->whereBetween('date', [$filter_date_start, $filter_date_end]);
             $total_incomes->whereBetween('date', [$filter_date_start, $filter_date_end]);
             $total_expenses->whereBetween('date', [$filter_date_start, $filter_date_end]);
@@ -84,22 +90,27 @@ class HomeController extends Controller
                 $count_incomingWoods->whereDate('date', date('Y-m-d'));
                 $count_incomingWoodTrades->whereDate('date', date('Y-m-d'));
                 $count_outcomingWoods->whereDate('date', date('Y-m-d'));
+                $count_truckRentals->whereDate('date', date('Y-m-d'));
                 $total_salaries->whereDate('date', date('Y-m-d'));
                 $total_incomes->whereDate('date', date('Y-m-d'));
                 $total_expenses->whereDate('date', date('Y-m-d'));
             } elseif ($filter_date == 'week') {
-                $count_attendances->whereBetween('check_in', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $count_incomingWoods->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $count_incomingWoodTrades->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $count_outcomingWoods->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $total_salaries->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $total_incomes->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
-                $total_expenses->whereBetween('date', [date('Y-m-d', strtotime('monday this week')), date('Y-m-d', strtotime('sunday this week'))]);
+                $filter_date_start = Carbon::now()->subDays(7)->startOfDay();
+                $filter_date_end =  Carbon::today()->endOfDay();
+                $count_attendances->whereBetween('check_in', [$filter_date_start, $filter_date_end]);
+                $count_incomingWoods->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $count_incomingWoodTrades->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $count_outcomingWoods->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $count_truckRentals->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $total_salaries->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $total_incomes->whereBetween('date', [$filter_date_start, $filter_date_end]);
+                $total_expenses->whereBetween('date', [$filter_date_start, $filter_date_end]);
             } elseif ($filter_date == 'month') {
                 $count_attendances->whereMonth('check_in', date('m'));
                 $count_incomingWoods->whereMonth('date', date('m'));
                 $count_incomingWoodTrades->whereMonth('date', date('m'));
                 $count_outcomingWoods->whereMonth('date', date('m'));
+                $count_truckRentals->whereMonth('date', date('m'));
                 $total_salaries->whereMonth('date', date('m'));
                 $total_incomes->whereMonth('date', date('m'));
                 $total_expenses->whereMonth('date', date('m'));
@@ -108,6 +119,7 @@ class HomeController extends Controller
                 $count_incomingWoods->whereYear('date', date('Y'));
                 $count_incomingWoodTrades->whereYear('date', date('Y'));
                 $count_outcomingWoods->whereYear('date', date('Y'));
+                $count_truckRentals->whereYear('date', date('Y'));
                 $total_salaries->whereYear('date', date('Y'));
                 $total_incomes->whereYear('date', date('Y'));
                 $total_expenses->whereYear('date', date('Y'));
@@ -116,6 +128,7 @@ class HomeController extends Controller
                 $count_incomingWoods->whereYear('date', date('Y'));
                 $count_incomingWoodTrades->whereYear('date', date('Y'));
                 $count_outcomingWoods->whereYear('date', date('Y'));
+                $count_truckRentals->whereYear('date', date('Y'));
                 $total_salaries->whereYear('date', date('Y'));
                 $total_incomes->whereYear('date', date('Y'));
                 $total_expenses->whereYear('date', date('Y'));
@@ -126,6 +139,7 @@ class HomeController extends Controller
         $count_incomingWoods = $count_incomingWoods->count();
         $count_incomingWoodTrades = $count_incomingWoodTrades->count();
         $count_outcomingWoods = $count_outcomingWoods->count();
+        $count_truckRentals = $count_truckRentals->count();
         $total_salaries = $total_salaries->sum('total');
         $total_incomes = $total_incomes->sum('amount');
         $total_expenses = $total_expenses->sum('amount');
@@ -135,6 +149,7 @@ class HomeController extends Controller
             'count_incomingWoods' => $count_incomingWoods. ' Transaksi',
             'count_incomingWoodTrades' => $count_incomingWoodTrades. ' Transaksi',
             'count_outcomingWoods' => $count_outcomingWoods. ' Transaksi',
+            'count_truckRentals' => $count_truckRentals. ' Transaksi',
             'count_salaries' => 'Rp '. Human::createFormatRupiah($total_salaries),
             'count_incomes' => 'Rp '. Human::createFormatRupiah($total_incomes),
             'count_expenses' => 'Rp '. Human::createFormatRupiah($total_expenses),

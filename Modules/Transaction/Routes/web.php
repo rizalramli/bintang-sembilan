@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('outcomingWoods', 'OutcomingWoodController')->except(['update']);
         Route::resource('incomes', 'IncomeController');
         Route::resource('expenses', 'ExpenseController');
+        Route::resource('truckRentals', 'TruckRentalController');
     });
 
 });
