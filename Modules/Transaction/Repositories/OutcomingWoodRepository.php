@@ -185,6 +185,10 @@ class OutcomingWoodRepository extends BaseRepository
 
         $result->leftJoin('customer', 'customer.id', '=', 'outcoming_wood.customer_id');
 
+        if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
+            $result->where('outcoming_wood.warehouse_id', '=', $param['get_by_warehouse']);
+        }
+
         if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
             $result->whereMonth('outcoming_wood.date', $param['get_by_month']);
         }

@@ -9,6 +9,7 @@ use Excel;
 use App\Exports\TemplateExcel;
 use App\Exports\Themes\IncomingWood as IncomingWoodTheme;
 use Modules\Transaction\Repositories\IncomingWoodRepository;
+use Modules\Master\Models\Warehouse;
 
 class IncomingWoodController extends AppBaseController
 {
@@ -17,6 +18,7 @@ class IncomingWoodController extends AppBaseController
         $data['month'] = Human::monthIndonesia();
         $data['year'] = Human::yearReport();
         $data['status'] = IncomingWood::$status;
+        $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
         return view('report::incoming_woods.index', $data);
     }
 
@@ -25,6 +27,7 @@ class IncomingWoodController extends AppBaseController
         $param['get_by_month'] = request()->filter_month;
         $param['get_by_year'] = request()->filter_year;
         $param['get_by_status'] = request()->filter_status;
+        $param['get_by_warehouse'] = request()->filter_warehouse;
 
         $query = IncomingWoodRepository::getReport($param);
         

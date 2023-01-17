@@ -17,6 +17,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_warehouse', 'Filter Gudang') !!}
+                        {!! Form::select('filter_warehouse', $warehouse, null, ['class' => 'select2 form-control','id' => 'filter_warehouse']) !!}
+                    </div>
+                    <div class="form-group col-sm-3 mb-1">   
                         {!! Form::label('filter_month', 'Filter Bulan') !!}
                         {!! Form::select('filter_month', $month, date('m'), ['class' => 'select2 form-control','id' => 'filter_month']) !!}
                     </div>
@@ -47,9 +51,11 @@
         var filter_month = $('#filter_month').val();
         var filter_year = $('#filter_year').val();
         var filter_status = $('#filter_status').val();
+        var filter_warehouse = $('#filter_warehouse').val();
         var filter = '?filter_month=' + filter_month + 
         '&filter_year=' + filter_year + 
-        '&filter_status=' + filter_status;
+        '&filter_status=' + filter_status + 
+        '&filter_warehouse=' + filter_warehouse;
         var url = "{{ url('report/incomingWoods/excel') }}" + filter;
         window.open(
             url,
