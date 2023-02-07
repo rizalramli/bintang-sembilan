@@ -88,6 +88,7 @@ class SalaryController extends AppBaseController
                     'amount' => $total,
                     'ref_id' => $salary->id,
                     'ref_table' => 'salary',
+                    'flag' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);

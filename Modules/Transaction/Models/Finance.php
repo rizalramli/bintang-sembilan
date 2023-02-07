@@ -38,6 +38,7 @@ class Finance extends Model
         'amount',
         'ref_id',
         'ref_table',
+        'flag',
         'created_at',
         'updated_at'
     ];

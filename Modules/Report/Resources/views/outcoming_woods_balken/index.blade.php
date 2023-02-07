@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Log Sengon Masuk')
+@section('title', 'Balken Keluar')
 @include('layouts.library.style')
 @section('content')
 <div class="row">
@@ -29,8 +29,8 @@
                         {!! Form::select('filter_year', $year, date('Y'), ['class' => 'select2 form-control','id' => 'filter_year']) !!}
                     </div>
                     <div class="form-group col-sm-3 mb-1">   
-                        {!! Form::label('filter_status', 'Filter Status') !!}
-                        {!! Form::select('filter_status', $status, null, ['class' => 'select2 form-control','id' => 'filter_status']) !!}
+                        {!! Form::label('filter_number_vehicle', 'Filter Nopol') !!}
+                        {!! Form::select('filter_number_vehicle', $number_vehicle, null, ['class' => 'select2 form-control','id' => 'filter_number_vehicle']) !!}
                     </div>
                 </div>
             </div>
@@ -50,13 +50,13 @@
     $('#export-excel').on('click', function() {
         var filter_month = $('#filter_month').val();
         var filter_year = $('#filter_year').val();
-        var filter_status = $('#filter_status').val();
+        var filter_number_vehicle = $('#filter_number_vehicle').val();
         var filter_warehouse = $('#filter_warehouse').val();
         var filter = '?filter_month=' + filter_month + 
         '&filter_year=' + filter_year + 
-        '&filter_status=' + filter_status + 
+        '&filter_number_vehicle=' + filter_number_vehicle +
         '&filter_warehouse=' + filter_warehouse;
-        var url = "{{ url('report/incomingWoods/excel') }}" + filter;
+        var url = "{{ url('report/outcomingWoodsBalken/excel') }}" + filter;
         window.open(
             url,
             '_blank'

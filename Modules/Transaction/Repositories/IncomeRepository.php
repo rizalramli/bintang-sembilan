@@ -88,7 +88,7 @@ class IncomeRepository extends BaseRepository
         $result->select('finance.*');
 
         $result->leftJoin('warehouse', 'warehouse.id', '=', 'finance.warehouse_id');
-        $result->where('finance.type',0);
+        // $result->where('finance.type',0);
 
         if (isset($param['get_by_month']) && !is_null($param['get_by_month'])) {
             $result->whereMonth('finance.date', $param['get_by_month']);
@@ -100,6 +100,10 @@ class IncomeRepository extends BaseRepository
 
         if (isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])) {
             $result->where('finance.warehouse_id', $param['get_by_warehouse']);
+        }
+
+        if (isset($param['get_by_flag']) && !is_null($param['get_by_flag'])) {
+            $result->where('finance.flag', $param['get_by_flag']);
         }
 
         $result->orderBy('finance.date', 'asc');

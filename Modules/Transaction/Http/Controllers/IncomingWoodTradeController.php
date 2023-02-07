@@ -107,6 +107,7 @@ class IncomingWoodTradeController extends AppBaseController
                     'type' => 1,
                     'amount' => $cost,
                     'ref_id' => $incomingWood->id,
+                    'flag' => 1,
                     'ref_table' => 'incoming_wood',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

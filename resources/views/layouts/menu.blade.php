@@ -52,19 +52,19 @@
         @endcan
 
         @can('transaksi-pemasukan')
-        <li class="nav-item {{ Request::is('transaction/incomes') || Request::is('transaction/incomes/create') || Request::is('transaction/incomes/*/edit') || Request::is('transaction/incomes/*') ? 'active ' : '' }}">
+        <!-- <li class="nav-item {{ Request::is('transaction/incomes') || Request::is('transaction/incomes/create') || Request::is('transaction/incomes/*/edit') || Request::is('transaction/incomes/*') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('transaction/incomes'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Pemasukan</span>
             </a>
-        </li>
+        </li> -->
         @endcan
 
         @can('transaksi-pengeluaran')
         <li class="nav-item {{ Request::is('transaction/expenses') || Request::is('transaction/expenses/create') || Request::is('transaction/expenses/*/edit') || Request::is('transaction/expenses/*') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('transaction/expenses'); }}">
                 <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Pengeluaran</span>
+                <span class="text text-custom">Operasional</span>
             </a>
         </li>
         @endcan
@@ -113,16 +113,40 @@
         <li class="nav-item {{ Request::is('report/incomingWoods') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/incomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Kayu Masuk</span>
+                <span class="text text-custom">Log Sengon Masuk</span>
             </a>
         </li>
         @endcan
 
         @can('laporan-kayu keluar')
+        <li class="nav-item {{ Request::is('report/outcomingWoodsBalken') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/outcomingWoodsBalken'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Balken Keluar</span>
+            </a>
+        </li>
         <li class="nav-item {{ Request::is('report/outcomingWoods') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('laporan-pengeluaran')
+        <li class="nav-item {{ Request::is('report/expense') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/expense'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Operasional</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('laporan-laba rugi')
+        <li class="nav-item {{ Request::is('report/profit_loss') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/profit_loss'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Hasil Dan Laba</span>
             </a>
         </li>
         @endcan
@@ -136,47 +160,29 @@
         </li>
         @endcan
 
+        @can('laporan-penggajian')
+        <!-- <li class="nav-item {{ Request::is('report/salaries') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/salaries'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Penggajian</span>
+            </a>
+        </li> -->
+        @endcan
+
+        @can('laporan-pemasukan')
+        <!-- <li class="nav-item {{ Request::is('report/income') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/income'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pemasukan</span>
+            </a>
+        </li> -->
+        @endcan
+
         @can('laporan-kehadiran')
         <li class="nav-item {{ Request::is('report/attendances') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/attendances'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kehadiran</span>
-            </a>
-        </li>
-        @endcan
-
-        @can('laporan-penggajian')
-        <li class="nav-item {{ Request::is('report/salaries') ? 'active ' : '' }}">
-            <a class="submenu" href="{{ url('report/salaries'); }}">
-                <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Penggajian</span>
-            </a>
-        </li>
-        @endcan
-
-        @can('laporan-laba rugi')
-        <li class="nav-item {{ Request::is('report/profit_loss') ? 'active ' : '' }}">
-            <a class="submenu" href="{{ url('report/profit_loss'); }}">
-                <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Laba Rugi</span>
-            </a>
-        </li>
-        @endcan
-
-        @can('laporan-pemasukan')
-        <li class="nav-item {{ Request::is('report/income') ? 'active ' : '' }}">
-            <a class="submenu" href="{{ url('report/income'); }}">
-                <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Pemasukan</span>
-            </a>
-        </li>
-        @endcan
-
-        @can('laporan-pengeluaran')
-        <li class="nav-item {{ Request::is('report/expense') ? 'active ' : '' }}">
-            <a class="submenu" href="{{ url('report/expense'); }}">
-                <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Pengeluaran</span>
             </a>
         </li>
         @endcan

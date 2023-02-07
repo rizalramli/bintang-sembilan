@@ -11,8 +11,10 @@ class ProfitLoss
     public function setView($data)
     {
         return view('report::profit_loss.excel',[
-            'profit' => $data['profit'],
-            'loss' => $data['loss'],
+            'outcoming_wood_balken' => $data['outcoming_wood_balken'],
+            'outcoming_wood_all' => $data['outcoming_wood_all'],
+            'incoming_wood' => $data['incoming_wood'],
+            'operasional' => $data['operasional'],
             'warehouse' => $data['warehouse'],
             'month' => $data['month'],
             'year' => $data['year'],

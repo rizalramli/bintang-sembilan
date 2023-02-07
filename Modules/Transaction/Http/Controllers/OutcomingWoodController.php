@@ -97,6 +97,12 @@ class OutcomingWoodController extends AppBaseController
         $input['driver_salary'] = $driver_salary;
         $input['fuel_cost'] = $fuel_cost;
 
+        if($input['wood_type_out_id'] == 1){
+            $flag = 2;
+        } else {
+            $flag = 3;
+        }
+
         $outcomingWood = $this->outcomingWoodRepository->create($input);
 
         if($outcomingWood)
@@ -115,6 +121,7 @@ class OutcomingWoodController extends AppBaseController
                     'amount' => $cost,
                     'ref_id' => $outcomingWood->id,
                     'ref_table' => 'outcoming_wood',
+                    'flag' => $flag,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
@@ -134,6 +141,7 @@ class OutcomingWoodController extends AppBaseController
                     'amount' => $cargo_fee,
                     'ref_id' => $outcomingWood->id,
                     'ref_table' => 'outcoming_wood',
+                    'flag' => $flag,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
@@ -153,6 +161,7 @@ class OutcomingWoodController extends AppBaseController
                     'amount' => $driver_salary,
                     'ref_id' => $outcomingWood->id,
                     'ref_table' => 'outcoming_wood',
+                    'flag' => $flag,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
@@ -172,6 +181,7 @@ class OutcomingWoodController extends AppBaseController
                     'amount' => $fuel_cost,
                     'ref_id' => $outcomingWood->id,
                     'ref_table' => 'outcoming_wood',
+                    'flag' => $flag,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);

@@ -68,6 +68,7 @@ class ExpenseController extends AppBaseController
 
         $input['type'] = 1;
         $input['amount'] = Human::removeFormatRupiah($input['amount']);
+        $input['flag'] = 4;
 
         $expense = $this->expenseRepository->create($input);
 

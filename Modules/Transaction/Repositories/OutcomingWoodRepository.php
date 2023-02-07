@@ -201,6 +201,14 @@ class OutcomingWoodRepository extends BaseRepository
             $result->whereRaw('LOWER(outcoming_wood.number_vehicles) LIKE ?', ['%'.strtolower($param['get_by_number_vehicle']).'%']);
         }
 
+        if(isset($param['is_balken']) && !is_null($param['is_balken'])){
+            $result->where('outcoming_wood.wood_type_out_id',1);
+        }
+
+        if(isset($param['is_not_balken']) && !is_null($param['is_not_balken'])){
+            $result->where('outcoming_wood.wood_type_out_id','!=',1);
+        }
+
         $result->orderBy('outcoming_wood.date', 'asc');
 
         $company = Company::find(1);

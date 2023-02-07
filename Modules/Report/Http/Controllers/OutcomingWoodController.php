@@ -28,12 +28,39 @@ class OutcomingWoodController extends AppBaseController
         $param['get_by_month'] = request()->filter_month;
         $param['get_by_year'] = request()->filter_year;
         $param['get_by_warehouse'] = request()->filter_warehouse;
+        $param['is_not_balken'] = true;
 
         $query = OutcomingWoodRepository::getReport($param);
 
         $query['month'] = Human::monthIndonesia()[request()->filter_month];
 
-        $title = 'Laporan Pengeluaran Kayu '. $param['get_by_month'] . '-' . $param['get_by_year'];
+        $title = 'Laporan Kayu Keluar '. $param['get_by_month'] . '-' . $param['get_by_year'];
+        
+        return Excel::download(new TemplateExcel($query, new OutcomingWoodTheme), $title.'.xlsx');
+    }
+
+    public function indexBalken()
+    {
+        $data['month'] = Human::monthIndonesia();
+        $data['year'] = Human::yearReport();
+        $data['number_vehicle'] = Human::getVehicleNumber();
+        $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
+        return view('report::outcoming_woods_balken.index', $data);
+    }
+
+    public function excelBalken()
+    {
+        $param['get_by_number_vehicle'] = request()->filter_number_vehicle;
+        $param['get_by_month'] = request()->filter_month;
+        $param['get_by_year'] = request()->filter_year;
+        $param['get_by_warehouse'] = request()->filter_warehouse;
+        $param['is_balken'] = true;
+
+        $query = OutcomingWoodRepository::getReport($param);
+
+        $query['month'] = Human::monthIndonesia()[request()->filter_month];
+
+        $title = 'Laporan Balken Keluar '. $param['get_by_month'] . '-' . $param['get_by_year'];
         
         return Excel::download(new TemplateExcel($query, new OutcomingWoodTheme), $title.'.xlsx');
     }

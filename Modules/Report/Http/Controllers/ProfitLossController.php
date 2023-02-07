@@ -27,8 +27,14 @@ class ProfitLossController extends AppBaseController
         $param['get_by_year'] = request()->filter_year;
         $param['get_by_warehouse'] = request()->filter_warehouse;
 
-        $query['profit'] = IncomeRepository::getReport($param)['data'];
-        $query['loss'] = ExpenseRepository::getReport($param)['data'];
+        $param['get_by_flag'] = 2;
+        $query['outcoming_wood_balken'] = IncomeRepository::getReport($param)['data'];
+        $param['get_by_flag'] = 3;
+        $query['outcoming_wood_all'] = IncomeRepository::getReport($param)['data'];
+        $param['get_by_flag'] = 1;
+        $query['incoming_wood'] = ExpenseRepository::getReport($param)['data'];
+        $param['get_by_flag'] = 4;
+        $query['operasional'] = ExpenseRepository::getReport($param)['data'];
         
         if(request()->filter_warehouse == null){
             $warehouse_name = 'Semua Gudang';
@@ -43,7 +49,7 @@ class ProfitLossController extends AppBaseController
 
         $query['warehouse'] = $warehouse_name;
 
-        $title = 'Laporan Laba Rugi di '.$warehouse_name. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
+        $title = 'Laporan Laba Dan Hasil di '.$warehouse_name. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
         
         return Excel::download(new TemplateExcel($query, new ProfitLoss), $title.'.xlsx');
     }
