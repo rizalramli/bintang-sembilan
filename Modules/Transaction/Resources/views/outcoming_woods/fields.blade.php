@@ -142,14 +142,7 @@
 </div>
 
 <div class="form-group col-sm-4 mb-1">
-    @php $is_invalid = ''; $errors->has('driver_salary') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('driver_salary', 'Gaji Sopir') !!}
-    {!! Form::text('driver_salary', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->driver_salary) : 0, ['id' => 'driver_salary','class' => "rupiah form-control $is_invalid"]) !!}
-    @error('driver_salary')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
+    {!! Form::hidden('driver_salary', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->driver_salary) : 0, ['id' => 'driver_salary','class' => "rupiah form-control $is_invalid"]) !!}
 </div>
 
 <div class="form-group col-sm-4 mb-1">

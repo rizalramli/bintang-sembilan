@@ -41,7 +41,7 @@ class IncomingWoodController extends AppBaseController
 
         $query['type'] = $type;
 
-        $title = 'Laporan Penerimaan Kayu '.$type. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
+        $title = 'Laporan Log Sengon Masuk '.$type. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
         
         return Excel::download(new TemplateExcel($query, new IncomingWoodTheme), $title.'.xlsx');
     }

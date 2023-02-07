@@ -162,6 +162,11 @@ class IncomingWoodRepository extends BaseRepository
 
         if (isset($param['get_by_status']) && !is_null($param['get_by_status'])) {
             $result->where('incoming_wood.type', $param['get_by_status']);
+            $result->leftJoin('finance', function ($join) {
+                $join->on('finance.ref_id', '=', 'incoming_wood.id')
+                     ->where('finance.ref_table', '=', 'incoming_wood');
+            });
+            $result->selectRaw("finance.amount");
         }
 
         $result->orderBy('incoming_wood.date', 'asc');

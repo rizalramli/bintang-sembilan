@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Laba Rugi')
+@section('title', 'Hasil Dan Laba')
 @include('layouts.library.style')
 @section('content')
 <div class="row">

@@ -24,6 +24,13 @@ class IncomingWood
         $sheet->getStyle('1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
     }
 
+    public function setColumnFormats()
+    {
+        return [
+            'N' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+        ];
+    }
+
     public function setDrawings($data){
         $company = $data['company'];
         $drawing = new Drawing();

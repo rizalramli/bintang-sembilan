@@ -1,6 +1,7 @@
 @php 
 $total_qty = 0;
 $total_volume = 0;
+$total = 0;
 @endphp
 <table>
     <tr>
@@ -57,6 +58,7 @@ $total_volume = 0;
         <td rowspan="3" style="vertical-align : middle;text-align:center;">NO</td>
         <td colspan="7" style="font-weight:bold;text-align:center;">Penerbitan NOTA PERUSAHAAN</td>
         <td rowspan="3" style="vertical-align : middle;text-align:center;">Ket</td>
+        <td rowspan="3" style="vertical-align : middle;text-align:center;">Uang</td>
     </tr>
 
     <tr>
@@ -83,6 +85,7 @@ $total_volume = 0;
         <td style="text-align:center;">7</td>
         <td style="text-align:center;">8</td>
         <td style="text-align:center;">9</td>
+        <td style="text-align:center;">10</td>
     </tr>
     @foreach($data as $item)
     <tr>
@@ -95,10 +98,12 @@ $total_volume = 0;
         <td>{{$item->customer_name}}</td>
         <td>{{$item->number_vehicles}}</td>
         <td>{{$item->description}}</td>
+        <td>{{$item->amount ?? 0}}</td>
     </tr>
     @php
         $total_qty += $item->total_qty;
         $total_volume += $item->total_volume;
+        $total += $item->amount;
     @endphp
     @endforeach
     <tr>
@@ -108,6 +113,10 @@ $total_volume = 0;
         <td style="text-align:center">Jumlah</td>
         <td style="text-align: center;">{{$total_qty}}</td>
         <td style="text-align: center;">{{$total_volume}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{$total}}</td>
     </tr>
 
     <tr>

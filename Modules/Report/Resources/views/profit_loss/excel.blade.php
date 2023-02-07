@@ -1,139 +1,73 @@
 @php 
-$balken_keluar = 0;
-$kayu_keluar = 0;
-$log_sengon_masuk = 0;
-$sum_operasional = 0;
+$balken_keluar = $outcoming_wood_balken->sum('amount');
+$kayu_keluar = $outcoming_wood_all->sum('amount');
+$log_sengon_masuk = $incoming_wood->sum('amount');
+$operasional = $operasional->sum('amount');
 $sum_profit = 0;
 $sum_expense = 0;
 @endphp
 <table>
     <tr>
-       <th style="text-align:center;font-size:10px" colspan="4">
-            LABA DAN HASIL DI {{$warehouse}} 
+       <th style="text-align:center;font-size:10px" colspan="3">
+            HASIL DAN LABA DI {{$warehouse}} 
        </th> 
     </tr>
     <tr>
-       <th style="text-align:center;font-size:10px" colspan="4">
+       <th style="text-align:center;font-size:10px" colspan="3">
             {{$month}} - {{$year}}
        </th> 
     </tr>
-
-    <tr>
-        <td colspan="4" style="text-align:center;font-size:10px">Balken Keluar</td>
-    </tr>
     <tr>
         <td>No</td>
-        <td>Tanggal</td>
         <td>Deskripsi</td>
         <td>Jumlah</td>
     </tr>
-    @foreach($outcoming_wood_balken as $key => $value)
     <tr>
-        <td>{{$key+1}}</td>
-        <td>{{App\Helpers\Human::dateFormat($value->date)}}</td>
-        <td>{{$value->description}}</td>
-        <td>{{$value->amount}}</td>
-    </tr>
-    @php
-        $balken_keluar += $value->amount;
-    @endphp
-    @endforeach
-    <tr>
-        <td colspan="3" style="text-align:right">Total</td>
+        <td>1</td>
+        <td>Balken Keluar</td>
         <td>{{$balken_keluar}}</td>
     </tr>
-
     <tr>
-        <td colspan="4" style="text-align:center;font-size:10px">Kayu Keluar</td>
-    </tr>
-    <tr>
-        <td>No</td>
-        <td>Tanggal</td>
-        <td>Deskripsi</td>
-        <td>Jumlah</td>
-    </tr>
-    @foreach($outcoming_wood_all as $key => $value)
-    <tr>
-        <td>{{$key+1}}</td>
-        <td>{{App\Helpers\Human::dateFormat($value->date)}}</td>
-        <td>{{$value->description}}</td>
-        <td>{{$value->amount}}</td>
-    </tr>
-    @php
-        $kayu_keluar += $value->amount;
-    @endphp
-    @endforeach
-    <tr>
-        <td colspan="3" style="text-align:right">Total</td>
+        <td>2</td>
+        <td>Kayu Keluar</td>
         <td>{{$kayu_keluar}}</td>
     </tr>
-
     <tr>
-        <td colspan="4" style="text-align:center;font-size:10px">Log Sengon Masuk</td>
-    </tr>
-    <tr>
-        <td>No</td>
-        <td>Tanggal</td>
-        <td>Deskripsi</td>
-        <td>Jumlah</td>
-    </tr>
-    @foreach($incoming_wood as $key => $value)
-    <tr>
-        <td>{{$key+1}}</td>
-        <td>{{App\Helpers\Human::dateFormat($value->date)}}</td>
-        <td>{{$value->description}}</td>
-        <td>{{$value->amount}}</td>
-    </tr>
-    @php
-        $log_sengon_masuk += $value->amount;
-    @endphp
-    @endforeach
-    <tr>
-        <td colspan="3" style="text-align:right">Total</td>
+        <td>3</td>
+        <td>Log Sengon Masuk</td>
         <td>{{$log_sengon_masuk}}</td>
     </tr>
-
     <tr>
-        <td colspan="4" style="text-align:center;font-size:10px">Operasional</td>
-    </tr>
-    <tr>
-        <td>No</td>
-        <td>Tanggal</td>
-        <td>Deskripsi</td>
-        <td>Jumlah</td>
-    </tr>
-    @foreach($operasional as $key => $value)
-    <tr>
-        <td>{{$key+1}}</td>
-        <td>{{App\Helpers\Human::dateFormat($value->date)}}</td>
-        <td>{{$value->description}}</td>
-        <td>{{$value->amount}}</td>
-    </tr>
-    @php
-        $sum_operasional += $value->amount;
-    @endphp
-    @endforeach
-    <tr>
-        <td colspan="3" style="text-align:right">Total</td>
-        <td>{{$sum_operasional}}</td>
-    </tr>
-
-    <tr>
-        <td colspan="4"></td>
+        <td>4</td>
+        <td>Operasional</td>
+        <td>{{$operasional}}</td>
     </tr>
     @php 
     $sum_profit = $balken_keluar + $kayu_keluar;
-    $sum_expense = $log_sengon_masuk + $sum_operasional;
+    $sum_expense = $log_sengon_masuk + $operasional;
+    $sum_laba = $sum_profit - $sum_expense;
     @endphp 
 
     @if($sum_profit > $sum_expense)
     <tr>
-        <td colspan="3" style="text-align:right">Laba</td>
-        <td>{{$sum_profit - $sum_expense}}</td>
+        <td>5</td>
+        <td>Laba</td>
+        <td>{{$sum_laba}}</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Zakat Mal</td>
+        <td>{{ $sum_laba * 0.025  }}</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Bersih</td>
+        <td>{{ $sum_laba * 0.975  }}</td>
     </tr>
     @else
     <tr>
-        <td colspan="3" style="text-align:right">Rugi</td>
+        <td>5</td>
+        <td>Rugi</td>
         <td>{{$sum_expense - $sum_profit}}</td>
     </tr>
     @endif

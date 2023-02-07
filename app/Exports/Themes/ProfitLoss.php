@@ -24,6 +24,7 @@ class ProfitLoss
     public function setColumnFormats()
     {
         return [
+            'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
             'D' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
         ];
     }

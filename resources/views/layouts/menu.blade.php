@@ -102,14 +102,14 @@
 </li>
 @endcanany
 
-@canany(['laporan-kayu masuk','laporan-kayu keluar','laporan-kehadiran','laporan-penggajian','laporan-laba rugi','laporan-pemasukan','laporan-pengeluaran','laporan-penyewaan truk'])
+@canany(['laporan-log sengon masuk','laporan-balken keluar','laporan-kayu keluar','laporan-operasional','laporan-hasil dan laba','laporan-penyewaan truk','laporan-kehadiran'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='file-text'></i>
         <span class="menu-title text-truncate text-custom">Laporan</span>
     </a>
     <ul>
-        @can('laporan-kayu masuk')
+        @can('laporan-log sengon masuk')
         <li class="nav-item {{ Request::is('report/incomingWoods') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/incomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -118,13 +118,16 @@
         </li>
         @endcan
 
-        @can('laporan-kayu keluar')
+        @can('laporan-balken keluar')
         <li class="nav-item {{ Request::is('report/outcomingWoodsBalken') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/outcomingWoodsBalken'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Balken Keluar</span>
             </a>
         </li>
+        @endcan
+
+        @can('laporan-kayu keluar')
         <li class="nav-item {{ Request::is('report/outcomingWoods') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -133,7 +136,7 @@
         </li>
         @endcan
 
-        @can('laporan-pengeluaran')
+        @can('laporan-operasional')
         <li class="nav-item {{ Request::is('report/expense') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/expense'); }}">
                 <i class="ficon" data-feather="circle"></i>
@@ -142,7 +145,7 @@
         </li>
         @endcan
 
-        @can('laporan-laba rugi')
+        @can('laporan-hasil dan laba')
         <li class="nav-item {{ Request::is('report/profit_loss') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/profit_loss'); }}">
                 <i class="ficon" data-feather="circle"></i>

@@ -17,6 +17,13 @@ class OutcomingWood
         ]);
     }
 
+    public function setColumnFormats()
+    {
+        return [
+            'J' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+        ];
+    }
+
     public function setStyles($sheet)
     {
         $sheet->getStyle('1')->getFont()->setBold(true);

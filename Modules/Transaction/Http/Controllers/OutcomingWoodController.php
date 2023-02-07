@@ -92,6 +92,11 @@ class OutcomingWoodController extends AppBaseController
         $driver_salary = Human::removeFormatRupiah($input['driver_salary']);
         $fuel_cost = Human::removeFormatRupiah($input['fuel_cost']);
 
+        if($cargo_fee > 0)
+        {
+            $cost = $cost - $cargo_fee;
+        }
+
         $input['cost'] = $cost;
         $input['cargo_fee'] = $cargo_fee;
         $input['driver_salary'] = $driver_salary;
@@ -127,65 +132,65 @@ class OutcomingWoodController extends AppBaseController
                 ]);
             }
 
-            if($cargo_fee > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                Finance::create([
-                    'warehouse_id' => $request->warehouse_id,
-                    'date' => $request->date,
-                    'description' => $description,
-                    'type' => 1,
-                    'amount' => $cargo_fee,
-                    'ref_id' => $outcomingWood->id,
-                    'ref_table' => 'outcoming_wood',
-                    'flag' => $flag,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
+            // if($cargo_fee > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     Finance::create([
+            //         'warehouse_id' => $request->warehouse_id,
+            //         'date' => $request->date,
+            //         'description' => $description,
+            //         'type' => 1,
+            //         'amount' => $cargo_fee,
+            //         'ref_id' => $outcomingWood->id,
+            //         'ref_table' => 'outcoming_wood',
+            //         'flag' => $flag,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now(),
+            //     ]);
+            // }
 
-            if($driver_salary > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                Finance::create([
-                    'warehouse_id' => $request->warehouse_id,
-                    'date' => $request->date,
-                    'description' => $description,
-                    'type' => 1,
-                    'amount' => $driver_salary,
-                    'ref_id' => $outcomingWood->id,
-                    'ref_table' => 'outcoming_wood',
-                    'flag' => $flag,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
+            // if($driver_salary > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     Finance::create([
+            //         'warehouse_id' => $request->warehouse_id,
+            //         'date' => $request->date,
+            //         'description' => $description,
+            //         'type' => 1,
+            //         'amount' => $driver_salary,
+            //         'ref_id' => $outcomingWood->id,
+            //         'ref_table' => 'outcoming_wood',
+            //         'flag' => $flag,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now(),
+            //     ]);
+            // }
 
-            if($fuel_cost > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                Finance::create([
-                    'warehouse_id' => $request->warehouse_id,
-                    'date' => $request->date,
-                    'description' => $description,
-                    'type' => 1,
-                    'amount' => $fuel_cost,
-                    'ref_id' => $outcomingWood->id,
-                    'ref_table' => 'outcoming_wood',
-                    'flag' => $flag,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
+            // if($fuel_cost > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     Finance::create([
+            //         'warehouse_id' => $request->warehouse_id,
+            //         'date' => $request->date,
+            //         'description' => $description,
+            //         'type' => 1,
+            //         'amount' => $fuel_cost,
+            //         'ref_id' => $outcomingWood->id,
+            //         'ref_table' => 'outcoming_wood',
+            //         'flag' => $flag,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now(),
+            //     ]);
+            // }
         }
 
         if(is_array($input['item2_length']) && count($input['item2_length']) > 0){
@@ -310,6 +315,11 @@ class OutcomingWoodController extends AppBaseController
         $input['driver_salary'] = $driver_salary;
         $input['fuel_cost'] = $fuel_cost;
 
+        if($cargo_fee > 0)
+        {
+            $cost = $cost - $cargo_fee;
+        }
+
         $outcomingWood = $this->outcomingWoodRepository->update($input, $id);
 
         if($outcomingWood)
@@ -351,116 +361,116 @@ class OutcomingWoodController extends AppBaseController
                 }
             }
 
-            if($cargo_fee > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                $finance_cargo_fee = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->first();
-                if(empty($finance_cargo_fee))
-                {
-                    Finance::create([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $cargo_fee,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                } else {
-                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->update([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $cargo_fee,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-            }
+            // if($cargo_fee > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Ongkos Muatan kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     $finance_cargo_fee = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //     ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->first();
+            //     if(empty($finance_cargo_fee))
+            //     {
+            //         Finance::create([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $cargo_fee,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     } else {
+            //         Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //         ->where('description','LIKE','%Ongkos Muatan kayu keluar%')->update([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $cargo_fee,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     }
+            // }
 
-            if($driver_salary > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                $finance_driver_salary = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Gaji Sopir kayu keluar%')->first();
-                if(empty($finance_driver_salary))
-                {
-                    Finance::create([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $driver_salary,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                } else {
-                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Gaji Sopir kayu keluar%')->update([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $driver_salary,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-            }
+            // if($driver_salary > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Gaji Sopir kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     $finance_driver_salary = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //     ->where('description','LIKE','%Gaji Sopir kayu keluar%')->first();
+            //     if(empty($finance_driver_salary))
+            //     {
+            //         Finance::create([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $driver_salary,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     } else {
+            //         Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //         ->where('description','LIKE','%Gaji Sopir kayu keluar%')->update([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $driver_salary,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     }
+            // }
 
-            if($fuel_cost > 0)
-            {
-                $customer = Customer::find($request->customer_id);
-                $warehouse = Warehouse::find($request->warehouse_id);
-                $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
-                $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
-                $finance_fuel_cost = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                ->where('description','LIKE','%Biaya Solar kayu keluar%')->first();
-                if(empty($finance_fuel_cost))
-                {
-                    Finance::create([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $fuel_cost,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                } else {
-                    Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
-                    ->where('description','LIKE','%Biaya Solar kayu keluar%')->update([
-                        'warehouse_id' => $request->warehouse_id,
-                        'date' => $request->date,
-                        'description' => $description,
-                        'type' => 1,
-                        'amount' => $fuel_cost,
-                        'ref_id' => $outcomingWood->id,
-                        'ref_table' => 'outcoming_wood',
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-            }
+            // if($fuel_cost > 0)
+            // {
+            //     $customer = Customer::find($request->customer_id);
+            //     $warehouse = Warehouse::find($request->warehouse_id);
+            //     $employee = Employee::join('users', 'users.id', '=', 'employee.user_id')->where('employee.id', $request->employee_id)->first();
+            //     $description = 'Biaya Solar kayu keluar di '.$warehouse->name.' atas nama '.$customer->name.' dengan nopol '.$input['number_vehicles']. ' dan sopir '.$employee->name;
+            //     $finance_fuel_cost = Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //     ->where('description','LIKE','%Biaya Solar kayu keluar%')->first();
+            //     if(empty($finance_fuel_cost))
+            //     {
+            //         Finance::create([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $fuel_cost,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     } else {
+            //         Finance::where(['ref_id' => $outcomingWood->id,'ref_table' => 'outcoming_wood'])
+            //         ->where('description','LIKE','%Biaya Solar kayu keluar%')->update([
+            //             'warehouse_id' => $request->warehouse_id,
+            //             'date' => $request->date,
+            //             'description' => $description,
+            //             'type' => 1,
+            //             'amount' => $fuel_cost,
+            //             'ref_id' => $outcomingWood->id,
+            //             'ref_table' => 'outcoming_wood',
+            //             'created_at' => Carbon::now(),
+            //             'updated_at' => Carbon::now(),
+            //         ]);
+            //     }
+            // }
         }
 
         if(is_array($input['item2_length']) && count($input['item2_length']) > 0){

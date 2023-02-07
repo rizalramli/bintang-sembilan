@@ -1,6 +1,7 @@
 @php 
 $total_qty = 0;
 $total_volume = 0;
+$total = 0;
 @endphp
 <table>
     <tr>
@@ -49,7 +50,11 @@ $total_volume = 0;
         <td style="text-align:center;" colspan="4">
             ASAL HASIL HUTAN
         </td>
+        @if($type == 'Dagang')
+        <td style="text-align:center;" colspan="6">
+        @else 
         <td style="text-align:center;" colspan="5">
+        @endif
             TUJUAN ANGKUTAN
         </td>
     </tr>
@@ -66,6 +71,9 @@ $total_volume = 0;
             <td rowspan="2" style="vertical-align : middle;text-align:center;">Nama Perusahaan</td>
             <td rowspan="2" style="vertical-align : middle;text-align:center;">Alamat Lengkap</td>
             <td rowspan="2" style="vertical-align : middle;text-align:center;">NOPOL</td>
+            @if($type == 'Dagang')
+            <td rowspan="2" style="vertical-align : middle;text-align:center;">Uang</td>
+            @endif
     </tr>
     <tr>
         <td style="text-align:center">Desa dan Kecamatan</td>
@@ -86,10 +94,14 @@ $total_volume = 0;
         <td>{{$company->name}}</td>
         <td>{{$company->address}}</td>
         <td>{{$item->number_vehicles}}</td>
+        @if($type == 'Dagang')
+        <td>{{$item->amount ?? 0}}</td>
+        @endif
     </tr>
     @php
         $total_qty += $item->total_qty;
         $total_volume += $item->total_volume;
+        $total += $item->amount;
     @endphp
     @endforeach
     <tr>
@@ -102,6 +114,13 @@ $total_volume = 0;
         <td colspan="2" style="text-align:center">Jumlah</td>
         <td>{{$total_qty}}</td>
         <td>{{$total_volume}}</td>
+        @if($type == 'Dagang')
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{$total}}</td>
+        @endif
+
     </tr>
 
     <tr>
