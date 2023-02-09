@@ -25,6 +25,7 @@ class ExpenseController extends AppBaseController
         $param['get_by_month'] = request()->filter_month;
         $param['get_by_year'] = request()->filter_year;
         $param['get_by_warehouse'] = request()->filter_warehouse;
+        $param['get_by_flag'] = 4;
 
         $query = ExpenseRepository::getReport($param);
         
@@ -41,7 +42,7 @@ class ExpenseController extends AppBaseController
 
         $query['warehouse'] = $warehouse_name;
 
-        $title = 'Laporan Pengeluaran di '.$warehouse_name. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
+        $title = 'Laporan Operasional di '.$warehouse_name. '-'. $param['get_by_month'] . '-' . $param['get_by_year'];
         
         return Excel::download(new TemplateExcel($query, new Expense), $title.'.xlsx');
     }

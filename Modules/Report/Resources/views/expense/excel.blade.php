@@ -4,7 +4,7 @@ $sum = 0;
 <table>
     <tr>
        <th style="text-align:center;font-size:10px" colspan="4">
-            DAFTAR PENGELUARAN DI {{$warehouse}} 
+            DAFTAR OPERASIONAL DI {{$warehouse}} 
        </th> 
     </tr>
     <tr>
