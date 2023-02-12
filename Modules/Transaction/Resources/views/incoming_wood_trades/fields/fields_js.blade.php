@@ -127,6 +127,53 @@
                 }
             });
         }
+        // form add supplier submit
+        $(document).on('click', '#addSupplier', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "{{ url('transaction/incomingWood/addSupplier') }}",
+                method: "POST",
+                data : {
+                    name: $('#name').val(),
+                    number_vehicles: $('#number_vehicles_supplier').val(),
+                    address: $('#address').val(),
+                    city: $('#city').val(),
+                    phone: $('#phone').val(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(result) {
+                    if(result.status == true){
+                        $('#supplier_id').append('<option value="'+result.data.id+'">'+result.data.name+' | '+result.data.address+'</option>');
+                        $('#supplier_id').val(result.data.id);
+                        $('#supplier_id').trigger('change');
+                        $('#modalAddSupplier').modal('hide');
+                        // clear form
+                        $('#name').val('');
+                        $('#number_vehicles_supplier').val(result.data.number_vehicles);
+                        $('#address').val('');
+                        $('#city').val('');
+                        $('#phone').val('');
+                        Swal.fire('Informasi',
+                            'Data berhasil disimpan.',
+                            'success');
+                    } else {
+                        Swal.fire('Informasi',
+                            'terjadi kesalahan.',
+                            'error');
+                    }
+                },
+                error: function(request, msg, error) {
+                    var data = request.responseJSON;
+                    $.each(data.errors, function(key, value) {
+                        swal.fire({
+                            title: 'Gagal!',
+                            text: value,
+                            icon: 'error',
+                        });
+                    });
+                }
+            });
+        });
     });
 </script>
 @endpush

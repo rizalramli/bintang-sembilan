@@ -302,5 +302,20 @@ class IncomingWoodController extends AppBaseController
         }
         return response()->json(['status' => true,'total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
     }
+
+    public function addSupplier()
+    {
+        request()->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required'
+        ]);
+        
+        $input = request()->all();
+        $input['created_by'] = \Auth::user()->id;
+        $input['updated_by'] = \Auth::user()->id;
+        $supplier = Supplier::create($input);
+        return response()->json(['status' => true, 'data' => $supplier]);
+    }
     
 }

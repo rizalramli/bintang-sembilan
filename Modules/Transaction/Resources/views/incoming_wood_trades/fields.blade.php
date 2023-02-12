@@ -25,6 +25,7 @@
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('supplier_id') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('supplier_id', 'Supplier') !!}
+    <a href="javascript:void(0)" class="float-right" data-bs-toggle="modal" data-bs-target="#modalAddSupplier">(Klik untuk menambah supplier baru)</a>
     {!! Form::select('supplier_id', $supplier, isset($incomingWood) ? $incomingWood->supplier_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'supplier_id']) !!}
     @error('supplier_id')
     <div class="invalid-feedback">
@@ -126,3 +127,78 @@
     </div>
     @enderror
 </div>
+
+<!-- modal add supplier -->
+<div class="modal fade text-start" id="modalAddSupplier" tabindex="-1" aria-labelledby="myModalLabel17" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel17">Tambah Supplier</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formAddSupplier">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-6 mb-1">
+                        @php $is_invalid = ''; $errors->has('name') ? $is_invalid = 'is-invalid' : ''; @endphp
+                        {!! Form::label('name', 'Nama') !!}
+                        {!! Form::text('name', null, ['id' => 'name','class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-sm-6 mb-1">
+                        @php $is_invalid = ''; $errors->has('number_vehicles') ? $is_invalid = 'is-invalid' : ''; @endphp
+                        {!! Form::label('number_vehicles', 'Nopol') !!}
+                        {!! Form::text('number_vehicles', isset($incomingWood) ? $incomingWood->number_vehicles : null, ['id' => 'number_vehicles_supplier','class' => "form-control $is_invalid"]) !!}
+                        @error('number_vehicles')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-sm-6 mb-1">
+                        @php $is_invalid = ''; $errors->has('address') ? $is_invalid = 'is-invalid' : ''; @endphp
+                        {!! Form::label('address', 'Desa dan Kecamatan') !!}
+                        {!! Form::text('address', null, ['id' => 'address','class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
+                        @error('address')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-sm-6 mb-1">
+                        @php $is_invalid = ''; $errors->has('city') ? $is_invalid = 'is-invalid' : ''; @endphp
+                        {!! Form::label('city', 'Kota') !!}
+                        {!! Form::text('city', null, ['id' => 'city','class' => "form-control $is_invalid",'maxlength' => 125,'maxlength' => 125]) !!}
+                        @error('city')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-sm-6 mb-1">
+                        @php $is_invalid = ''; $errors->has('phone') ? $is_invalid = 'is-invalid' : ''; @endphp
+                        {!! Form::label('phone', 'No Hp') !!}
+                        {!! Form::text('phone', null, ['id' => 'phone','class' => "form-control $is_invalid",'maxlength' => 15,'maxlength' => 15]) !!}
+                        @error('phone')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal"> Batalkan</button>
+                <button id="addSupplier" type="button" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
+        </div>
+    </div>
