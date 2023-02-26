@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('incomes', 'IncomeController');
         Route::resource('expenses', 'ExpenseController');
         Route::resource('truckRentals', 'TruckRentalController');
+        Route::resource('outsideWarehousePurchases', 'OutsideWarehousePurchaseController');
     });
 
 });
