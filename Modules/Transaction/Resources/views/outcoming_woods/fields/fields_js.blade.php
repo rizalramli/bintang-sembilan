@@ -74,6 +74,27 @@
         }
         @endif
 
+        var wood_type_id = $('#wood_type_out_id').val();
+
+        hiddenDetail(wood_type_id);
+
+        $(document).on('change', '#wood_type_out_id', function() {
+            var wood_type_id = $(this).val();
+            hiddenDetail(wood_type_id);
+        });
+
+        function hiddenDetail(wood_type_id){
+            if(wood_type_id == '1'){
+                $("#total_qty").attr("readonly", true); 
+                $("#total_volume").attr("readonly", true); 
+                $('#detailProduk').show();
+            } else {
+                $("#total_qty").attr("readonly", false); 
+                $("#total_volume").attr("readonly", false); 
+                $('#detailProduk').hide();
+            }
+        }
+
         $(document).on('keyup', '.item2_qty', function() {
             var index = $(this).attr('index');
             var value = parseInt($(this).val());

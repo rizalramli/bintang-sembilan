@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Penggajian')
+@include('layouts.library.style')
 @section('content')
 <div class="row">
 <div class="col-12">
@@ -57,4 +58,4 @@
     </div>
 
 @endsection
-
+@include('layouts.library.script')

@@ -28,10 +28,16 @@ class OutcomingWoodDataTable extends DataTable
         ->editColumn('total_volume', function ($row) {
             return '<div style="text-align:right">' . $row->total_volume . '</div>';
         })
+        ->editColumn('total_volume_tally', function ($row) {
+            return '<div style="text-align:right">' . $row->total_volume_tally . '</div>';
+        })
+        ->editColumn('total_volume_afkir', function ($row) {
+            return '<div style="text-align:right">' . $row->total_volume_afkir . '</div>';
+        })
         ->editColumn('cost', function ($row) {
             return '<div style="text-align:right">' . Human::createFormatRupiah($row->cost) . '</div>';
         })
-        ->rawColumns(['action', 'total_volume', 'cost']);
+        ->rawColumns(['action', 'total_volume','total_volume_tally','total_volume_afkir', 'cost']);
     }
 
     /**
@@ -136,7 +142,9 @@ class OutcomingWoodDataTable extends DataTable
             'warehouse_name' => ['title' => 'Gudang','name' => 'warehouse.name'],
             'wood_type_out_name' => ['title' => 'Jenis Kayu','name' => 'wood_type.name'],
             'number_vehicles' => ['title' => 'Nopol'],
-            'total_volume' => ['title' => 'Total Volume'],
+            'total_volume' => ['title' => 'Volume SJ'],
+            'total_volume_tally' => ['title' => 'Volume Tally'],
+            'total_volume_afkir' => ['title' => 'Volume Afkir'],
             'cost' => ['title' => 'Total Biaya'],
         ];
     }

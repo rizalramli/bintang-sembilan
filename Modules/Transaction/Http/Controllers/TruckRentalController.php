@@ -248,6 +248,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $truck_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -261,6 +262,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $truck_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -282,6 +284,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $driver_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -316,6 +319,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $solar_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -329,6 +333,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $solar_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -350,6 +355,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $damage_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
@@ -363,6 +369,7 @@ class TruckRentalController extends AppBaseController
                         'amount' => $damage_cost,
                         'ref_id' => $truckRental->id,
                         'ref_table' => 'truck_rental',
+                        'flag' => 6,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);

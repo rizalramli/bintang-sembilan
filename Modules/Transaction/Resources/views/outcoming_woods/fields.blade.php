@@ -34,6 +34,11 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
+    {!! Form::label('serial_number_factory', 'No. Transaksi Pabrik') !!}
+    {!! Form::text('serial_number_factory', isset($outcomingWood) ? $outcomingWood->serial_number_factory : null, ['id' => 'serial_number_factory','class' => "form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('customer_id') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('customer_id', 'Customer') !!}
     {!! Form::select('customer_id', $customer, isset($outcomingWood) ? $outcomingWood->customer_id : null, ['class' => "select2 form-control $is_invalid",'id' => 'customer_id']) !!}
@@ -90,7 +95,7 @@
 
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('total_qty') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('total_qty', 'Total Batang') !!}
+    {!! Form::label('total_qty', 'Total Batang SJ') !!}
     {!! Form::text('total_qty', isset($outcomingWood) ? $outcomingWood->total_qty : 0, ['id' => 'total_qty','class' => "form-control $is_invalid",'readonly']) !!}
     @error('total_qty')
     <div class="invalid-feedback">
@@ -101,13 +106,33 @@
 
 <div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('total_volume') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('total_volume', 'Total Volume') !!}
+    {!! Form::label('total_volume', 'Total Volume SJ') !!}
     {!! Form::text('total_volume', isset($outcomingWood) ? $outcomingWood->total_volume : 0, ['id' => 'total_volume','class' => "form-control $is_invalid",'readonly']) !!}
     @error('total_volume')
     <div class="invalid-feedback">
         {{ $message }}
     </div>
     @enderror
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('total_qty_tally', 'Total Batang Tally') !!}
+    {!! Form::text('total_qty_tally', isset($outcomingWood) ? $outcomingWood->total_qty_tally : null, ['id' => 'total_qty_tally','class' => "form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('total_volume_tally', 'Total Volume Tally') !!}
+    {!! Form::text('total_volume_tally', isset($outcomingWood) ? $outcomingWood->total_volume_tally : null, ['id' => 'total_volume_tally','class' => "form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('total_qty_afkir', 'Total Batang Afkir') !!}
+    {!! Form::text('total_qty_afkir', isset($outcomingWood) ? $outcomingWood->total_qty_afkir : null, ['id' => 'total_qty_afkir','class' => "form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('total_volume_afkir', 'Total Volume Afkir') !!}
+    {!! Form::text('total_volume_afkir', isset($outcomingWood) ? $outcomingWood->total_volume_afkir : null, ['id' => 'total_volume_afkir','class' => "form-control"]) !!}
 </div>
 
 <div class="form-group col-sm-6 mb-1">

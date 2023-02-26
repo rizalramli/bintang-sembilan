@@ -102,7 +102,7 @@ class OutcomingWoodController extends AppBaseController
         $input['driver_salary'] = $driver_salary;
         $input['fuel_cost'] = $fuel_cost;
 
-        if($input['wood_type_out_id'] == 1){
+        if($input['wood_type_out_id'] == 1 || $input['wood_type_out_id'] == 6){
             $flag = 2;
         } else {
             $flag = 3;
@@ -193,7 +193,7 @@ class OutcomingWoodController extends AppBaseController
             // }
         }
 
-        if(is_array($input['item2_length']) && count($input['item2_length']) > 0){
+        if($input['wood_type_out_id'] == 1 && is_array($input['item2_length']) && count($input['item2_length']) > 0){
             foreach($input['item2_length'] as $key => $value){
                 $outcoming_wood_detail = OutcomingWoodDetail::create([
                     'outcoming_wood_id' => $outcomingWood->id,
@@ -473,7 +473,7 @@ class OutcomingWoodController extends AppBaseController
             // }
         }
 
-        if(is_array($input['item2_length']) && count($input['item2_length']) > 0){
+        if($input['wood_type_out_id'] == 1 && is_array($input['item2_length']) && count($input['item2_length']) > 0){
             // Delete Detail
             $outcoming_wood_detail = OutcomingWoodDetail::where('outcoming_wood_id',$id);
             if($outcoming_wood_detail->count() > 0){

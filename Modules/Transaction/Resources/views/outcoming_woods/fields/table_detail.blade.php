@@ -1,4 +1,4 @@
-<div class="form-group col-sm-12 mb-1">
+<div class="form-group col-sm-12 mb-1" id="detailProduk">
     <h4>Detail Kayu</h4>
     <table width="100%" class="table table-bordered" id="table-detail">
         <thead>
@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(isset($outcomingWood))
+            @if(isset($outcomingWood) && $outcomingWoodDetail != null)
             @php 
             $sum_sub_total_volume = 0;
             $sum_qty = 0;

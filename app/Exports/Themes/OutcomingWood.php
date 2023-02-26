@@ -20,7 +20,7 @@ class OutcomingWood
     public function setColumnFormats()
     {
         return [
-            'J' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'O' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
         ];
     }
 
