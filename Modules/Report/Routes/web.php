@@ -31,4 +31,6 @@ Route::prefix('report')->group(function() {
     Route::get('expense', 'ExpenseController@index');
     Route::get('profit_loss/excel', 'ProfitLossController@excel');
     Route::get('profit_loss', 'ProfitLossController@index');
+    Route::get('outsideWarehousePurchases/excel', 'OutsideWarehousePurchaseController@excel');
+    Route::get('outsideWarehousePurchases', 'OutsideWarehousePurchaseController@index');
 });

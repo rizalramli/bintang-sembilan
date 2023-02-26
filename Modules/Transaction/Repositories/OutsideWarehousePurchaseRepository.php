@@ -94,6 +94,10 @@ class OutsideWarehousePurchaseRepository extends BaseRepository
             $result->whereBetween('date', [$param['get_by_date_start'], $param['get_by_date_end']]);
         }
 
+        if (isset($param['order_by_date']) && !is_null($param['order_by_date'])) {
+            $result->orderBy('date','asc');
+        }
+
         return $result;
     }
 }

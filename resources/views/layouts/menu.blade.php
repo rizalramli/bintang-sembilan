@@ -8,7 +8,7 @@
 </li>
 @endcan
 
-@canany(['transaksi-kayu masuk sakr','transaksi-kayu masuk dagang','transaksi-kayu keluar','transaksi-pemasukan','transaksi-pengeluaran','transaksi-penyewaan truk'])
+@canany(['transaksi-kayu masuk sakr','transaksi-kayu masuk dagang','transaksi-kayu keluar','transaksi-pemasukan','transaksi-pengeluaran','transaksi-penyewaan truk','transaksi-pembelian gudang luar'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='clipboard'></i>
@@ -38,6 +38,15 @@
             <a class="submenu" href="{{ url('transaction/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('transaksi-pembelian gudang luar')
+        <li class="nav-item {{ Request::is('transaction/outsideWarehousePurchases') || Request::is('transaction/outsideWarehousePurchases/create') || Request::is('transaction/outsideWarehousePurchases/*/edit') || Request::is('transaction/outsideWarehousePurchases/*') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('transaction/outsideWarehousePurchases'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pembelian Gudang Luar</span>
             </a>
         </li>
         @endcan
@@ -102,7 +111,7 @@
 </li>
 @endcanany
 
-@canany(['laporan-log sengon masuk','laporan-balken keluar','laporan-kayu keluar','laporan-operasional','laporan-hasil dan laba','laporan-penyewaan truk','laporan-kehadiran'])
+@canany(['laporan-log sengon masuk','laporan-balken keluar','laporan-kayu keluar','laporan-operasional','laporan-hasil dan laba','laporan-penyewaan truk','laporan-kehadiran','laporan-pembelian gudang luar'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='file-text'></i>
@@ -132,6 +141,15 @@
             <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
                 <span class="text text-custom">Kayu Keluar</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('laporan-pembelian gudang luar')
+        <li class="nav-item {{ Request::is('report/outsideWarehousePurchases') ? 'active ' : '' }}">
+            <a class="submenu" href="{{ url('report/outsideWarehousePurchases'); }}">
+                <i class="ficon" data-feather="circle"></i>
+                <span class="text text-custom">Pembelian Gudang Luar</span>
             </a>
         </li>
         @endcan
