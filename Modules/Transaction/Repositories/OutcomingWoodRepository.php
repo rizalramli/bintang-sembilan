@@ -203,22 +203,10 @@ class OutcomingWoodRepository extends BaseRepository
 
         if(isset($param['is_balken']) && !is_null($param['is_balken'])){
             $result->where('outcoming_wood.wood_type_out_id',1);
-            $result->leftJoin('finance', function ($join) {
-                $join->on('finance.ref_id', '=', 'outcoming_wood.id')
-                     ->where('finance.ref_table', '=', 'outcoming_wood')
-                     ->where('finance.flag', '=', 2);
-            });
-            $result->selectRaw("finance.amount");
         }
 
         if(isset($param['is_not_balken']) && !is_null($param['is_not_balken'])){
             $result->where('outcoming_wood.wood_type_out_id','!=',1);
-            $result->leftJoin('finance', function ($join) {
-                $join->on('finance.ref_id', '=', 'outcoming_wood.id')
-                     ->where('finance.ref_table', '=', 'outcoming_wood')
-                     ->where('finance.flag', '=', 3);
-            });
-            $result->selectRaw("finance.amount");
         }
 
         $result->orderBy('outcoming_wood.date', 'asc');

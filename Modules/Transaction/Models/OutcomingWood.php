@@ -49,34 +49,13 @@ class OutcomingWood extends Model
         'total_volume_tally',
         'total_qty_afkir',
         'total_volume_afkir',
-        'cost',
-        'cargo_fee',
-        'driver_salary',
-        'fuel_cost',
+        'nett',
+        'fare_truck',
+        'fee',
+        'result',
         'description',
         'created_at',
         'updated_at'
-    ];
-
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-        'customer_id' => 'integer',
-        'warehouse_id' => 'integer',
-        'wood_type_out_id' => 'integer',
-        'serial_number' => 'string',
-        'date' => 'date',
-        'number_vehicles' => 'string',
-        'total_qty' => 'integer',
-        'total_volume' => 'float',
-        'cost' => 'integer',
-        'description' => 'string',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime'
     ];
 
     /**
@@ -94,7 +73,7 @@ class OutcomingWood extends Model
         'number_vehicles' => 'required|string|max:15',
         'total_qty' => 'required',
         'total_volume' => 'required',
-        'cost' => 'required',
+        'nett' => 'required',
         'description' => 'nullable|string|max:125',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'

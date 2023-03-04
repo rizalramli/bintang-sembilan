@@ -34,10 +34,10 @@ class OutcomingWoodDataTable extends DataTable
         ->editColumn('total_volume_afkir', function ($row) {
             return '<div style="text-align:right">' . $row->total_volume_afkir . '</div>';
         })
-        ->editColumn('cost', function ($row) {
-            return '<div style="text-align:right">' . Human::createFormatRupiah($row->cost) . '</div>';
+        ->editColumn('nett', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->nett) . '</div>';
         })
-        ->rawColumns(['action', 'total_volume','total_volume_tally','total_volume_afkir', 'cost']);
+        ->rawColumns(['action', 'total_volume','total_volume_tally','total_volume_afkir', 'nett']);
     }
 
     /**
@@ -145,7 +145,7 @@ class OutcomingWoodDataTable extends DataTable
             'total_volume' => ['title' => 'Volume SJ'],
             'total_volume_tally' => ['title' => 'Volume Tally'],
             'total_volume_afkir' => ['title' => 'Volume Afkir'],
-            'cost' => ['title' => 'Total Biaya'],
+            'nett' => ['title' => 'Bersih'],
         ];
     }
 

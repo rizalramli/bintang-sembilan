@@ -94,6 +94,9 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
+</div>
+
+<div class="form-group col-sm-6 mb-1">
     @php $is_invalid = ''; $errors->has('total_qty') ? $is_invalid = 'is-invalid' : ''; @endphp
     {!! Form::label('total_qty', 'Total Batang SJ') !!}
     {!! Form::text('total_qty', isset($outcomingWood) ? $outcomingWood->total_qty : 0, ['id' => 'total_qty','class' => "form-control $is_invalid",'readonly']) !!}
@@ -141,35 +144,27 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
-    @php $is_invalid = ''; $errors->has('cost') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('cost', 'Biaya') !!}
-    {!! Form::text('cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->cost) : 0, ['id' => 'cost','class' => "rupiah form-control $is_invalid"]) !!}
-    @error('cost')
+    {!! Form::label('result', 'Hasil') !!}
+    {!! Form::text('result', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->result) : 0, ['id' => 'result','class' => "rupiah form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('fee', 'Biaya') !!}
+    {!! Form::text('fee', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->fee) : 0, ['id' => 'fee','class' => "rupiah form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('fare_truck', 'Ongkos Truck') !!}
+    {!! Form::text('fare_truck', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->fare_truck) : 0, ['id' => 'fare_truck','class' => "rupiah form-control"]) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    @php $is_invalid = ''; $errors->has('nett') ? $is_invalid = 'is-invalid' : ''; @endphp
+    {!! Form::label('nett', 'Bersih') !!}
+    {!! Form::text('nett', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->nett) : 0, ['id' => 'nett','class' => "rupiah form-control $is_invalid",'readonly']) !!}
+    @error('nett')
     <div class="invalid-feedback">
         {{ $message }}
     </div>
     @enderror
-</div>
-
-<hr>
-<h5>Pengeluaran</h5>
-<hr>
-
-<div class="form-group col-sm-4 mb-1">
-    @php $is_invalid = ''; $errors->has('cargo_fee') ? $is_invalid = 'is-invalid' : ''; @endphp
-    {!! Form::label('cargo_fee', 'Ongkos Muatan') !!}
-    {!! Form::text('cargo_fee', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->cargo_fee) : 0, ['id' => 'cargo_fee','class' => "rupiah form-control $is_invalid"]) !!}
-    @error('cargo_fee')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
-
-<div class="form-group col-sm-4 mb-1">
-    {!! Form::hidden('driver_salary', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->driver_salary) : 0, ['id' => 'driver_salary','class' => "rupiah form-control $is_invalid"]) !!}
-</div>
-
-<div class="form-group col-sm-4 mb-1">
-    {!! Form::hidden('fuel_cost', isset($outcomingWood) ? \App\Helpers\Human::CreateFormatRupiah($outcomingWood->fuel_cost) : 0, ['id' => 'fuel_cost','class' => "rupiah form-control $is_invalid"]) !!}
 </div>

@@ -127,6 +127,57 @@
                 }
             });
         }
+
+        $('#result').on('keyup', function () {
+            var result = $(this).val();
+            result = result.replace(/\./g, '');
+            var fee = $('#fee').val();
+            fee = fee.replace(/\./g, '');
+            var fare_truck = $('#fare_truck').val();
+            fare_truck = fare_truck.replace(/\./g, '');
+            var total = parseInt(result) - parseInt(fee) - parseInt(fare_truck);
+            total = parseInt(total);
+            if(total < 0)
+            {
+                total = 0;
+            }
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#nett').val(total);
+        });
+
+        $('#fee').on('keyup', function () {
+            var result = $('#result').val();
+            result = result.replace(/\./g, '');
+            var fee = $(this).val();
+            fee = fee.replace(/\./g, '');
+            var fare_truck = $('#fare_truck').val();
+            fare_truck = fare_truck.replace(/\./g, '');
+            var total = parseInt(result) - parseInt(fee) - parseInt(fare_truck);
+            total = parseInt(total);
+            if(total < 0)
+            {
+                total = 0;
+            }
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#nett').val(total);
+        });
+
+        $('#fare_truck').on('keyup', function () {
+            var result = $('#result').val();
+            result = result.replace(/\./g, '');
+            var fee = $('#fee').val();
+            fee = fee.replace(/\./g, '');
+            var fare_truck = $(this).val();
+            fare_truck = fare_truck.replace(/\./g, '');
+            var total = parseInt(result) - parseInt(fee) - parseInt(fare_truck);
+            total = parseInt(total);
+            if(total < 0)
+            {
+                total = 0;
+            }
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#nett').val(total);
+        });
     });
 </script>
 @endpush

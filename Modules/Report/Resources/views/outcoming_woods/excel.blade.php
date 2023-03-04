@@ -5,7 +5,10 @@ $total_qty_tally = 0;
 $total_volume_tally = 0;
 $total_qty_afkir = 0;
 $total_volume_afkir = 0;
-$total = 0;
+$result = 0;
+$fee = 0;
+$fare_truck = 0;
+$nett = 0;
 @endphp
 <table>
     <tr>
@@ -62,7 +65,10 @@ $total = 0;
         <td rowspan="3" style="vertical-align : middle;text-align:center;">NO</td>
         <td colspan="12" style="font-weight:bold;text-align:center;">Penerbitan NOTA PERUSAHAAN</td>
         <td rowspan="3" style="vertical-align : middle;text-align:center;">Ket</td>
-        <td rowspan="3" style="vertical-align : middle;text-align:center;">Uang</td>
+        <td rowspan="3" style="vertical-align : middle;text-align:center;">Hasil</td>
+        <td rowspan="3" style="vertical-align : middle;text-align:center;">Biaya</td>
+        <td rowspan="3" style="vertical-align : middle;text-align:center;">Ongkos Truk</td>
+        <td rowspan="3" style="vertical-align : middle;text-align:center;">Bersih</td>
     </tr>
 
     <tr>
@@ -100,7 +106,10 @@ $total = 0;
         <td>{{$item->customer_name}}</td>
         <td>{{$item->number_vehicles}}</td>
         <td>{{$item->description}}</td>
-        <td>{{$item->amount ?? 0}}</td>
+        <td>{{$item->result}}</td>
+        <td>{{$item->fee}}</td>
+        <td>{{$item->fare_truck}}</td>
+        <td>{{$item->nett}}</td>
     </tr>
     @php
         $total_qty += $item->total_qty;
@@ -109,7 +118,10 @@ $total = 0;
         $total_volume_tally += $item->total_volume_tally;
         $total_qty_afkir += $item->total_qty_afkir;
         $total_volume_afkir += $item->total_volume_afkir;
-        $total += $item->amount;
+        $result += $item->result;
+        $fee += $item->fee;
+        $fare_truck += $item->fare_truck;
+        $nett += $item->nett;
     @endphp
     @endforeach
     <tr>
@@ -127,7 +139,10 @@ $total = 0;
         <td></td>
         <td></td>
         <td></td>
-        <td>{{$total}}</td>
+        <td>{{$result}}</td>
+        <td>{{$fee}}</td>
+        <td>{{$fare_truck}}</td>
+        <td>{{$nett}}</td>
     </tr>
 
     <tr>
