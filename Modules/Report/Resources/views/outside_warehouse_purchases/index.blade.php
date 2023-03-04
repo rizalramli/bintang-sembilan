@@ -32,6 +32,10 @@
                         {!! Form::label('filter_number_vehicle', 'Filter Nopol') !!}
                         {!! Form::select('filter_number_vehicle', $number_vehicle, null, ['class' => 'select2 form-control','id' => 'filter_number_vehicle']) !!}
                     </div>
+                    <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_destination', 'Filter Tujuan') !!}
+                        {!! Form::select('filter_destination', $destination, null, ['class' => 'select2 form-control','id' => 'filter_destination']) !!}
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
@@ -51,10 +55,12 @@
         var filter_month = $('#filter_month').val();
         var filter_year = $('#filter_year').val();
         var filter_number_vehicle = $('#filter_number_vehicle').val();
+        var filter_destination = $('#filter_destination').val();
         var filter_warehouse = $('#filter_warehouse').val();
         var filter = '?filter_month=' + filter_month + 
         '&filter_year=' + filter_year + 
         '&filter_number_vehicle=' + filter_number_vehicle +
+        '&filter_destination=' + filter_destination +
         '&filter_warehouse=' + filter_warehouse;
         var url = "{{ url('report/outsideWarehousePurchases/excel') }}" + filter;
         window.open(

@@ -74,13 +74,18 @@
 </div>
 
 <div class="form-group col-sm-6 mb-1">
-    {!! Form::label('down_payment', 'DP') !!}
-    {!! Form::text('down_payment', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->down_payment) : 0, ['id' => 'down_payment','class' => "rupiah form-control"]) !!}
+    {!! Form::label('fare_truck', 'Ongkos Truk') !!}
+    {!! Form::text('fare_truck', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->fare_truck) : 0, ['id' => 'fare_truck','class' => "rupiah form-control"]) !!}
 </div>
 
 <div class="form-group col-sm-6 mb-1">
     {!! Form::label('nett', 'Bersih') !!}
     {!! Form::text('nett', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->nett) : 0, ['id' => 'nett','class' => "rupiah form-control",'readonly']) !!}
+</div>
+
+<div class="form-group col-sm-6 mb-1">
+    {!! Form::label('down_payment', 'DP') !!}
+    {!! Form::text('down_payment', isset($outsideWarehousePurchase) ? \App\Helpers\Human::CreateFormatRupiah($outsideWarehousePurchase->down_payment) : 0, ['id' => 'down_payment','class' => "rupiah form-control"]) !!}
 </div>
 
 @push('third_party_scripts')
@@ -144,6 +149,23 @@
             }
             total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             $('#nett').val(total);
+        });
+
+        $('#fare_truck').on('keyup', function (e) {
+            var fare_truck = $(this).val();
+            fare_truck = fare_truck.replace(/\./g, '');
+            var grand_total = $('#grand_total').val();
+            grand_total = grand_total.replace(/\./g, '');
+            var fee = $('#fee').val();
+            fee = fee.replace(/\./g, '');
+            var total = parseInt(grand_total) - parseInt(fare_truck) - parseInt(fee);
+            total = parseInt(total);
+            if(total < 0)
+            {
+                total = 0;
+            }
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#paid').val(total);
         });
     });
 </script>

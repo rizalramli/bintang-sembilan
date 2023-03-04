@@ -70,6 +70,7 @@ class OutsideWarehousePurchaseController extends AppBaseController
         $input['fare_down'] = Human::removeFormatRupiah($input['fare_down']);
         $input['grand_total'] = Human::removeFormatRupiah($input['grand_total']);
         $input['fee'] = Human::removeFormatRupiah($input['fee']);
+        $input['fare_truck'] = Human::removeFormatRupiah($input['fare_truck']);
         $input['paid'] = Human::removeFormatRupiah($input['paid']);
         $input['down_payment'] = Human::removeFormatRupiah($input['down_payment']);
         $input['nett'] = Human::removeFormatRupiah($input['nett']);
@@ -147,6 +148,7 @@ class OutsideWarehousePurchaseController extends AppBaseController
         $input['fare_down'] = Human::removeFormatRupiah($input['fare_down']);
         $input['grand_total'] = Human::removeFormatRupiah($input['grand_total']);
         $input['fee'] = Human::removeFormatRupiah($input['fee']);
+        $input['fare_truck'] = Human::removeFormatRupiah($input['fare_truck']);
         $input['paid'] = Human::removeFormatRupiah($input['paid']);
         $input['down_payment'] = Human::removeFormatRupiah($input['down_payment']);
         $input['nett'] = Human::removeFormatRupiah($input['nett']);

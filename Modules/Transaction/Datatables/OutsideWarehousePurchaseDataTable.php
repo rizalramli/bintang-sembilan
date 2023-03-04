@@ -37,6 +37,9 @@ class OutsideWarehousePurchaseDataTable extends DataTable
         ->editColumn('fee', function ($row) {
             return '<div style="text-align:right">' . Human::createFormatRupiah($row->fee) . '</div>';
         })
+        ->editColumn('fare_truck', function ($row) {
+            return '<div style="text-align:right">' . Human::createFormatRupiah($row->fare_truck) . '</div>';
+        })
         ->editColumn('paid', function ($row) {
             return '<div style="text-align:right">' . Human::createFormatRupiah($row->paid) . '</div>';
         })
@@ -46,7 +49,7 @@ class OutsideWarehousePurchaseDataTable extends DataTable
         ->editColumn('nett', function ($row) {
             return '<div style="text-align:right">' . Human::createFormatRupiah($row->nett) . '</div>';
         })
-        ->rawColumns(['action', 'payment_factory','fare_down','grand_total', 'fee','paid','down_payment','nett']);
+        ->rawColumns(['action', 'payment_factory','fare_down','grand_total', 'fee','fare_truck','paid','down_payment','nett']);
     }
 
     /**
@@ -143,6 +146,7 @@ class OutsideWarehousePurchaseDataTable extends DataTable
             'fare_down' => ['title' => 'Ongkos Turun'],
             'grand_total' => ['title' => 'Grand Total'],
             'fee' => ['title' => 'Fee'],
+            'fare_truck' => ['title' => 'Ongkos Truk'],
             'paid' => ['title' => 'Yang Dibayar'],
             'down_payment' => ['title' => 'DP'],
             'nett' => ['title' => 'Bersih'],

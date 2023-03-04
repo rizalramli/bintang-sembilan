@@ -17,6 +17,7 @@ class OutsideWarehousePurchaseController extends AppBaseController
         $data['month'] = Human::monthIndonesia();
         $data['year'] = Human::yearReport();
         $data['number_vehicle'] = Human::getVehicleNumberOutsideWarehousePurchases();
+        $data['destination'] = Human::getDestinationOutsideWarehousePurchases();
         $data['warehouse'] = Warehouse::pluck('name', 'id')->prepend('Semua Gudang', null);
         return view('report::outside_warehouse_purchases.index', $data);
     }
@@ -24,6 +25,7 @@ class OutsideWarehousePurchaseController extends AppBaseController
     public function excel()
     {
         $param['get_by_number_vehicle'] = request()->filter_number_vehicle;
+        $param['get_by_destination'] = request()->filter_destination;
         $param['get_by_month'] = request()->filter_month;
         $param['get_by_year'] = request()->filter_year;
         $param['get_by_warehouse'] = request()->filter_warehouse;

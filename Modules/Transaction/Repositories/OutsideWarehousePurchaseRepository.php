@@ -72,6 +72,10 @@ class OutsideWarehousePurchaseRepository extends BaseRepository
             $result->whereRaw('LOWER(number_vehicles) LIKE ?', ['%'.strtolower($param['get_by_number_vehicle']).'%']);
         }
 
+        if(isset($param['get_by_destination']) && !is_null($param['get_by_destination'])){
+            $result->whereRaw('LOWER(destination) LIKE ?', ['%'.strtolower($param['get_by_destination']).'%']);
+        }
+
         if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
             $result->where('warehouse_id', '=', $param['get_by_warehouse']);
         }

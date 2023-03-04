@@ -52,6 +52,12 @@ class Human
 		return $data;
 	}
 
+	public static function getDestinationOutsideWarehousePurchases()
+	{
+		$data = OutsideWarehousePurchase::pluck('destination','destination')->prepend('Semua Tujuan', null);
+		return $data;
+	}
+
 	public static function monthIndonesia()
 	{
 		$month = [

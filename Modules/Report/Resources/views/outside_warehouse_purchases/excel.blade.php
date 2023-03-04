@@ -10,6 +10,7 @@ $sum_fare_down = 0;
 $sum_grand_total = 0;
 $sum_fee = 0;
 $sum_paid = 0;
+$sum_fare_truck = 0;
 $sum_down_payment = 0;
 $sum_nett = 0;
 @endphp
@@ -41,8 +42,9 @@ $sum_nett = 0;
         <td>Grand Total</td>
         <td>Fee</td>
         <td>Yang Dibayar</td>
-        <td>DP</td>
+        <td>Ongkos Truck</td>
         <td>Bersih</td>
+        <td>DP</td>
     </tr>
     @foreach($data as $key => $value)
     <tr>
@@ -62,8 +64,9 @@ $sum_nett = 0;
         <td>{{$value->grand_total}}</td>
         <td>{{$value->fee}}</td>
         <td>{{$value->paid}}</td>
-        <td>{{$value->down_payment}}</td>
+        <td>{{$value->fare_truck}}</td>
         <td>{{$value->nett}}</td>
+        <td>{{$value->down_payment}}</td>
     </tr>
     @php
         $sum_total_qty_sj += $value->total_qty_sj;
@@ -77,8 +80,9 @@ $sum_nett = 0;
         $sum_grand_total += $value->grand_total;
         $sum_fee += $value->fee;
         $sum_paid += $value->paid;
-        $sum_down_payment += $value->down_payment;
+        $sum_fare_truck += $value->fare_truck;
         $sum_nett += $value->nett;
+        $sum_down_payment += $value->down_payment;
     @endphp
     @endforeach
     <tr>
@@ -94,7 +98,8 @@ $sum_nett = 0;
         <td>{{$sum_grand_total}}</td>
         <td>{{$sum_fee}}</td>
         <td>{{$sum_paid}}</td>
-        <td>{{$sum_down_payment}}</td>
+        <td>{{$sum_fare_truck}}</td>
         <td>{{$sum_nett}}</td>
+        <td>{{$sum_down_payment}}</td>
     </tr>
 </table>

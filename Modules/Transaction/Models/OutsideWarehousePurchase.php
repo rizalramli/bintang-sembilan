@@ -53,6 +53,7 @@ class OutsideWarehousePurchase extends Model
         'total_volume_afkir',
         'payment_factory',
         'fare_down',
+        'fare_truck',
         'grand_total',
         'fee',
         'paid',
