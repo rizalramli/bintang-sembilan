@@ -181,9 +181,11 @@ class OutcomingWoodRepository extends BaseRepository
         $result->select(
             'outcoming_wood.*',
             'customer.name as customer_name',
+            'wood_type_out.name as wood_type_out_name'
         );
 
         $result->leftJoin('customer', 'customer.id', '=', 'outcoming_wood.customer_id');
+        $result->leftJoin('wood_type_out', 'wood_type_out.id', '=', 'outcoming_wood.wood_type_out_id');
 
         if(isset($param['get_by_warehouse']) && !is_null($param['get_by_warehouse'])){
             $result->where('outcoming_wood.warehouse_id', '=', $param['get_by_warehouse']);
@@ -197,16 +199,20 @@ class OutcomingWoodRepository extends BaseRepository
             $result->whereYear('outcoming_wood.date', $param['get_by_year']);
         }
 
+        if(isset($param['get_by_wood_type_out']) && !is_null($param['get_by_wood_type_out'])){
+            $result->where('outcoming_wood.wood_type_out_id', '=', $param['get_by_wood_type_out']);
+        }
+
         if(isset($param['get_by_number_vehicle']) && !is_null($param['get_by_number_vehicle'])){
             $result->whereRaw('LOWER(outcoming_wood.number_vehicles) LIKE ?', ['%'.strtolower($param['get_by_number_vehicle']).'%']);
         }
 
         if(isset($param['is_balken']) && !is_null($param['is_balken'])){
-            $result->where('outcoming_wood.wood_type_out_id',1);
+            $result->whereIn('outcoming_wood.wood_type_out_id',[1,6]);
         }
 
         if(isset($param['is_not_balken']) && !is_null($param['is_not_balken'])){
-            $result->where('outcoming_wood.wood_type_out_id','!=',1);
+            $result->whereNotIn('outcoming_wood.wood_type_out_id',[1,6]);
         }
 
         $result->orderBy('outcoming_wood.date', 'asc');

@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use Modules\Master\Models\WoodTypeOut;
 use Modules\Transaction\Models\OutcomingWood;
 use Modules\Transaction\Models\OutsideWarehousePurchase;
 use Modules\Transaction\Models\TruckRental;
@@ -32,6 +33,18 @@ class Human
 	public static function dateFormat($datetime)
 	{
 		return date('d/m/Y', strtotime($datetime));
+	}
+
+	public static function getWoodTypeOutBalken()
+	{
+		$data = WoodTypeOut::whereIn('id',[1,6])->pluck('name','id')->prepend('Semua Jenis', null);
+		return $data;
+	}
+
+	public static function getWoodTypeOutNotBalken()
+	{
+		$data = WoodTypeOut::whereNotIn('id',[1,6])->pluck('name','id')->prepend('Semua Jenis', null);
+		return $data;
 	}
 
 	public static function getVehicleNumber()

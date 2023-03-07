@@ -96,7 +96,7 @@ $nett = 0;
         <td>{{$item->serial_number}}</td>
         <td>{{$item->serial_number_factory}}</td>
         <td>{{App\Helpers\Human::dateFormat($item->date)}}</td>
-        <td>GERGAJIAN SENGON</td>
+        <td>{{$item->wood_type_out_name}}</td>
         <td style="text-align: right;">{{$item->total_qty}}</td>
         <td style="text-align: right;">{{$item->total_volume}}</td>
         <td style="text-align: right;">{{$item->total_qty_tally}}</td>

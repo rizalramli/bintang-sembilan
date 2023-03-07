@@ -32,6 +32,10 @@
                         {!! Form::label('filter_number_vehicle', 'Filter Nopol') !!}
                         {!! Form::select('filter_number_vehicle', $number_vehicle, null, ['class' => 'select2 form-control','id' => 'filter_number_vehicle']) !!}
                     </div>
+                    <div class="form-group col-sm-3 mb-1">   
+                        {!! Form::label('filter_wood_type_out', 'Filter Jenis Kayu') !!}
+                        {!! Form::select('filter_wood_type_out', $wood_type_out, null, ['class' => 'select2 form-control','id' => 'filter_wood_type_out']) !!}
+                    </div>
                 </div>
             </div>
             <div class="card-footer">
@@ -51,10 +55,12 @@
         var filter_month = $('#filter_month').val();
         var filter_year = $('#filter_year').val();
         var filter_number_vehicle = $('#filter_number_vehicle').val();
+        var filter_wood_type_out = $('#filter_wood_type_out').val();
         var filter_warehouse = $('#filter_warehouse').val();
         var filter = '?filter_month=' + filter_month + 
         '&filter_year=' + filter_year + 
         '&filter_number_vehicle=' + filter_number_vehicle +
+        '&filter_wood_type_out=' + filter_wood_type_out +
         '&filter_warehouse=' + filter_warehouse;
         var url = "{{ url('report/outcomingWoodsBalken/excel') }}" + filter;
         window.open(

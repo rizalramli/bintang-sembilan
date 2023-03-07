@@ -111,7 +111,7 @@
 </li>
 @endcanany
 
-@canany(['laporan-log sengon masuk','laporan-balken keluar','laporan-kayu keluar','laporan-operasional','laporan-hasil dan laba','laporan-penyewaan truk','laporan-kehadiran','laporan-pembelian gudang luar'])
+@canany(['laporan-log sengon masuk','laporan-balken keluar','laporan-sampah kayu keluar','laporan-operasional','laporan-hasil dan laba','laporan-penyewaan truk','laporan-kehadiran','laporan-pembelian gudang luar'])
 <li>
     <a class="dropmenu d-flex align-items-center" target="_self" href="#">
         <i data-feather='file-text'></i>
@@ -136,11 +136,11 @@
         </li>
         @endcan
 
-        @can('laporan-kayu keluar')
+        @can('laporan-sampah kayu keluar')
         <li class="nav-item {{ Request::is('report/outcomingWoods') ? 'active ' : '' }}">
             <a class="submenu" href="{{ url('report/outcomingWoods'); }}">
                 <i class="ficon" data-feather="circle"></i>
-                <span class="text text-custom">Kayu Keluar</span>
+                <span class="text text-custom">Sampah Kayu Keluar</span>
             </a>
         </li>
         @endcan
