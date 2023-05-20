@@ -44,7 +44,7 @@ class OutcomingWoodController extends AppBaseController
             $wood_name = 'Semua';
         }
 
-        $title = 'Laporan Sampah Kayu Keluar Dengan Jenis Kayu '.$wood_name.' '. $param['get_by_month'] . '-' . $param['get_by_year'];
+        $title = 'Laporan Limbah Pabrik Dengan Jenis Kayu '.$wood_name.' '. $param['get_by_month'] . '-' . $param['get_by_year'];
         
         return Excel::download(new TemplateExcel($query, new OutcomingWoodTheme), $title.'.xlsx');
     }

@@ -139,14 +139,8 @@
                     </div>
 
                     <div class="form-group col-sm-6 mb-1">
-                        @php $is_invalid = ''; $errors->has('number_vehicles') ? $is_invalid = 'is-invalid' : ''; @endphp
-                        {!! Form::label('number_vehicles', 'Nopol') !!}
-                        {!! Form::text('number_vehicles', isset($incomingWood) ? $incomingWood->number_vehicles : null, ['id' => 'number_vehicles_supplier','class' => "form-control $is_invalid"]) !!}
-                        @error('number_vehicles')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
+                        {!! Form::label('number_vehicles_supplier', 'Nopol') !!}
+                        {!! Form::text('number_vehicles_supplier', null, ['id' => 'number_vehicles_supplier','class' => "form-control $is_invalid"]) !!}
                     </div>
 
                     <div class="form-group col-sm-6 mb-1">

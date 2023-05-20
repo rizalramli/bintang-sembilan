@@ -312,6 +312,7 @@ class IncomingWoodController extends AppBaseController
         ]);
         
         $input = request()->all();
+        $input['number_vehicles'] = request()->number_vehicles_supplier;
         $input['created_by'] = \Auth::user()->id;
         $input['updated_by'] = \Auth::user()->id;
         $supplier = Supplier::create($input);

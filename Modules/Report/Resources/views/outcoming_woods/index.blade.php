@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Sampah Kayu Keluar')
+@section('title', 'Limbah Pabrik')
 @include('layouts.library.style')
 @section('content')
 <div class="row">
