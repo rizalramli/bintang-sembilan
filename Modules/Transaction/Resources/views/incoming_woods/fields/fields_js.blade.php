@@ -149,7 +149,7 @@
                         $('#modalAddSupplier').modal('hide');
                         // clear form
                         $('#name').val('');
-                        $('#number_vehicles_supplier').val(result.data.number_vehicles);
+                        $('#number_vehicles_supplier').val('');
                         $('#address').val('');
                         $('#city').val('');
                         $('#phone').val('');
