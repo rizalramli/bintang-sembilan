@@ -10,10 +10,12 @@ use Modules\Transaction\Repositories\IncomingWoodRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Facades\Auth;
+use Modules\Master\Models\Company;
 use Modules\Master\Models\Supplier;
 use Modules\Master\Models\TemplateWood;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
+use Modules\Master\Repositories\SupplierRepository;
 use Modules\Transaction\Models\IncomingWoodDetail;
 use Modules\Transaction\Models\IncomingWoodDetailItem;
 use Response;
@@ -22,10 +24,12 @@ class IncomingWoodController extends AppBaseController
 {
     /** @var  IncomingWoodRepository */
     private $incomingWoodRepository;
+    private $supplierRepository;
 
-    public function __construct(IncomingWoodRepository $incomingWoodRepo)
+    public function __construct(IncomingWoodRepository $incomingWoodRepo,SupplierRepository $supplierRepo)
     {
         $this->incomingWoodRepository = $incomingWoodRepo;
+        $this->supplierRepository = $supplierRepo;
     }
 
     /**
@@ -313,6 +317,25 @@ class IncomingWoodController extends AppBaseController
         $input['updated_by'] = \Auth::user()->id;
         $supplier = Supplier::create($input);
         return response()->json(['status' => true, 'data' => $supplier]);
+    }
+
+    public function invoice($id)
+    {
+        $param = [];
+
+        $incomingWood = $this->incomingWoodRepository->find($id);
+        $supplier = $this->supplierRepository->find($incomingWood->supplier_id);
+
+        $param['get_by_incoming_wood_id'] = $id;
+        $incomingWoodDetail = IncomingWoodRepository::getDetail($param);
+
+        $data['company'] = Company::find(1);
+        $data['incomingWoodDetail'] = $incomingWoodDetail;
+        $data['incomingWood'] = $incomingWood;
+        $data['supplier'] = $supplier;
+
+        $pdf = \PDF::loadView('transaction::incoming_woods.invoice',$data);
+        return $pdf->stream('Invoice.pdf', array("Attachment" => false));
     }
     
 }

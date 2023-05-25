@@ -1,5 +1,8 @@
 {!! Form::open(['route' => ['incomingWoods.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
+    <a target="__blank" href="{{ route('incomingWoods.invoice', $id) }}" class='btn btn-success btn-sm print-invoice'>
+        <i data-feather='eye'></i> Nota
+    </a>
     <a href="{{ route('incomingWoods.show', $id) }}" class='btn btn-info btn-sm'>
         <i data-feather='eye'></i> Detail
     </a>
@@ -13,4 +16,3 @@
     ]) !!}
 </div>
 {!! Form::close() !!}
- 

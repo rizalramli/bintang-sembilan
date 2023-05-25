@@ -14,10 +14,12 @@ use App\Http\Controllers\AppBaseController;
 use Carbon\Carbon;
 use Excel;
 use Illuminate\Support\Facades\Auth;
+use Modules\Master\Models\Company;
 use Modules\Master\Models\Supplier;
 use Modules\Master\Models\TemplateWood;
 use Modules\Master\Models\Warehouse;
 use Modules\Master\Models\WoodType;
+use Modules\Master\Repositories\SupplierRepository;
 use Modules\Transaction\Models\IncomingWoodDetail;
 use Modules\Transaction\Models\IncomingWoodDetailItem;
 use Modules\Transaction\Models\Finance;
@@ -28,10 +30,12 @@ class IncomingWoodTradeController extends AppBaseController
 {
     /** @var  IncomingWoodRepository */
     private $incomingWoodRepository;
+    private $supplierRepository;
 
-    public function __construct(IncomingWoodTradeRepository $incomingWoodRepo)
+    public function __construct(IncomingWoodTradeRepository $incomingWoodRepo,SupplierRepository $supplierRepo)
     {
         $this->incomingWoodRepository = $incomingWoodRepo;
+        $this->supplierRepository = $supplierRepo;
     }
 
     /**
@@ -411,6 +415,25 @@ class IncomingWoodTradeController extends AppBaseController
             $total_qty += $sub_qty;
         }
         return response()->json(['status' => true,'total_qty' => $total_qty,'total_volume' => round($total_volume,4), 'sub_total_volume' => $array]);
+    }
+
+    public function invoice($id)
+    {
+        $param = [];
+
+        $incomingWood = $this->incomingWoodRepository->find($id);
+        $supplier = $this->supplierRepository->find($incomingWood->supplier_id);
+
+        $param['get_by_incoming_wood_id'] = $id;
+        $incomingWoodDetail = IncomingWoodTradeRepository::getDetail($param);
+
+        $data['company'] = Company::find(1);
+        $data['incomingWoodDetail'] = $incomingWoodDetail;
+        $data['incomingWood'] = $incomingWood;
+        $data['supplier'] = $supplier;
+
+        $pdf = \PDF::loadView('transaction::incoming_wood_trades.invoice',$data);
+        return $pdf->stream('Invoice.pdf', array("Attachment" => false));
     }
     
 }
