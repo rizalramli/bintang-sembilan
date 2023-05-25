@@ -182,3 +182,20 @@
     </tr>
     @endif
 </table>
+<br>
+<br>
+<table width="100%" border="0" class="border-collapse">
+    <tr>
+        <td class="font-12 text-right">Mengetahui</td>
+    </tr>
+    <br>
+    <br>
+    <br>
+    <tr>
+        <td class="font-12 text-right">Fresty Nur Hidayati</td>
+    </tr>
+    <tr>
+        <td class="font-12 text-right">STAF TUK</td>
+    </tr>
+</table>
+
